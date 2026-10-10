@@ -5,5 +5,5 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "jkedusphere"
-database_id = "PASTE-YOUR-D1-DATABASE-ID-HERE"
+database_id = "61818261-75b4-43a6-8b2c-4107be226c7f"
 migrations_dir = "migrations"
