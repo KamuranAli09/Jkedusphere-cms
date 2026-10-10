@@ -19,7 +19,7 @@ app.use('*', async (c, next) => {
   c.header('X-Frame-Options', 'DENY');
   c.header('Referrer-Policy', 'strict-origin-when-cross-origin');
   if (new URL(c.req.url).pathname.startsWith('/admin')) {
-    c.header('Content-Security-Policy', "default-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'");
+    c.header('Content-Security-Policy', "default-src 'self'; img-src 'self' blob: data:; style-src 'self' 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'");
     c.header('Cache-Control', 'no-store');
   }
 });
