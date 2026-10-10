@@ -3,8 +3,9 @@ import { getCookie, setCookie, deleteCookie } from 'hono/cookie';
 import { html } from 'hono/html';
 import { hashPassword, verifyPassword, sha256Hex, newToken, safeEqual } from './auth';
 import { adminPage } from './layout';
+import type { Env } from './types';
+import { registerContent } from './content';
 
-type Env = { Bindings: { DB: D1Database; SETUP_KEY?: string }; Variables: { user: { id: number; email: string } } };
 const app = new Hono<Env>();
 
 const COOKIE = 'jk_session';
@@ -117,13 +118,13 @@ app.post('/admin/logout', async (c) => {
 app.get('/admin', async (c) => {
   const q = (sql: string) => c.env.DB.prepare(sql).first<{ n: number }>().then((r) => r?.n ?? 0);
   const [published, drafts, pages, views] = await Promise.all([
-    q("SELECT COUNT(*) AS n FROM posts WHERE status='published'"),
+    q(`SELECT COUNT(*) AS n FROM posts WHERE status='published' AND published_at <= ${now()}`),
     q("SELECT COUNT(*) AS n FROM posts WHERE status='draft'"),
     q('SELECT COUNT(*) AS n FROM pages'),
     q('SELECT COALESCE(SUM(views),0) AS n FROM posts'),
   ]);
   return c.html(adminPage('Dashboard', html`
-    <div class="card"><h2>Welcome, ${c.get('user').email}</h2><p class="muted">Stage 1 is live: database and secure login. Post editor, analytics and theme come next.</p></div>
+    <div class="card"><h2>Welcome, ${c.get('user').email}</h2><p class="muted">Stage 2 is live: post editor, pages manager and image uploads. Analytics and the public theme come next.</p></div>
     <div class="grid">
       <div class="card"><div class="stat">${published}</div><div class="muted">Published posts</div></div>
       <div class="card"><div class="stat">${drafts}</div><div class="muted">Drafts</div></div>
@@ -131,6 +132,8 @@ app.get('/admin', async (c) => {
       <div class="card"><div class="stat">${views}</div><div class="muted">Total views</div></div>
     </div>`, true));
 });
+
+registerContent(app);
 
 // ---------- Public placeholder ----------
 app.get('/', (c) => c.html(html`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>JKEdusphere</title></head>
