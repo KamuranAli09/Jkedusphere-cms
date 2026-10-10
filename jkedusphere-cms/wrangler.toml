@@ -1,0 +1,9 @@
+name = "jkedusphere-cms"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "jkedusphere"
+database_id = "PASTE-YOUR-D1-DATABASE-ID-HERE"
+migrations_dir = "migrations"
