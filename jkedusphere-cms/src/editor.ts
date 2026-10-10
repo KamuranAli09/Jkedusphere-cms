@@ -3,15 +3,20 @@ export const APP_JS = `(function(){
 document.addEventListener('submit',function(e){var m=e.target.getAttribute&&e.target.getAttribute('data-confirm');if(m&&!confirm(m))e.preventDefault();});
 
 function compress(file,cb){
-  var img=new Image(),url=URL.createObjectURL(file);
-  img.onload=function(){
-    var w=Math.min(img.width,1200),h=Math.round(img.height*w/img.width);
-    var c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+  function draw(srcImg,sw,sh){
+    var w=Math.min(sw,1200),h=Math.round(sh*w/sw);
+    var c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(srcImg,0,0,w,h);
     var q=0.82;
     (function go(){c.toBlob(function(b){if(b&&b.size>400000&&q>0.4){q-=0.12;go();}else cb(b);},'image/webp',q);})();
-    URL.revokeObjectURL(url);
-  };
-  img.onerror=function(){alert('Could not read that image file.');};
+  }
+  var bad=function(){alert('Could not read that image file. Please use a JPG, PNG or WebP image.');};
+  if(window.createImageBitmap){
+    createImageBitmap(file).then(function(bm){draw(bm,bm.width,bm.height);}).catch(bad);
+    return;
+  }
+  var img=new Image(),url=URL.createObjectURL(file);
+  img.onload=function(){draw(img,img.width,img.height);URL.revokeObjectURL(url);};
+  img.onerror=bad;
   img.src=url;
 }
 function upload(file,cb){
