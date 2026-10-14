@@ -33,7 +33,7 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px
 .source{min-height:340px;font-family:ui-monospace,Consolas,monospace;font-size:13px;border-radius:0 0 8px 8px}
 .thumb{max-height:90px;margin-top:8px;border-radius:6px;border:1px solid var(--line)}
 </style></head><body>
-${nav ? html`<header><div><b>JKEdusphere Admin</b><nav><a href="/admin">Dashboard</a><a href="/admin/posts">Posts</a><a href="/admin/pages">Pages</a></nav></div><form method="post" action="/admin/logout"><button class="ghost">Log out</button></form></header>` : ''}
+${nav ? html`<header><div><b>JKEdusphere Admin</b><nav><a href="/admin">Dashboard</a><a href="/admin/posts">Posts</a><a href="/admin/pages">Pages</a><a href="/admin/layout">Layout</a></nav></div><form method="post" action="/admin/logout"><button class="ghost">Log out</button></form></header>` : ''}
 <main>${body}</main>
 ${nav ? html`<script src="/admin/assets/app.js" defer></script>` : ''}
 </body></html>`;
