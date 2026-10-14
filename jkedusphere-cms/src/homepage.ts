@@ -50,13 +50,19 @@ const SECTIONS: Record<string, Section> = {
   join: { label: 'Telegram call to action', hint: 'Coloured strip near the bottom.', fields: {
     title: T('Heading'), text: T('Text'), btn: T('Button text'), url: T('Button link') } },
   faq: { label: 'FAQ', hint: 'Questions and answers.', fields: { title: T('Heading'), items: LN('Questions', ['q', 'a']) } },
+  post: { label: 'Post and page template', hint: 'Controls every post page: dates box, share buttons, related posts, call to action and disclaimer.', fields: {
+    authorLine: T('Byline'), showDates: { t: 'select', l: 'Show important dates box', opts: ['yes', 'no'] },
+    showShare: { t: 'select', l: 'Show share buttons', opts: ['yes', 'no'] }, showRelated: { t: 'select', l: 'Show related posts', opts: ['yes', 'no'] },
+    relatedTitle: T('Related posts heading'), ctaTitle: T('Call to action heading'), ctaText: T('Call to action text'),
+    ctaBtn: T('Call to action button (empty hides the box)'), ctaUrl: T('Call to action link'), disclaimer: A('Note shown under every post') } },
   footer: { label: 'Footer', hint: 'Disclaimer and footer links.', fields: { text: A('Disclaimer text'), links: LN('Footer links', LINK) } },
 };
 
 const FIRST = ['seo', 'header', 'hero'];
 const MOVABLE = ['trust', 'exams', 'vacancies', 'affairs', 'schemes', 'prep', 'how', 'join', 'faq'];
 const LAST = ['footer'];
-const NOT_HIDEABLE = ['seo', 'header', 'footer'];
+const NOT_HIDEABLE = ['seo', 'header', 'footer', 'post'];
+const TEMPLATES = ['post'];
 
 const rows = (cols: string[], data: string[][]) => data.map((a) => Object.fromEntries(cols.map((k, i) => [k, a[i] ?? ''])));
 const DEFAULTS: Record<string, any> = {
@@ -87,17 +93,23 @@ const DEFAULTS: Record<string, any> = {
 // ---------------------------------------------------------------------------------------------
 // 2. Storage: one JSON value in the existing settings table (key: home_layout). No migration needed.
 // ---------------------------------------------------------------------------------------------
+DEFAULTS.post = { authorLine: 'By JKEdusphere Team', showDates: 'yes', showShare: 'yes', showRelated: 'yes', relatedTitle: 'More from JKEdusphere',
+  ctaTitle: 'Practice before the exam', ctaText: 'Take a free mock test with solutions and a live leaderboard.', ctaBtn: 'Start a free test', ctaUrl: 'https://jkedusphere.com',
+  disclaimer: 'We summarise official notifications for your convenience. Always confirm dates and eligibility on the official website before applying.' };
+DEFAULTS.vacancies.linkUrl = '/category/vacancies/';
+DEFAULTS.affairs.linkUrl = '/category/current-affairs/';
+
 type Stored = { order?: string[]; hidden?: string[]; data?: Record<string, any> };
 const KEY = 'home_layout';
 
-async function load(db: D1Database): Promise<Stored> {
+export async function load(db: D1Database): Promise<Stored> {
   const r = await db.prepare('SELECT value FROM settings WHERE key = ?').bind(KEY).first<{ value: string }>();
   try { return JSON.parse(r?.value ?? '{}') as Stored; } catch { return {}; }
 }
 const store = (db: D1Database, s: Stored) =>
   db.prepare('INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').bind(KEY, JSON.stringify(s)).run();
 
-function resolve(s: Stored) {
+export function resolve(s: Stored) {
   const saved = (s.order ?? []).filter((id) => MOVABLE.includes(id));
   const order = [...saved, ...MOVABLE.filter((id) => !saved.includes(id))];
   const hidden = new Set(s.hidden ?? []);
@@ -108,8 +120,8 @@ function resolve(s: Stored) {
 // ---------------------------------------------------------------------------------------------
 // 3. Public homepage
 // ---------------------------------------------------------------------------------------------
-const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
-const href = (u: string) => (/^(https?:\/\/|\/|#|mailto:)/i.test(u || '') ? esc(u) : '#');
+export const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
+export const href = (u: string) => (/^(https?:\/\/|\/|#|mailto:)/i.test(u || '') ? esc(u) : '#');
 const head = (d: any, link = false) => `<div class="sh"><div><h2>${esc(d.title)}</h2>${d.subtitle ? `<p>${esc(d.subtitle)}</p>` : ''}</div>${link && d.linkText ? `<a href="${href(d.linkUrl)}">${esc(d.linkText)}</a>` : ''}</div>`;
 const logo = (dark = false) => `<a class="jk-logo${dark ? ' dk' : ''}" href="/" aria-label="JKEdusphere home"><span class="jk-wm">JKEdusphere</span><span class="jk-tag">Powered by Vision &amp; Knowledge</span></a>`;
 const tagCls = (t: string) => (/^new/i.test(t) ? 'n' : /clos|last|urgent/i.test(t) ? 'c' : '');
@@ -183,6 +195,23 @@ ${body}
 </body></html>`;
 }
 
+
+export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean }) {
+  const L = resolve(await load(db));
+  const ctx: Ctx = { latest: [], vacancies: [] };
+  const og = o.image ? `<meta property="og:image" content="${esc(o.image)}"><meta name="twitter:card" content="summary_large_image">` : '';
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
+<meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.description)}"><meta property="og:type" content="${o.type ?? 'website'}"><meta property="og:url" content="${esc(o.canonical)}"><meta property="og:site_name" content="${esc(L.data('seo').siteName)}">${og}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">
+${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}</head><body>
+${R.header(L.data('header'), ctx)}
+<main>${o.body}</main>
+${R.footer(L.data('footer'), ctx)}
+</body></html>`;
+}
+
 // ---------------------------------------------------------------------------------------------
 // 4. Admin: Layout tab
 // ---------------------------------------------------------------------------------------------
@@ -213,7 +242,7 @@ export function registerHomepage(app: Hono<Env>) {
 
   app.get('/admin/layout', async (c) => {
     const L = resolve(await load(c.env.DB));
-    const all = [...FIRST, ...L.order, ...LAST];
+    const all = [...FIRST, ...L.order, ...LAST, ...TEMPLATES];
     return c.html(adminPage('Layout', html`
       <div class="bar"><h2 style="margin:0;flex:1">Layout</h2><a class="btn" href="/" target="_blank" rel="noopener" style="margin:0">Preview homepage</a></div>
       <p class="muted">Tap a section to edit its text, links and items. Use the arrows to reorder and Hide to remove a section from the homepage. Changes go live within a minute.</p>
