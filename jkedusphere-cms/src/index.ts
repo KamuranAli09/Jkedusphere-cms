@@ -135,6 +135,7 @@ app.get('/admin', async (c) => {
 });
 
 registerContent(app);
+registerHomepage(app);
 
 // ---------- Public placeholder ----------
 app.get('/', (c) => c.html(html`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>JKEdusphere</title></head>
