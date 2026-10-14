@@ -11,6 +11,9 @@ import { THEME_CSS } from './theme';
 type Field = { t: 'text' | 'area' | 'number' | 'select' | 'lines'; l: string; opts?: string[]; cols?: string[] };
 type Section = { label: string; hint: string; fields: Record<string, Field> };
 
+const ICON = `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`;
+const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#1b2a6b"/><stop offset="1" stop-color="#63b7ea"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><text x="32" y="43" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" text-anchor="middle" fill="#fff">JK</text></svg>';
+const GA = ICON + `<script async src="https://www.googletagmanager.com/gtag/js?id=G-V15TG71Q95"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-V15TG71Q95');</script>`;
 const CATS = ['Vacancies', 'Current Affairs', 'Govt Schemes', 'Reports', 'Updates', 'Study Material'];
 const T = (l: string): Field => ({ t: 'text', l });
 const A = (l: string): Field => ({ t: 'area', l });
@@ -87,7 +90,7 @@ const DEFAULTS: Record<string, any> = {
   join: { title: 'Never miss a notification', text: 'Vacancy and result alerts on Telegram.', btn: 'Join on Telegram', url: 'https://t.me/jkedusphere' },
   faq: { title: 'Frequently asked questions', items: rows(['q', 'a'], [['Are these notifications official?', "We summarise each notification and link to the official source. Confirm dates on the recruiting body's website before applying."], ['Is JKEdusphere free to use?', 'All vacancy, update and scheme posts are free. Some notes and test series on jkedusphere.com are paid.'], ['Is JKEdusphere affiliated with JKSSB or JKPSC?', 'No. We are an independent educational platform.']]) },
   footer: { text: 'JKEdusphere is an independent educational platform and is not affiliated with JKSSB, JKPSC, JKBOSE, NTA or any government body. Verify exam dates and notifications from official websites.',
-    links: rows(LINK, [['About', '/about-us/'], ['Contact', '/contact-us/'], ['Privacy policy', '/privacy-policy/'], ['Disclaimer', '/disclaimer/'], ['jkedusphere.com', 'https://jkedusphere.com']]) },
+    links: rows(LINK, [['About', '/about-us'], ['Contact', '/contact-us'], ['Privacy policy', '/privacy-policy'], ['Disclaimer', '/disclaimer'], ['jkedusphere.com', 'https://jkedusphere.com']]) },
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -96,8 +99,8 @@ const DEFAULTS: Record<string, any> = {
 DEFAULTS.post = { authorLine: 'By JKEdusphere Team', showDates: 'yes', showShare: 'yes', showRelated: 'yes', relatedTitle: 'More from JKEdusphere',
   ctaTitle: 'Practice before the exam', ctaText: 'Take a free mock test with solutions and a live leaderboard.', ctaBtn: 'Start a free test', ctaUrl: 'https://jkedusphere.com',
   disclaimer: 'We summarise official notifications for your convenience. Always confirm dates and eligibility on the official website before applying.' };
-DEFAULTS.vacancies.linkUrl = '/category/vacancies/';
-DEFAULTS.affairs.linkUrl = '/category/current-affairs/';
+DEFAULTS.vacancies.linkUrl = '/category/vacancies';
+DEFAULTS.affairs.linkUrl = '/category/current-affairs';
 
 type Stored = { order?: string[]; hidden?: string[]; data?: Record<string, any> };
 const KEY = 'home_layout';
@@ -132,7 +135,7 @@ async function latest(db: D1Database, category: string | null, limit: number) {
   const t = Math.floor(Date.now() / 1000);
   const sql = `SELECT title, slug, excerpt, category, important_dates FROM posts WHERE status = 'published' AND published_at <= ?${category ? ' AND category = ?' : ''} ORDER BY published_at DESC LIMIT ?`;
   const binds: (string | number)[] = category ? [t, category, limit] : [t, limit];
-  return ((await db.prepare(sql).bind(...binds).all()).results as unknown as Post[]).map((p) => ({ ...p, last: lastDate(p.important_dates), url: `/${p.slug}/` }));
+  return ((await db.prepare(sql).bind(...binds).all()).results as unknown as Post[]).map((p) => ({ ...p, last: lastDate(p.important_dates), url: `/${p.slug}` }));
 }
 
 type Ctx = { latest: any[]; vacancies: any[] };
@@ -189,7 +192,7 @@ async function renderHome(db: D1Database, origin: string) {
 <title>${esc(seo.title)}</title><meta name="description" content="${esc(seo.description)}"><link rel="canonical" href="${esc(origin)}/">
 <meta property="og:title" content="${esc(seo.title)}"><meta property="og:description" content="${esc(seo.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${esc(origin)}/">${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>
 ${body}
 </body></html>`;
@@ -204,7 +207,7 @@ export async function shell(db: D1Database, origin: string, o: { title: string; 
 <title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
 <meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.description)}"><meta property="og:type" content="${o.type ?? 'website'}"><meta property="og:url" content="${esc(o.canonical)}"><meta property="og:site_name" content="${esc(L.data('seo').siteName)}">${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
 ${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}</head><body>
 ${R.header(L.data('header'), ctx)}
 <main>${o.body}</main>
@@ -229,6 +232,15 @@ function fromForm(f: Field, raw: string, current: any) {
 }
 
 export function registerHomepage(app: Hono<Env>) {
+  // Live domain: send jkedusphere.online to www. Test address (workers.dev): hide it from Google so it is never indexed.
+  app.use('*', async (c, next) => {
+    const u = new URL(c.req.url);
+    if (u.hostname === 'jkedusphere.online') { u.hostname = 'www.jkedusphere.online'; return c.redirect(u.toString(), 301); }
+    if (u.hostname.endsWith('.workers.dev')) c.header('X-Robots-Tag', 'noindex, nofollow');
+    await next();
+  });
+  app.get('/favicon.svg', (c) => c.body(FAVICON, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' }));
+  app.get('/favicon.ico', (c) => c.redirect('/favicon.svg', 301));
   app.get('/assets/theme.css', (c) => c.body(THEME_CSS, 200, { 'Content-Type': 'text/css; charset=utf-8', 'Cache-Control': 'public, max-age=300' }));
 
   app.get('/', async (c) => {

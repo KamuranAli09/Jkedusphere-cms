@@ -7,6 +7,7 @@ import type { Env } from './types';
 import { registerContent } from './content';
 import { registerHomepage } from './homepage';
 import { registerPublic } from './posts';
+import { registerImporter } from './importer';
 
 const app = new Hono<Env>();
 
@@ -137,6 +138,7 @@ app.get('/admin', async (c) => {
 
 registerContent(app);
 registerHomepage(app);
+registerImporter(app);
 
 // ---------- Public placeholder ----------
 app.get('/', (c) => c.html(html`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>JKEdusphere</title></head>
