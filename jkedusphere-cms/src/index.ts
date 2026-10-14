@@ -5,6 +5,7 @@ import { hashPassword, verifyPassword, sha256Hex, newToken, safeEqual } from './
 import { adminPage } from './layout';
 import type { Env } from './types';
 import { registerContent } from './content';
+import { registerHomepage } from './homepage';
 
 const app = new Hono<Env>();
 
