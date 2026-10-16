@@ -19,6 +19,12 @@ const T = (l: string): Field => ({ t: 'text', l });
 const A = (l: string): Field => ({ t: 'area', l });
 const LN = (l: string, cols: string[]): Field => ({ t: 'lines', l, cols });
 const LINK = ['label', 'url'];
+const FEED: Record<string, Field> = {
+  title: T('Heading'), subtitle: T('Subheading'), linkText: T('Link text'), linkUrl: T('Link'),
+  source: { t: 'select', l: 'Cards come from', opts: ['auto', 'manual'] },
+  category: { t: 'select', l: 'Post category (auto)', opts: CATS }, limit: { t: 'number', l: 'How many cards (auto)' },
+  items: LN('Manual cards', ['body', 'date', 'title', 'note', 'url']),
+};
 
 const SECTIONS: Record<string, Section> = {
   seo: { label: 'SEO and meta', hint: 'Homepage title, description and share image shown on Google and WhatsApp.', fields: {
@@ -26,19 +32,20 @@ const SECTIONS: Record<string, Section> = {
     ogImage: T('Share image link (1200x630, e.g. /img/12)'), siteName: T('Site name') } },
   header: { label: 'Header', hint: 'Menu and the button at the top right.', fields: {
     nav: LN('Menu links', LINK), ctaText: T('Button text'), ctaUrl: T('Button link') } },
-  hero: { label: 'Hero (top banner)', hint: 'Your main H1 headline, search box and the notice panel.', fields: {
-    title: T('Headline (H1)'), text: A('Intro text'), searchPlaceholder: T('Search box hint'),
-    chips: LN('Quick links', LINK), panelTitle: T('Notice panel title'),
-    panelMode: { t: 'select', l: 'Notice panel shows', opts: ['auto', 'manual'] },
+  hero: { label: 'Hero (top banner)', hint: 'Your main H1 headline, search box, quick links and two buttons.', fields: {
+    badge: T('Small badge above the headline (empty hides it)'), title: T('Headline (H1)'), text: A('Intro text'), searchPlaceholder: T('Search box hint'),
+    chips: LN('Quick links', LINK),
+    btn1Text: T('Main button text (empty hides it)'), btn1Url: T('Main button link'), btn2Text: T('Second button text (empty hides it)'), btn2Url: T('Second button link'),
+    panelMode: { t: 'select', l: 'Notice panel on the right', opts: ['off', 'auto', 'manual'] }, panelTitle: T('Notice panel title'),
     panelItems: LN('Manual notices (used when set to manual)', ['tag', 'title', 'note', 'url']) } },
   trust: { label: 'Trust strip', hint: 'Short promises under the hero.', fields: { items: LN('Points', ['text']) } },
+  subjects: { label: 'Browse by subject', hint: 'Subject tiles. Each opens a search for that subject, so tag your posts with the subject name.', fields: {
+    title: T('Heading'), subtitle: T('Subheading'), items: LN('Subject tiles', ['badge', 'name', 'note', 'url']) } },
+  study: { label: 'Study material and research', hint: 'Newest posts from one category, or cards you write by hand.', fields: FEED },
+  reports: { label: 'Reports and analysis', hint: 'Newest posts from one category, or cards you write by hand.', fields: FEED },
   exams: { label: 'Browse by exam', hint: 'Exam tiles.', fields: {
     title: T('Heading'), subtitle: T('Subheading'), items: LN('Exam tiles', ['name', 'note', 'url']) } },
-  vacancies: { label: 'Latest vacancies', hint: 'Cards from your newest posts, or cards you write by hand.', fields: {
-    title: T('Heading'), subtitle: T('Subheading'), linkText: T('Link text'), linkUrl: T('Link'),
-    source: { t: 'select', l: 'Cards come from', opts: ['auto', 'manual'] },
-    category: { t: 'select', l: 'Post category (auto)', opts: CATS }, limit: { t: 'number', l: 'How many cards (auto)' },
-    items: LN('Manual cards', ['body', 'date', 'title', 'note', 'url']) } },
+  vacancies: { label: 'Latest vacancies', hint: 'Cards from your newest posts, or cards you write by hand.', fields: FEED },
   affairs: { label: 'Current affairs', hint: 'Magazine card and quick links.', fields: {
     title: T('Heading'), subtitle: T('Subheading'), linkText: T('Link text'), linkUrl: T('Link'),
     magTag: T('Magazine tag'), magTitle: T('Magazine title'), magText: A('Magazine text'), magBtn: T('Magazine button text'), magUrl: T('Magazine button link (empty hides the button)'),
@@ -62,20 +69,25 @@ const SECTIONS: Record<string, Section> = {
 };
 
 const FIRST = ['seo', 'header', 'hero'];
-const MOVABLE = ['trust', 'exams', 'vacancies', 'affairs', 'schemes', 'prep', 'how', 'join', 'faq'];
+const MOVABLE = ['trust', 'subjects', 'study', 'affairs', 'reports', 'exams', 'vacancies', 'schemes', 'prep', 'how', 'join', 'faq'];
 const LAST = ['footer'];
 const NOT_HIDEABLE = ['seo', 'header', 'footer', 'post'];
 const TEMPLATES = ['post'];
 
 const rows = (cols: string[], data: string[][]) => data.map((a) => Object.fromEntries(cols.map((k, i) => [k, a[i] ?? ''])));
 const DEFAULTS: Record<string, any> = {
-  seo: { title: 'JKEdusphere | Government Jobs, Exam Updates, Schemes & Current Affairs for J&K', description: 'Verified JKSSB, JKPSC, JKPSI, banking and central vacancies, exam updates, schemes, current affairs and reports for Jammu & Kashmir aspirants.', ogImage: '', siteName: 'JKEdusphere' },
-  header: { ctaText: 'Free mock test', ctaUrl: 'https://jkedusphere.com', nav: rows(LINK, [['Vacancies', '#vacancies'], ['Exams', '#exams'], ['Current affairs', '#affairs'], ['Schemes', '#schemes'], ['Notes', '#prep']]) },
-  hero: { title: 'Government jobs, exam updates and schemes for Jammu & Kashmir',
-    text: 'Vacancies, admit cards, results, schemes and current affairs for JKSSB, JKPSC, JKPSI, banking and central exams, each checked against the official source.',
-    searchPlaceholder: 'Search a post, exam or scheme', chips: rows(LINK, ['JKSSB', 'JKPSC', 'JKPSI', 'Banking', 'SSC', 'UPSC'].map((x) => [x, '/search?q=' + x])),
-    panelTitle: 'Latest notifications', panelMode: 'auto', panelItems: [] },
-  trust: { items: rows(['text'], [['Official source linked'], ['Updated daily'], ['Free to read'], ['Independent educational platform']]) },
+  seo: { title: 'JKEdusphere | Study Material, Current Affairs & Exam Prep for J&K Exams', description: 'Subject-wise notes, research, reports and current affairs for JKSSB, JKPSC, JKPSI, banking and UPSC aspirants in Jammu & Kashmir, with vacancy updates alongside.', ogImage: '', siteName: 'JKEdusphere' },
+  header: { ctaText: 'Free mock test', ctaUrl: 'https://jkedusphere.com', nav: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/#study'], ['Current affairs', '/#affairs'], ['Reports', '/#reports'], ['Vacancies', '/#vacancies']]) },
+  hero: { badge: 'Free study material for J&K aspirants', title: 'Learn the syllabus. Clear the exam.',
+    text: 'Subject-wise notes, research, reports and current affairs for JKSSB, JKPSC, JKPSI, banking and UPSC. Vacancy updates sit alongside, so you never miss a date.',
+    searchPlaceholder: 'Search a topic, subject or exam', chips: rows(LINK, ['Polity', 'History', 'Geography', 'Economy', 'J&K GK', 'Current Affairs'].map((x) => [x, '/search?q=' + encodeURIComponent(x)])),
+    btn1Text: 'Browse study material', btn1Url: '/category/study-material', btn2Text: 'Latest vacancies', btn2Url: '/category/vacancies',
+    panelMode: 'off', panelTitle: 'Latest notifications', panelItems: [] },
+  trust: { items: rows(['text'], [['Free to read'], ['Exam-focused notes'], ['Official sources linked'], ['Independent educational platform']]) },
+  subjects: { title: 'Browse by subject', subtitle: 'Notes, research and practice material, organised the way the syllabus is.',
+    items: rows(['badge', 'name', 'note', 'url'], [['PO', 'Polity', 'Constitution, governance'], ['HI', 'History', 'India and J&K'], ['GE', 'Geography', 'India, J&K, world'], ['EC', 'Economy', 'Basics and schemes'], ['ST', 'Science and Tech', 'General science'], ['JK', 'J&K GK', 'Region-specific facts'], ['RM', 'Reasoning and Maths', 'Aptitude practice'], ['EN', 'English', 'Grammar, comprehension']].map((r) => [...r, '/search?q=' + encodeURIComponent(r[1])])) },
+  study: { title: 'Study material and research', subtitle: 'Notes and explainers you can read free.', linkText: 'View all', linkUrl: '/category/study-material', source: 'auto', category: 'Study Material', limit: 6, items: [] },
+  reports: { title: 'Reports and analysis', subtitle: 'Data-led reading on trends, cut-offs and policy.', linkText: 'View all', linkUrl: '/category/reports', source: 'auto', category: 'Reports', limit: 3, items: [] },
   exams: { title: 'Browse by exam', subtitle: 'Vacancies, syllabus and previous papers in one place.',
     items: rows(['name', 'note', 'url'], [['JKSSB', 'Posts, PYQs'], ['JKPSC', 'CCE, KAS'], ['JKPSI', 'Police'], ['Banking', 'J&K Bank, IBPS'], ['SSC', 'CGL, CHSL'], ['UPSC', 'Notes hub'], ['NEET', 'Notes hub']].map((r) => [...r, '/search?q=' + r[0]])) },
   vacancies: { title: 'Latest vacancies', subtitle: 'Each post lists last date, eligibility and how to apply.', linkText: 'View all', linkUrl: '/search?q=vacancy', source: 'auto', category: 'Vacancies', limit: 6, items: [] },
@@ -113,8 +125,13 @@ const store = (db: D1Database, s: Stored) =>
   db.prepare('INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').bind(KEY, JSON.stringify(s)).run();
 
 export function resolve(s: Stored) {
-  const saved = (s.order ?? []).filter((id) => MOVABLE.includes(id));
-  const order = [...saved, ...MOVABLE.filter((id) => !saved.includes(id))];
+  const order = (s.order ?? []).filter((id) => MOVABLE.includes(id));
+  // A section added later slots in at its default position instead of falling to the bottom
+  MOVABLE.forEach((id, i) => {
+    if (order.includes(id)) return;
+    const next = MOVABLE.slice(i + 1).find((x) => order.includes(x));
+    order.splice(next ? order.indexOf(next) : order.length, 0, id);
+  });
   const hidden = new Set(s.hidden ?? []);
   const data = (id: string) => ({ ...DEFAULTS[id], ...(s.data?.[id] ?? {}) });
   return { order, hidden, data };
@@ -138,191 +155,32 @@ async function latest(db: D1Database, category: string | null, limit: number) {
   return ((await db.prepare(sql).bind(...binds).all()).results as unknown as Post[]).map((p) => ({ ...p, last: lastDate(p.important_dates), url: `/${p.slug}` }));
 }
 
-type Ctx = { latest: any[]; vacancies: any[] };
+type Ctx = { latest: any[]; feeds: Record<string, any[]> };
+const FEEDS = ['vacancies', 'study', 'reports'];
+const feed = (id: string) => (d: any, c: Ctx) => {
+  const cards = d.source === 'auto' ? (c.feeds[id] ?? []).map((p) => ({ body: p.category ?? '', date: p.last, title: p.title, note: p.excerpt ?? '', url: p.url })) : d.items;
+  if (!cards.length) return '';
+  const more = id === 'vacancies' ? 'See details' : 'Read more';
+  return `<div class="w"><section class="s" id="${id}">${head(d, true)}<div class="vg">${cards.map((i: any) => `<article class="vc"><div class="vt"><span>${esc(i.body)}</span>${esc(i.date)}</div><h3>${esc(i.title)}</h3><p>${esc(i.note)}</p><a href="${href(i.url)}">${more}</a></article>`).join('')}</div></section></div>`;
+};
 const R: Record<string, (d: any, c: Ctx) => string> = {
   header: (d) => `<header><div class="w bar">${logo()}<nav class="m" aria-label="Main">${d.nav.map((n: any) => `<a href="${href(n.url)}">${esc(n.label)}</a>`).join('')}</nav>${d.ctaText ? `<a class="btn" href="${href(d.ctaUrl)}">${esc(d.ctaText)}</a>` : ''}</div></header>`,
 
   hero: (d, c) => {
-    const items = d.panelMode === 'auto' ? c.latest.map((p) => ({ tag: p.category ?? '', title: p.title, note: p.last ? 'Last date ' + p.last : '', url: p.url })) : d.panelItems;
-    const list = items.length ? items.map((i: any) => `<a href="${href(i.url)}">${i.tag ? `<span class="tag ${tagCls(i.tag)}">${esc(i.tag)}</span>` : ''}<b>${esc(i.title)}</b><small>${esc(i.note)}</small></a>`).join('')
-      : '<p style="padding:16px 20px;margin:0;color:#56637f">New notifications will appear here.</p>';
-    return `<section class="hero"><div class="w hg"><div><h1>${esc(d.title)}</h1><p class="s">${esc(d.text)}</p>
+    const panel = d.panelMode === 'auto' || d.panelMode === 'manual';
+    let side = '';
+    if (panel) {
+      const items = d.panelMode === 'auto' ? c.latest.map((p) => ({ tag: p.category ?? '', title: p.title, note: p.last ? 'Last date ' + p.last : '', url: p.url })) : d.panelItems;
+      const list = items.length ? items.map((i: any) => `<a href="${href(i.url)}">${i.tag ? `<span class="tag ${tagCls(i.tag)}">${esc(i.tag)}</span>` : ''}<b>${esc(i.title)}</b><small>${esc(i.note)}</small></a>`).join('')
+        : '<p style="padding:16px 20px;margin:0;color:#56637f">New notifications will appear here.</p>';
+      side = `<div class="nb"><h2>${esc(d.panelTitle)}</h2>${list}</div>`;
+    }
+    const btns = (d.btn1Text ? `<a class="btn" href="${href(d.btn1Url)}">${esc(d.btn1Text)}</a>` : '') + (d.btn2Text ? `<a class="btn o" href="${href(d.btn2Url)}">${esc(d.btn2Text)}</a>` : '');
+    return `<section class="hero${panel ? '' : ' c'}"><div class="w hg"><div>${d.badge ? `<span class="eyebrow">${esc(d.badge)}</span>` : ''}<h1>${esc(d.title)}</h1><p class="s">${esc(d.text)}</p>
 <form class="search" action="/search" role="search"><input type="search" name="q" placeholder="${esc(d.searchPlaceholder)}" aria-label="Search"><button type="submit">Search</button></form>
-<div class="chips">${d.chips.map((x: any) => `<a href="${href(x.url)}">${esc(x.label)}</a>`).join('')}</div></div>
-<div class="nb"><h2>${esc(d.panelTitle)}</h2>${list}</div></div></section>`;
+<div class="chips">${d.chips.map((x: any) => `<a href="${href(x.url)}">${esc(x.label)}</a>`).join('')}</div>${btns ? `<div class="hb">${btns}</div>` : ''}</div>
+${side}</div></section>`;
   },
 
   trust: (d) => `<div class="tr"><div class="w">${d.items.map((i: any) => `<span>${esc(i.text)}</span>`).join('')}</div></div>`,
-  exams: (d) => `<div class="w"><section class="s" id="exams">${head(d)}<div class="cats">${d.items.map((i: any) => `<a href="${href(i.url)}"><b>${esc(i.name)}</b><small>${esc(i.note)}</small></a>`).join('')}</div></section></div>`,
-
-  vacancies: (d, c) => {
-    const cards = d.source === 'auto' ? c.vacancies.map((p) => ({ body: p.category ?? '', date: p.last, title: p.title, note: p.excerpt ?? '', url: p.url })) : d.items;
-    if (!cards.length) return '';
-    return `<div class="w"><section class="s" id="vacancies">${head(d, true)}<div class="vg">${cards.map((i: any) => `<article class="vc"><div class="vt"><span>${esc(i.body)}</span>${esc(i.date)}</div><h3>${esc(i.title)}</h3><p>${esc(i.note)}</p><a href="${href(i.url)}">See details</a></article>`).join('')}</div></section></div>`;
-  },
-
-  affairs: (d) => `<div class="w"><section class="s" id="affairs">${head(d, true)}<div class="ca"><div class="mag"><div><small>${esc(d.magTag)}</small><h3>${esc(d.magTitle)}</h3><p>${esc(d.magText)}</p></div>${d.magUrl ? `<div><a class="btn w2" href="${href(d.magUrl)}">${esc(d.magBtn)}</a></div>` : ''}</div>
-<div class="lst">${d.links.map((l: any) => `<a href="${href(l.url)}">${esc(l.title)}<small>${esc(l.note)}</small></a>`).join('')}</div></div></section></div>`,
-
-  schemes: (d) => `<div class="w"><section class="s" id="schemes">${head(d)}<div class="gs">${d.items.map((i: any) => `<a href="${href(i.url)}"><i>${esc(i.badge)}</i><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></a>`).join('')}</div></section></div>`,
-
-  prep: (d) => `<section class="prep" id="prep"><div class="w">${head(d, true)}<div class="bk">${d.items.map((i: any) => `<div class="bc${i.url ? '' : ' g'}"><div><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></div>${i.url ? `<a class="btn" href="${href(i.url)}">${esc(i.button || 'Open')}</a>` : '<span class="btn">Coming soon</span>'}</div>`).join('')}</div></div></section>`,
-
-  how: (d) => `<div class="w"><section class="s">${head(d)}<div class="how">${d.items.map((i: any) => `<div><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></div>`).join('')}</div></section></div>`,
-  join: (d) => `<div class="w"><section class="s"><div class="join"><div><h2>${esc(d.title)}</h2><p>${esc(d.text)}</p></div><a class="btn" href="${href(d.url)}">${esc(d.btn)}</a></div></section></div>`,
-  faq: (d) => `<div class="w"><section class="s faq"><div class="sh"><h2>${esc(d.title)}</h2></div>${d.items.map((i: any) => `<details><summary>${esc(i.q)}</summary><p>${esc(i.a)}</p></details>`).join('')}</section></div>`,
-  footer: (d) => `<footer><div class="w"><div>${logo(true)}<p>${esc(d.text)}</p></div><nav aria-label="Footer">${d.links.map((l: any) => `<a href="${href(l.url)}">${esc(l.label)}</a>`).join('')}</nav></div></footer>`,
-};
-
-async function renderHome(db: D1Database, origin: string) {
-  const L = resolve(await load(db));
-  const seo = L.data('seo');
-  const vac = L.data('vacancies'), hero = L.data('hero');
-  const ctx: Ctx = {
-    latest: hero.panelMode === 'auto' ? await latest(db, null, 4) : [],
-    vacancies: vac.source === 'auto' && !L.hidden.has('vacancies') ? await latest(db, vac.category, Math.max(1, Math.min(12, Number(vac.limit) || 6))) : [],
-  };
-  const ids = ['header', 'hero', ...L.order, 'footer'].filter((id) => !L.hidden.has(id));
-  const body = ids.map((id) => R[id](L.data(id), ctx)).join('\n');
-  const ld = { '@context': 'https://schema.org', '@graph': [
-    { '@type': 'WebSite', name: seo.siteName, url: origin + '/', potentialAction: { '@type': 'SearchAction', target: origin + '/search?q={q}', 'query-input': 'required name=q' } },
-    { '@type': 'Organization', name: seo.siteName, url: origin + '/' }] };
-  const og = seo.ogImage ? `<meta property="og:image" content="${esc(seo.ogImage.startsWith('/') ? origin + seo.ogImage : seo.ogImage)}"><meta name="twitter:card" content="summary_large_image">` : '';
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(seo.title)}</title><meta name="description" content="${esc(seo.description)}"><link rel="canonical" href="${esc(origin)}/">
-<meta property="og:title" content="${esc(seo.title)}"><meta property="og:description" content="${esc(seo.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${esc(origin)}/">${og}
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
-<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>
-${body}
-</body></html>`;
-}
-
-
-export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean }) {
-  const L = resolve(await load(db));
-  const ctx: Ctx = { latest: [], vacancies: [] };
-  const og = o.image ? `<meta property="og:image" content="${esc(o.image)}"><meta name="twitter:card" content="summary_large_image">` : '';
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
-<meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.description)}"><meta property="og:type" content="${o.type ?? 'website'}"><meta property="og:url" content="${esc(o.canonical)}"><meta property="og:site_name" content="${esc(L.data('seo').siteName)}">${og}
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
-${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}</head><body>
-${R.header(L.data('header'), ctx)}
-<main>${o.body}</main>
-${R.footer(L.data('footer'), ctx)}
-</body></html>`;
-}
-
-// ---------------------------------------------------------------------------------------------
-// 4. Admin: Layout tab
-// ---------------------------------------------------------------------------------------------
-const toText = (f: Field, v: any) => (f.t === 'lines' ? ((v ?? []) as any[]).map((o) => f.cols!.map((k) => o[k] ?? '').join(' | ').replace(/( \| )+$/, '')).join('\n') : String(v ?? ''));
-const cell = (s: string) => s.replace(/[\r\n]+/g, ' ').trim().slice(0, 600);
-
-function fromForm(f: Field, raw: string, current: any) {
-  if (f.t === 'lines') {
-    return raw.split('\n').map((l) => l.split('|').map(cell)).filter((a) => a.some(Boolean)).slice(0, 40)
-      .map((a) => Object.fromEntries(f.cols!.map((k, i) => [k, i === f.cols!.length - 1 ? a.slice(i).join(' | ') : a[i] ?? ''])));
-  }
-  if (f.t === 'number') return Math.max(1, Math.min(12, parseInt(raw, 10) || 6));
-  if (f.t === 'select') return f.opts!.includes(raw) ? raw : current;
-  return raw.trim().slice(0, f.t === 'area' ? 1500 : 300);
-}
-
-export function registerHomepage(app: Hono<Env>) {
-  // Live domain: send jkedusphere.online to www. Test address (workers.dev): hide it from Google so it is never indexed.
-  app.use('*', async (c, next) => {
-    const u = new URL(c.req.url);
-    if (u.hostname === 'jkedusphere.online') { u.hostname = 'www.jkedusphere.online'; return c.redirect(u.toString(), 301); }
-    if (u.hostname.endsWith('.workers.dev')) c.header('X-Robots-Tag', 'noindex, nofollow');
-    await next();
-  });
-  app.get('/favicon.svg', (c) => c.body(FAVICON, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' }));
-  app.get('/favicon.ico', (c) => c.redirect('/favicon.svg', 301));
-  app.get('/assets/theme.css', (c) => c.body(THEME_CSS, 200, { 'Content-Type': 'text/css; charset=utf-8', 'Cache-Control': 'public, max-age=300' }));
-
-  app.get('/', async (c) => {
-    const page = await renderHome(c.env.DB, new URL(c.req.url).origin);
-    return c.html(page, 200, { 'Cache-Control': 'public, max-age=60' });
-  });
-
-  const post = (action: string, label: string, confirm = '') => confirm
-    ? html`<form method="post" action="${action}" data-confirm="${confirm}" style="display:inline;margin:0"><button class="light" style="margin:0;padding:6px 10px">${label}</button></form>`
-    : html`<form method="post" action="${action}" style="display:inline;margin:0"><button class="light" style="margin:0;padding:6px 10px">${label}</button></form>`;
-
-  app.get('/admin/layout', async (c) => {
-    const L = resolve(await load(c.env.DB));
-    const all = [...FIRST, ...L.order, ...LAST, ...TEMPLATES];
-    return c.html(adminPage('Layout', html`
-      <div class="bar"><h2 style="margin:0;flex:1">Layout</h2><a class="btn" href="/" target="_blank" rel="noopener" style="margin:0">Preview homepage</a></div>
-      <p class="muted">Tap a section to edit its text, links and items. Use the arrows to reorder and Hide to remove a section from the homepage. Changes go live within a minute.</p>
-      <div class="card" style="padding:6px 14px"><table>
-      ${all.map((id) => {
-        const s = SECTIONS[id], mv = MOVABLE.includes(id), hid = L.hidden.has(id);
-        return html`<tr><td><a href="/admin/layout/${id}"><b>${s.label}</b></a><div class="muted">${s.hint}</div></td>
-          <td>${hid ? html`<span class="badge sch">Hidden</span>` : html`<span class="badge pub">Visible</span>`}</td>
-          <td style="white-space:nowrap">${mv ? html`${post(`/admin/layout/move/${id}/up`, 'Up')} ${post(`/admin/layout/move/${id}/down`, 'Down')}` : ''}
-          ${NOT_HIDEABLE.includes(id) ? '' : post(`/admin/layout/toggle/${id}`, hid ? 'Show' : 'Hide')}
-          <a class="btn light" href="/admin/layout/${id}" style="margin:0;padding:6px 10px">Edit</a></td></tr>`;
-      })}
-      </table></div>`, true));
-  });
-
-  app.get('/admin/layout/:id', async (c) => {
-    const id = c.req.param('id'), s = SECTIONS[id];
-    if (!s) return c.text('Not found', 404);
-    const d = resolve(await load(c.env.DB)).data(id);
-    return c.html(adminPage(s.label, html`
-      <h2>${s.label}</h2>${c.req.query('saved') ? html`<div class="ok">Saved. The homepage updates within a minute.</div>` : ''}
-      <form method="post" action="/admin/layout/${id}" class="card">
-        ${Object.entries(s.fields).map(([k, f]) => html`<label>${f.l}${f.t === 'lines' ? html` <span class="muted">(one per line: ${f.cols!.join(' | ')})</span>` : ''}</label>
-          ${f.t === 'area' ? html`<textarea name="${k}" rows="4">${toText(f, d[k])}</textarea>`
-            : f.t === 'lines' ? html`<textarea name="${k}" rows="${Math.max(5, Math.min(14, (d[k] ?? []).length + 2))}" style="font-family:ui-monospace,Consolas,monospace;font-size:14px">${toText(f, d[k])}</textarea>`
-            : f.t === 'select' ? html`<select name="${k}">${f.opts!.map((o) => (o === d[k] ? html`<option selected>${o}</option>` : html`<option>${o}</option>`))}</select>`
-            : f.t === 'number' ? html`<input type="number" name="${k}" min="1" max="12" value="${toText(f, d[k])}">`
-            : html`<input name="${k}" value="${toText(f, d[k])}" maxlength="300">`}`)}
-        <button>Save section</button> <a class="btn light" href="/admin/layout">Back to layout</a>
-      </form>
-      ${post(`/admin/layout/reset/${id}`, 'Reset this section to default', 'Reset this section to its default content?')}`, true));
-  });
-
-  app.post('/admin/layout/:id', async (c) => {
-    const id = c.req.param('id'), s = SECTIONS[id];
-    if (!s) return c.text('Not found', 404);
-    const f = await c.req.formData(), st = await load(c.env.DB), cur = resolve(st).data(id), next: Record<string, any> = {};
-    for (const [k, fld] of Object.entries(s.fields)) next[k] = fromForm(fld, String(f.get(k) ?? ''), cur[k]);
-    st.data = { ...(st.data ?? {}), [id]: next };
-    await store(c.env.DB, st);
-    return c.redirect(`/admin/layout/${id}?saved=1`);
-  });
-
-  app.post('/admin/layout/reset/:id', async (c) => {
-    const id = c.req.param('id'), st = await load(c.env.DB);
-    if (!SECTIONS[id]) return c.text('Not found', 404);
-    if (st.data) delete st.data[id];
-    await store(c.env.DB, st);
-    return c.redirect(`/admin/layout/${id}`);
-  });
-
-  app.post('/admin/layout/toggle/:id', async (c) => {
-    const id = c.req.param('id'), st = await load(c.env.DB);
-    if (!SECTIONS[id] || NOT_HIDEABLE.includes(id)) return c.text('Not allowed', 400);
-    const h = new Set(st.hidden ?? []);
-    h.has(id) ? h.delete(id) : h.add(id);
-    st.hidden = [...h];
-    await store(c.env.DB, st);
-    return c.redirect('/admin/layout');
-  });
-
-  app.post('/admin/layout/move/:id/:dir', async (c) => {
-    const id = c.req.param('id'), dir = c.req.param('dir'), st = await load(c.env.DB);
-    const order = resolve(st).order, i = order.indexOf(id), j = dir === 'up' ? i - 1 : i + 1;
-    if (i < 0 || j < 0 || j >= order.length) return c.redirect('/admin/layout');
-    [order[i], order[j]] = [order[j], order[i]];
-    st.order = order;
-    await store(c.env.DB, st);
-    return c.redirect('/admin/layout');
-  });
-}
+  exams: (d) => `<div class="w"><section class="s" id="exams">${head(d)}<div class="cats">${d.items.
