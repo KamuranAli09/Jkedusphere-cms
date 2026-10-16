@@ -250,4 +250,6 @@ footer a{color:var(--navy)}
   .prep{padding:44px 0;margin-top:56px}
   .join{padding:22px}
 }
-`;
+
+/* ---- Minimal centred hero + subject tiles ---- */
+.eyebrow{display:inline-block;font-size:13px;font-weight:700;color:var(--blue);background:var(--soft);border:1px solid var(--l
