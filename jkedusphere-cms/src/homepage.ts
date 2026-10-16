@@ -30,13 +30,17 @@ const SECTIONS: Record<string, Section> = {
   seo: { label: 'SEO and meta', hint: 'Homepage title, description and share image shown on Google and WhatsApp.', fields: {
     title: T('Page title (about 60 characters)'), description: A('Meta description (about 150 characters)'),
     ogImage: T('Share image link (1200x630, e.g. /img/12)'), siteName: T('Site name') } },
-  header: { label: 'Header', hint: 'Menu and the button at the top right.', fields: {
-    nav: LN('Menu links', LINK), ctaText: T('Button text'), ctaUrl: T('Button link') } },
-  hero: { label: 'Hero (top banner)', hint: 'Your main H1 headline, search box, quick links and two buttons.', fields: {
-    badge: T('Small badge above the headline (empty hides it)'), title: T('Headline (H1)'), text: A('Intro text'), searchPlaceholder: T('Search box hint'),
-    chips: LN('Quick links', LINK),
-    btn1Text: T('Main button text (empty hides it)'), btn1Url: T('Main button link'), btn2Text: T('Second button text (empty hides it)'), btn2Url: T('Second button link'),
-    panelMode: { t: 'select', l: 'Notice panel on the right', opts: ['off', 'auto', 'manual'] }, panelTitle: T('Notice panel title'),
+  header: { label: 'Header and menu', hint: 'Top bar links, the button at the top right, the dark subject bar under the header and the hamburger menu (it lists all of these).', fields: {
+    nav: LN('Menu links', LINK), ctaText: T('Button text'), ctaUrl: T('Button link'),
+    strip: LN('Subject bar under the header (empty hides it)', LINK) } },
+  hero: { label: 'Hero (top banner)', hint: 'Dark banner: headline, tagline, search, checklist and a swipeable card on the right. Leave any field empty to hide that part.', fields: {
+    badge: T('Small badge above the headline'), title: T('Headline (H1)'), tagline: T('Tagline (highlighted line under the headline)'), text: A('Extra intro text'),
+    searchPlaceholder: T('Search box hint'), chips: LN('Quick links under the search box', LINK),
+    btn1Text: T('Main button text'), btn1Url: T('Main button link'), btn2Text: T('Second button text'), btn2Url: T('Second button link'),
+    featuresTitle: T('Checklist heading'), features: LN('Checklist points', ['text']),
+    memberText: T('Line under the checklist (text)'), memberLinkText: T('Line under the checklist (link text)'), memberLinkUrl: T('Line under the checklist (link)'),
+    cards: LN('Swipeable cards (tag is the big word on the picture; image is optional, e.g. /img/12)', ['title', 'text', 'button', 'url', 'tag', 'image']),
+    panelMode: { t: 'select', l: 'Show the notice panel instead of the cards', opts: ['off', 'auto', 'manual'] }, panelTitle: T('Notice panel title'),
     panelItems: LN('Manual notices (used when set to manual)', ['tag', 'title', 'note', 'url']) } },
   trust: { label: 'Trust strip', hint: 'Short promises under the hero.', fields: { items: LN('Points', ['text']) } },
   subjects: { label: 'Library (browse by subject)', hint: 'The coloured library panel. Each row opens a search for that subject, so tag your posts with the subject name. The last word of the heading is highlighted.', fields: {
@@ -80,11 +84,21 @@ const TEMPLATES = ['post'];
 const rows = (cols: string[], data: string[][]) => data.map((a) => Object.fromEntries(cols.map((k, i) => [k, a[i] ?? ''])));
 const DEFAULTS: Record<string, any> = {
   seo: { title: 'JKEdusphere | Study Material, Current Affairs & Exam Prep for J&K Exams', description: 'Subject-wise notes, research, reports and current affairs for JKSSB, JKPSC, JKPSI, banking and UPSC aspirants in Jammu & Kashmir, with vacancy updates alongside.', ogImage: '', siteName: 'JKEdusphere' },
-  header: { ctaText: 'Free mock test', ctaUrl: 'https://jkedusphere.com', nav: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/#study'], ['Current affairs', '/#affairs'], ['Reports', '/#reports'], ['Vacancies', '/#vacancies']]) },
-  hero: { badge: 'Free study material for J&K aspirants', title: 'Learn the syllabus. Clear the exam.',
-    text: 'Subject-wise notes, research, reports and current affairs for JKSSB, JKPSC, JKPSI, banking and UPSC. Vacancy updates sit alongside, so you never miss a date.',
-    searchPlaceholder: 'Search a topic, subject or exam', chips: rows(LINK, ['Polity', 'History', 'Geography', 'Economy', 'J&K GK', 'Current Affairs'].map((x) => [x, '/search?q=' + encodeURIComponent(x)])),
-    btn1Text: 'Browse study material', btn1Url: '/category/study-material', btn2Text: 'Latest vacancies', btn2Url: '/category/vacancies',
+  header: { ctaText: 'Free mock test', ctaUrl: 'https://jkedusphere.com', nav: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/#study'], ['Current affairs', '/#affairs'], ['Reports', '/#reports'], ['Vacancies', '/#vacancies']]),
+    strip: rows(LINK, ['Polity', 'History', 'Geography', 'Economy', 'Science and Tech', 'J&K GK', 'Reasoning', 'English', 'Current Affairs'].map((x) => [x, '/search?q=' + encodeURIComponent(x)])) },
+  hero: { badge: '', title: 'Learn the syllabus. Clear the exam.',
+    tagline: 'Free notes, research and current affairs. No sign-up needed, just start reading.',
+    text: 'For JKSSB, JKPSC, JKPSI, banking and UPSC aspirants in Jammu & Kashmir.',
+    searchPlaceholder: 'Search a topic, subject or exam', chips: [],
+    btn1Text: '', btn1Url: '/category/study-material', btn2Text: '', btn2Url: '/category/vacancies',
+    featuresTitle: 'Everything you get, free:',
+    features: rows(['text'], [['Subject-wise notes'], ['Monthly current affairs PDF'], ['Previous year papers'], ['Research and reports'], ['Free mock tests'], ['Telegram alerts'], ['Plain-language explainers'], ['Official sources linked']]),
+    memberText: 'Want to practise?', memberLinkText: 'Take a free mock test', memberLinkUrl: 'https://jkedusphere.com',
+    cards: rows(['title', 'text', 'button', 'url', 'tag', 'image'], [
+      ['Free mock tests', 'Timed tests with solutions and a live leaderboard.', 'Start free', 'https://jkedusphere.com', 'FREE', ''],
+      ['Monthly current affairs', 'A free PDF magazine for JKSSB, JKPSC and UPSC.', 'Read current affairs', '/category/current-affairs', 'PDF', ''],
+      ['Subject-wise notes', 'Polity, history, geography and more, in plain language.', 'Start reading', '/category/study-material', 'NOTES', ''],
+      ['Telegram alerts', 'Vacancy and result alerts, the moment they are out.', 'Join Telegram', 'https://t.me/jkedusphere', 'ALERTS', '']]),
     panelMode: 'off', panelTitle: 'Latest notifications', panelItems: [] },
   trust: { items: rows(['text'], [['Free to read'], ['Exam-focused notes'], ['Official sources linked'], ['Independent educational platform']]) },
   subjects: { title: 'JKEdusphere Library', subtitle: 'Free subject-wise notes, research and practice material for J&K exams. Pick a subject and start reading.', counts: 'auto',
@@ -189,22 +203,38 @@ const feed = (id: string) => (d: any, c: Ctx) => {
   const more = id === 'vacancies' ? 'See details' : 'Read more';
   return `<div class="w"><section class="s" id="${id}">${head(d, true)}<div class="vg">${cards.map((i: any) => `<article class="vc"><div class="vt"><span>${esc(i.body)}</span>${esc(i.date)}</div><h3>${esc(i.title)}</h3><p>${esc(i.note)}</p><a href="${href(i.url)}">${more}</a></article>`).join('')}</div></section></div>`;
 };
+// Hamburger menu: open/close the drawer (Escape and any link inside also close it)
+const MENU_JS = `<script>(function(){var b=document.querySelector('.mb'),d=document.getElementById('drawer');if(!b||!d)return;function o(x){d.hidden=!x;b.setAttribute('aria-expanded',x?'true':'false');document.documentElement.style.overflow=x?'hidden':''}b.onclick=function(){o(d.hidden)};d.addEventListener('click',function(e){if(e.target.closest('[data-x]')||e.target.closest('a'))o(false)});document.addEventListener('keydown',function(e){if(e.key==='Escape')o(false)})})();</script>`;
+// Hero cards: dots follow the swipe and jump to a card when tapped
+const HERO_JS = `<script>(function(){var c=document.querySelector('.hc');if(!c)return;var t=c.querySelector('.ht'),ds=c.querySelectorAll('.hd button'),k=t.children;function s(){return k[1]?k[1].offsetLeft-k[0].offsetLeft:(k[0].offsetWidth||1)}function u(){var i=Math.round(t.scrollLeft/s());ds.forEach(function(b,j){b.className=j===i?'on':''})}ds.forEach(function(b,j){b.onclick=function(){t.scrollTo({left:j*s(),behavior:'smooth'})}});t.addEventListener('scroll',u,{passive:true});u()})();</script>`;
 const R: Record<string, (d: any, c: Ctx) => string> = {
-  header: (d) => `<header><div class="w bar">${logo()}<nav class="m" aria-label="Main">${d.nav.map((n: any) => `<a href="${href(n.url)}">${esc(n.label)}</a>`).join('')}</nav>${d.ctaText ? `<a class="btn" href="${href(d.ctaUrl)}">${esc(d.ctaText)}</a>` : ''}</div></header>`,
+  header: (d) => {
+    const nav = (d.nav ?? []) as any[], strip = (d.strip ?? []) as any[];
+    const cta = d.ctaText ? `<a class="btn" href="${href(d.ctaUrl)}">${esc(d.ctaText)}</a>` : '';
+    return `<header><div class="w bar"><button type="button" class="mb" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>${logo()}<nav class="m" aria-label="Main">${nav.map((n) => `<a href="${href(n.url)}">${esc(n.label)}</a>`).join('')}</nav>${cta}</div></header>${strip.length ? `<div class="sb"><div class="w"><nav aria-label="Subjects">${strip.map((n) => `<a href="${href(n.url)}">${esc(n.label)}</a>`).join('')}</nav></div></div>` : ''}
+<div class="dr" id="drawer" hidden><div class="ov" data-x></div><aside class="dp" aria-label="Menu"><div class="dh"><b>Menu</b><button type="button" class="dx" data-x aria-label="Close menu">&times;</button></div>
+<nav aria-label="Menu links">${nav.map((n) => `<a href="${href(n.url)}">${esc(n.label)}</a>`).join('')}</nav>${strip.length ? `<h4>Subjects</h4><nav aria-label="Subjects menu">${strip.map((n) => `<a href="${href(n.url)}">${esc(n.label)}</a>`).join('')}</nav>` : ''}${cta}</aside></div>${MENU_JS}`;
+  },
 
   hero: (d, c) => {
     const panel = d.panelMode === 'auto' || d.panelMode === 'manual';
+    const cards = ((d.cards ?? []) as any[]).filter((x) => x.title);
     let side = '';
     if (panel) {
       const items = d.panelMode === 'auto' ? c.latest.map((p) => ({ tag: p.category ?? '', title: p.title, note: p.last ? 'Last date ' + p.last : '', url: p.url })) : d.panelItems;
       const list = items.length ? items.map((i: any) => `<a href="${href(i.url)}">${i.tag ? `<span class="tag ${tagCls(i.tag)}">${esc(i.tag)}</span>` : ''}<b>${esc(i.title)}</b><small>${esc(i.note)}</small></a>`).join('')
         : '<p style="padding:16px 20px;margin:0;color:#56637f">New notifications will appear here.</p>';
       side = `<div class="nb"><h2>${esc(d.panelTitle)}</h2>${list}</div>`;
+    } else if (cards.length) {
+      side = `<div class="hc"><div class="ht">${cards.map((i, k) => `<article class="hk v${k % 5}"><div class="hv">${i.image ? `<img src="${href(i.image)}" alt="${esc(i.title)}" loading="lazy">` : `<div class="xw"><b>${esc(i.tag || i.title)}</b></div>`}</div><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p>${i.button ? `<a class="btn" href="${href(i.url)}">${esc(i.button)}</a>` : ''}</article>`).join('')}</div>${cards.length > 1 ? `<div class="hd">${cards.map((_, k) => `<button type="button" aria-label="Show card ${k + 1}"></button>`).join('')}</div>` : ''}</div>${HERO_JS}`;
     }
+    const feats = ((d.features ?? []) as any[]).filter((x) => x.text);
     const btns = (d.btn1Text ? `<a class="btn" href="${href(d.btn1Url)}">${esc(d.btn1Text)}</a>` : '') + (d.btn2Text ? `<a class="btn o" href="${href(d.btn2Url)}">${esc(d.btn2Text)}</a>` : '');
-    return `<section class="hero${panel ? '' : ' c'}"><div class="w hg"><div>${d.badge ? `<span class="eyebrow">${esc(d.badge)}</span>` : ''}<h1>${esc(d.title)}</h1><p class="s">${esc(d.text)}</p>
+    const chips = (d.chips ?? []) as any[];
+    return `<section class="hero d"><div class="w hg"><div>${d.badge ? `<span class="eyebrow">${esc(d.badge)}</span>` : ''}<h1>${esc(d.title)}</h1>${d.tagline ? `<p class="tg">${esc(d.tagline)}</p>` : ''}${d.text ? `<p class="s">${esc(d.text)}</p>` : ''}
 <form class="search" action="/search" role="search"><input type="search" name="q" placeholder="${esc(d.searchPlaceholder)}" aria-label="Search"><button type="submit">Search</button></form>
-<div class="chips">${d.chips.map((x: any) => `<a href="${href(x.url)}">${esc(x.label)}</a>`).join('')}</div>${btns ? `<div class="hb">${btns}</div>` : ''}</div>
+${chips.length ? `<div class="chips">${chips.map((x) => `<a href="${href(x.url)}">${esc(x.label)}</a>`).join('')}</div>` : ''}${btns ? `<div class="hb">${btns}</div>` : ''}
+${feats.length ? `${d.featuresTitle ? `<p class="hl2">${esc(d.featuresTitle)}</p>` : ''}<ul class="hf">${feats.map((x) => `<li>${esc(x.text)}</li>`).join('')}</ul>` : ''}${d.memberLinkText ? `<p class="hm">${esc(d.memberText)} <a href="${href(d.memberLinkUrl)}">${esc(d.memberLinkText)}</a></p>` : ''}</div>
 ${side}</div></section>`;
   },
 
