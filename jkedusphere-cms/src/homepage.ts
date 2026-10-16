@@ -183,4 +183,175 @@ ${side}</div></section>`;
   },
 
   trust: (d) => `<div class="tr"><div class="w">${d.items.map((i: any) => `<span>${esc(i.text)}</span>`).join('')}</div></div>`,
-  exams: (d) => `<div class="w"><section class="s" id="exams">${head(d)}<div class="cats">${d.items.
+  exams: (d) => `<div class="w"><section class="s" id="exams">${head(d)}<div class="cats">${d.items.map((i: any) => `<a href="${href(i.url)}"><b>${esc(i.name)}</b><small>${esc(i.note)}</small></a>`).join('')}</div></section></div>`,
+
+  subjects: (d) => `<div class="w"><section class="s" id="subjects">${head(d)}<div class="gs sj">${d.items.map((i: any) => `<a href="${href(i.url)}"><i>${esc(i.badge)}</i><h3>${esc(i.name)}</h3><p>${esc(i.note)}</p></a>`).join('')}</div></section></div>`,
+  vacancies: feed('vacancies'), study: feed('study'), reports: feed('reports'),
+
+  affairs: (d) => `<div class="w"><section class="s" id="affairs">${head(d, true)}<div class="ca"><div class="mag"><div><small>${esc(d.magTag)}</small><h3>${esc(d.magTitle)}</h3><p>${esc(d.magText)}</p></div>${d.magUrl ? `<div><a class="btn w2" href="${href(d.magUrl)}">${esc(d.magBtn)}</a></div>` : ''}</div>
+<div class="lst">${d.links.map((l: any) => `<a href="${href(l.url)}">${esc(l.title)}<small>${esc(l.note)}</small></a>`).join('')}</div></div></section></div>`,
+
+  schemes: (d) => `<div class="w"><section class="s" id="schemes">${head(d)}<div class="gs">${d.items.map((i: any) => `<a href="${href(i.url)}"><i>${esc(i.badge)}</i><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></a>`).join('')}</div></section></div>`,
+
+  prep: (d) => `<section class="prep" id="prep"><div class="w">${head(d, true)}<div class="bk">${d.items.map((i: any) => `<div class="bc${i.url ? '' : ' g'}"><div><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></div>${i.url ? `<a class="btn" href="${href(i.url)}">${esc(i.button || 'Open')}</a>` : '<span class="btn">Coming soon</span>'}</div>`).join('')}</div></div></section>`,
+
+  how: (d) => `<div class="w"><section class="s">${head(d)}<div class="how">${d.items.map((i: any) => `<div><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></div>`).join('')}</div></section></div>`,
+  join: (d) => `<div class="w"><section class="s"><div class="join"><div><h2>${esc(d.title)}</h2><p>${esc(d.text)}</p></div><a class="btn" href="${href(d.url)}">${esc(d.btn)}</a></div></section></div>`,
+  faq: (d) => `<div class="w"><section class="s faq"><div class="sh"><h2>${esc(d.title)}</h2></div>${d.items.map((i: any) => `<details><summary>${esc(i.q)}</summary><p>${esc(i.a)}</p></details>`).join('')}</section></div>`,
+  footer: (d) => `<footer><div class="w"><div>${logo(true)}<p>${esc(d.text)}</p></div><nav aria-label="Footer">${d.links.map((l: any) => `<a href="${href(l.url)}">${esc(l.label)}</a>`).join('')}</nav></div></footer>`,
+};
+
+async function renderHome(db: D1Database, origin: string) {
+  const L = resolve(await load(db));
+  const seo = L.data('seo');
+  const hero = L.data('hero');
+  const feeds: Record<string, any[]> = {};
+  await Promise.all(FEEDS.map(async (id) => {
+    const f = L.data(id);
+    if (f.source === 'auto' && !L.hidden.has(id)) feeds[id] = await latest(db, f.category, Math.max(1, Math.min(12, Number(f.limit) || 6)));
+  }));
+  const ctx: Ctx = { latest: hero.panelMode === 'auto' ? await latest(db, null, 4) : [], feeds };
+  const ids = ['header', 'hero', ...L.order, 'footer'].filter((id) => !L.hidden.has(id));
+  const body = ids.map((id) => R[id](L.data(id), ctx)).join('\n');
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'WebSite', name: seo.siteName, url: origin + '/', potentialAction: { '@type': 'SearchAction', target: origin + '/search?q={q}', 'query-input': 'required name=q' } },
+    { '@type': 'Organization', name: seo.siteName, url: origin + '/' }] };
+  const og = seo.ogImage ? `<meta property="og:image" content="${esc(seo.ogImage.startsWith('/') ? origin + seo.ogImage : seo.ogImage)}"><meta name="twitter:card" content="summary_large_image">` : '';
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(seo.title)}</title><meta name="description" content="${esc(seo.description)}"><link rel="canonical" href="${esc(origin)}/">
+<meta property="og:title" content="${esc(seo.title)}"><meta property="og:description" content="${esc(seo.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${esc(origin)}/">${og}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>
+${body}
+</body></html>`;
+}
+
+
+export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean }) {
+  const L = resolve(await load(db));
+  const ctx: Ctx = { latest: [], feeds: {} };
+  const og = o.image ? `<meta property="og:image" content="${esc(o.image)}"><meta name="twitter:card" content="summary_large_image">` : '';
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
+<meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.description)}"><meta property="og:type" content="${o.type ?? 'website'}"><meta property="og:url" content="${esc(o.canonical)}"><meta property="og:site_name" content="${esc(L.data('seo').siteName)}">${og}
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
+${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}</head><body>
+${R.header(L.data('header'), ctx)}
+<main>${o.body}</main>
+${R.footer(L.data('footer'), ctx)}
+</body></html>`;
+}
+
+// ---------------------------------------------------------------------------------------------
+// 4. Admin: Layout tab
+// ---------------------------------------------------------------------------------------------
+const toText = (f: Field, v: any) => (f.t === 'lines' ? ((v ?? []) as any[]).map((o) => f.cols!.map((k) => o[k] ?? '').join(' | ').replace(/( \| )+$/, '')).join('\n') : String(v ?? ''));
+const cell = (s: string) => s.replace(/[\r\n]+/g, ' ').trim().slice(0, 600);
+
+function fromForm(f: Field, raw: string, current: any) {
+  if (f.t === 'lines') {
+    return raw.split('\n').map((l) => l.split('|').map(cell)).filter((a) => a.some(Boolean)).slice(0, 40)
+      .map((a) => Object.fromEntries(f.cols!.map((k, i) => [k, i === f.cols!.length - 1 ? a.slice(i).join(' | ') : a[i] ?? ''])));
+  }
+  if (f.t === 'number') return Math.max(1, Math.min(12, parseInt(raw, 10) || 6));
+  if (f.t === 'select') return f.opts!.includes(raw) ? raw : current;
+  return raw.trim().slice(0, f.t === 'area' ? 1500 : 300);
+}
+
+export function registerHomepage(app: Hono<Env>) {
+  // Live domain: send jkedusphere.online to www. Test address (workers.dev): hide it from Google so it is never indexed.
+  app.use('*', async (c, next) => {
+    const u = new URL(c.req.url);
+    if (u.hostname === 'jkedusphere.online') { u.hostname = 'www.jkedusphere.online'; return c.redirect(u.toString(), 301); }
+    if (u.hostname.endsWith('.workers.dev')) c.header('X-Robots-Tag', 'noindex, nofollow');
+    await next();
+  });
+  app.get('/favicon.svg', (c) => c.body(FAVICON, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' }));
+  app.get('/favicon.ico', (c) => c.redirect('/favicon.svg', 301));
+  app.get('/assets/theme.css', (c) => c.body(THEME_CSS, 200, { 'Content-Type': 'text/css; charset=utf-8', 'Cache-Control': 'public, max-age=300' }));
+
+  app.get('/', async (c) => {
+    const page = await renderHome(c.env.DB, new URL(c.req.url).origin);
+    return c.html(page, 200, { 'Cache-Control': 'public, max-age=60' });
+  });
+
+  const post = (action: string, label: string, confirm = '') => confirm
+    ? html`<form method="post" action="${action}" data-confirm="${confirm}" style="display:inline;margin:0"><button class="light" style="margin:0;padding:6px 10px">${label}</button></form>`
+    : html`<form method="post" action="${action}" style="display:inline;margin:0"><button class="light" style="margin:0;padding:6px 10px">${label}</button></form>`;
+
+  app.get('/admin/layout', async (c) => {
+    const L = resolve(await load(c.env.DB));
+    const all = [...FIRST, ...L.order, ...LAST, ...TEMPLATES];
+    return c.html(adminPage('Layout', html`
+      <div class="bar"><h2 style="margin:0;flex:1">Layout</h2><a class="btn" href="/" target="_blank" rel="noopener" style="margin:0">Preview homepage</a></div>
+      <p class="muted">Tap a section to edit its text, links and items. Use the arrows to reorder and Hide to remove a section from the homepage. Changes go live within a minute.</p>
+      <div class="card" style="padding:6px 14px"><table>
+      ${all.map((id) => {
+        const s = SECTIONS[id], mv = MOVABLE.includes(id), hid = L.hidden.has(id);
+        return html`<tr><td><a href="/admin/layout/${id}"><b>${s.label}</b></a><div class="muted">${s.hint}</div></td>
+          <td>${hid ? html`<span class="badge sch">Hidden</span>` : html`<span class="badge pub">Visible</span>`}</td>
+          <td style="white-space:nowrap">${mv ? html`${post(`/admin/layout/move/${id}/up`, 'Up')} ${post(`/admin/layout/move/${id}/down`, 'Down')}` : ''}
+          ${NOT_HIDEABLE.includes(id) ? '' : post(`/admin/layout/toggle/${id}`, hid ? 'Show' : 'Hide')}
+          <a class="btn light" href="/admin/layout/${id}" style="margin:0;padding:6px 10px">Edit</a></td></tr>`;
+      })}
+      </table></div>`, true));
+  });
+
+  app.get('/admin/layout/:id', async (c) => {
+    const id = c.req.param('id'), s = SECTIONS[id];
+    if (!s) return c.text('Not found', 404);
+    const d = resolve(await load(c.env.DB)).data(id);
+    return c.html(adminPage(s.label, html`
+      <h2>${s.label}</h2>${c.req.query('saved') ? html`<div class="ok">Saved. The homepage updates within a minute.</div>` : ''}
+      <form method="post" action="/admin/layout/${id}" class="card">
+        ${Object.entries(s.fields).map(([k, f]) => html`<label>${f.l}${f.t === 'lines' ? html` <span class="muted">(one per line: ${f.cols!.join(' | ')})</span>` : ''}</label>
+          ${f.t === 'area' ? html`<textarea name="${k}" rows="4">${toText(f, d[k])}</textarea>`
+            : f.t === 'lines' ? html`<textarea name="${k}" rows="${Math.max(5, Math.min(14, (d[k] ?? []).length + 2))}" style="font-family:ui-monospace,Consolas,monospace;font-size:14px">${toText(f, d[k])}</textarea>`
+            : f.t === 'select' ? html`<select name="${k}">${f.opts!.map((o) => (o === d[k] ? html`<option selected>${o}</option>` : html`<option>${o}</option>`))}</select>`
+            : f.t === 'number' ? html`<input type="number" name="${k}" min="1" max="12" value="${toText(f, d[k])}">`
+            : html`<input name="${k}" value="${toText(f, d[k])}" maxlength="300">`}`)}
+        <button>Save section</button> <a class="btn light" href="/admin/layout">Back to layout</a>
+      </form>
+      ${post(`/admin/layout/reset/${id}`, 'Reset this section to default', 'Reset this section to its default content?')}`, true));
+  });
+
+  app.post('/admin/layout/:id', async (c) => {
+    const id = c.req.param('id'), s = SECTIONS[id];
+    if (!s) return c.text('Not found', 404);
+    const f = await c.req.formData(), st = await load(c.env.DB), cur = resolve(st).data(id), next: Record<string, any> = {};
+    for (const [k, fld] of Object.entries(s.fields)) next[k] = fromForm(fld, String(f.get(k) ?? ''), cur[k]);
+    st.data = { ...(st.data ?? {}), [id]: next };
+    await store(c.env.DB, st);
+    return c.redirect(`/admin/layout/${id}?saved=1`);
+  });
+
+  app.post('/admin/layout/reset/:id', async (c) => {
+    const id = c.req.param('id'), st = await load(c.env.DB);
+    if (!SECTIONS[id]) return c.text('Not found', 404);
+    if (st.data) delete st.data[id];
+    await store(c.env.DB, st);
+    return c.redirect(`/admin/layout/${id}`);
+  });
+
+  app.post('/admin/layout/toggle/:id', async (c) => {
+    const id = c.req.param('id'), st = await load(c.env.DB);
+    if (!SECTIONS[id] || NOT_HIDEABLE.includes(id)) return c.text('Not allowed', 400);
+    const h = new Set(st.hidden ?? []);
+    h.has(id) ? h.delete(id) : h.add(id);
+    st.hidden = [...h];
+    await store(c.env.DB, st);
+    return c.redirect('/admin/layout');
+  });
+
+  app.post('/admin/layout/move/:id/:dir', async (c) => {
+    const id = c.req.param('id'), dir = c.req.param('dir'), st = await load(c.env.DB);
+    const order = resolve(st).order, i = order.indexOf(id), j = dir === 'up' ? i - 1 : i + 1;
+    if (i < 0 || j < 0 || j >= order.length) return c.redirect('/admin/layout');
+    [order[i], order[j]] = [order[j], order[i]];
+    st.order = order;
+    await store(c.env.DB, st);
+    return c.redirect('/admin/layout');
+  });
+}
