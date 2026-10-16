@@ -91,7 +91,7 @@ const DEFAULTS: Record<string, any> = {
     items: rows(['badge', 'name', 'note', 'url'], [['PO', 'Polity', 'Constitution, governance'], ['HI', 'History', 'India and J&K'], ['GE', 'Geography', 'India, J&K, world'], ['EC', 'Economy', 'Basics and schemes'], ['ST', 'Science and Tech', 'General science'], ['JK', 'J&K GK', 'Region-specific facts'], ['RM', 'Reasoning and Maths', 'Aptitude practice'], ['EN', 'English', 'Grammar, comprehension']].map((r) => [...r, '/search?q=' + encodeURIComponent(r[1])])) },
   study: { title: 'Study material and research', subtitle: 'Notes and explainers you can read free.', linkText: 'View all', linkUrl: '/category/study-material', source: 'auto', category: 'Study Material', limit: 6, items: [] },
   reports: { title: 'Reports and analysis', subtitle: 'Data-led reading on trends, cut-offs and policy.', linkText: 'View all', linkUrl: '/category/reports', source: 'auto', category: 'Reports', limit: 3, items: [] },
-  exams: { title: 'Browse by exam', subtitle: 'Syllabus, notes and previous papers for every exam you are preparing for.', btn: 'Start preparing',
+  exams: { title: 'Browse by Exam', subtitle: 'Syllabus, notes and previous papers for every exam you are preparing for.', btn: 'Start preparing',
     items: rows(['name', 'note', 'url', 'text', 'tags'], [
       ['JKSSB', 'Subordinate Services', '/search?q=JKSSB', 'Junior Assistant, Naib Tehsildar, Finance Account Assistant and more. Syllabus, notes and previous papers in one place.', 'Syllabus, PYQs, Notes'],
       ['JKPSC', 'CCE and KAS', '/search?q=JKPSC', 'Combined Competitive Exam and gazetted services. Prelims and mains study material.', 'Prelims, Mains, Essay'],
