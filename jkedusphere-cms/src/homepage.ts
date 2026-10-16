@@ -39,12 +39,15 @@ const SECTIONS: Record<string, Section> = {
     panelMode: { t: 'select', l: 'Notice panel on the right', opts: ['off', 'auto', 'manual'] }, panelTitle: T('Notice panel title'),
     panelItems: LN('Manual notices (used when set to manual)', ['tag', 'title', 'note', 'url']) } },
   trust: { label: 'Trust strip', hint: 'Short promises under the hero.', fields: { items: LN('Points', ['text']) } },
-  subjects: { label: 'Browse by subject', hint: 'Subject tiles. Each opens a search for that subject, so tag your posts with the subject name.', fields: {
-    title: T('Heading'), subtitle: T('Subheading'), items: LN('Subject tiles', ['badge', 'name', 'note', 'url']) } },
+  subjects: { label: 'Library (browse by subject)', hint: 'The coloured library panel. Each row opens a search for that subject, so tag your posts with the subject name. The last word of the heading is highlighted.', fields: {
+    title: T('Heading'), subtitle: T('Subheading'),
+    counts: { t: 'select', l: 'Show post count on each row', opts: ['auto', 'off'] },
+    items: LN('Subject rows', ['badge', 'name', 'note', 'url']) } },
   study: { label: 'Study material and research', hint: 'Newest posts from one category, or cards you write by hand.', fields: FEED },
   reports: { label: 'Reports and analysis', hint: 'Newest posts from one category, or cards you write by hand.', fields: FEED },
-  exams: { label: 'Browse by exam', hint: 'Exam tiles.', fields: {
-    title: T('Heading'), subtitle: T('Subheading'), items: LN('Exam tiles', ['name', 'note', 'url']) } },
+  exams: { label: 'Browse by exam', hint: 'A swipeable row of exam cards. The last word of the heading is highlighted. Tags are separated by commas.', fields: {
+    title: T('Heading'), subtitle: T('Subheading'), btn: T('Card button text'),
+    items: LN('Exam cards', ['name', 'note', 'url', 'text', 'tags']) } },
   vacancies: { label: 'Latest vacancies', hint: 'Cards from your newest posts, or cards you write by hand.', fields: FEED },
   affairs: { label: 'Current affairs', hint: 'Magazine card and quick links.', fields: {
     title: T('Heading'), subtitle: T('Subheading'), linkText: T('Link text'), linkUrl: T('Link'),
@@ -84,12 +87,19 @@ const DEFAULTS: Record<string, any> = {
     btn1Text: 'Browse study material', btn1Url: '/category/study-material', btn2Text: 'Latest vacancies', btn2Url: '/category/vacancies',
     panelMode: 'off', panelTitle: 'Latest notifications', panelItems: [] },
   trust: { items: rows(['text'], [['Free to read'], ['Exam-focused notes'], ['Official sources linked'], ['Independent educational platform']]) },
-  subjects: { title: 'Browse by subject', subtitle: 'Notes, research and practice material, organised the way the syllabus is.',
+  subjects: { title: 'JKEdusphere Library', subtitle: 'Free subject-wise notes, research and practice material for J&K exams. Pick a subject and start reading.', counts: 'auto',
     items: rows(['badge', 'name', 'note', 'url'], [['PO', 'Polity', 'Constitution, governance'], ['HI', 'History', 'India and J&K'], ['GE', 'Geography', 'India, J&K, world'], ['EC', 'Economy', 'Basics and schemes'], ['ST', 'Science and Tech', 'General science'], ['JK', 'J&K GK', 'Region-specific facts'], ['RM', 'Reasoning and Maths', 'Aptitude practice'], ['EN', 'English', 'Grammar, comprehension']].map((r) => [...r, '/search?q=' + encodeURIComponent(r[1])])) },
   study: { title: 'Study material and research', subtitle: 'Notes and explainers you can read free.', linkText: 'View all', linkUrl: '/category/study-material', source: 'auto', category: 'Study Material', limit: 6, items: [] },
   reports: { title: 'Reports and analysis', subtitle: 'Data-led reading on trends, cut-offs and policy.', linkText: 'View all', linkUrl: '/category/reports', source: 'auto', category: 'Reports', limit: 3, items: [] },
-  exams: { title: 'Browse by exam', subtitle: 'Vacancies, syllabus and previous papers in one place.',
-    items: rows(['name', 'note', 'url'], [['JKSSB', 'Posts, PYQs'], ['JKPSC', 'CCE, KAS'], ['JKPSI', 'Police'], ['Banking', 'J&K Bank, IBPS'], ['SSC', 'CGL, CHSL'], ['UPSC', 'Notes hub'], ['NEET', 'Notes hub']].map((r) => [...r, '/search?q=' + r[0]])) },
+  exams: { title: 'Browse by exam', subtitle: 'Syllabus, notes and previous papers for every exam you are preparing for.', btn: 'Start preparing',
+    items: rows(['name', 'note', 'url', 'text', 'tags'], [
+      ['JKSSB', 'Subordinate Services', '/search?q=JKSSB', 'Junior Assistant, Naib Tehsildar, Finance Account Assistant and more. Syllabus, notes and previous papers in one place.', 'Syllabus, PYQs, Notes'],
+      ['JKPSC', 'CCE and KAS', '/search?q=JKPSC', 'Combined Competitive Exam and gazetted services. Prelims and mains study material.', 'Prelims, Mains, Essay'],
+      ['JKPSI', 'Police Sub-Inspector', '/search?q=JKPSI', 'Telecom, Executive and Armed. Law, reasoning and general knowledge preparation.', 'Law, Reasoning, GK'],
+      ['Banking', 'J&K Bank and IBPS', '/search?q=Banking', 'Quantitative aptitude, reasoning, English and banking awareness.', 'Aptitude, English, Awareness'],
+      ['SSC', 'CGL and CHSL', '/search?q=SSC', 'Central exams with a common core of maths, reasoning, English and general studies.', 'Maths, Reasoning, GS'],
+      ['UPSC', 'Civil Services', '/search?q=UPSC', 'Concept-first notes on polity, history, geography, economy and current affairs.', 'Prelims, Mains, Notes'],
+      ['NEET', 'Medical entrance', '/search?q=NEET', 'Biology, chemistry and physics notes with practice questions.', 'Biology, Chemistry, Physics']]) },
   vacancies: { title: 'Latest vacancies', subtitle: 'Each post lists last date, eligibility and how to apply.', linkText: 'View all', linkUrl: '/search?q=vacancy', source: 'auto', category: 'Vacancies', limit: 6, items: [] },
   affairs: { title: 'Current affairs', subtitle: 'Daily notes, a weekly digest and a free monthly magazine.', linkText: 'Open hub', linkUrl: '/search?q=current+affairs',
     magTag: 'Free PDF', magTitle: 'Monthly Current Affairs Magazine', magText: 'Curated for JKSSB, JKPSC, UPSC and SSC aspirants.', magBtn: "Get this month's edition", magUrl: '',
@@ -143,6 +153,8 @@ export function resolve(s: Stored) {
 export const esc = (s: unknown) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
 export const href = (u: string) => (/^(https?:\/\/|\/|#|mailto:)/i.test(u || '') ? esc(u) : '#');
 const head = (d: any, link = false) => `<div class="sh"><div><h2>${esc(d.title)}</h2>${d.subtitle ? `<p>${esc(d.subtitle)}</p>` : ''}</div>${link && d.linkText ? `<a href="${href(d.linkUrl)}">${esc(d.linkText)}</a>` : ''}</div>`;
+// Highlights the last word of a heading, e.g. "JKEdusphere <em>Library</em>"
+const hl = (t: unknown) => { const s = String(t ?? '').trim(), i = s.lastIndexOf(' '); return i < 0 ? `<em>${esc(s)}</em>` : `${esc(s.slice(0, i))} <em>${esc(s.slice(i + 1))}</em>`; };
 const logo = (dark = false) => `<a class="jk-logo${dark ? ' dk' : ''}" href="/" aria-label="JKEdusphere home"><span class="jk-wm">JKEdusphere</span><span class="jk-tag">Powered by Vision &amp; Knowledge</span></a>`;
 const tagCls = (t: string) => (/^new/i.test(t) ? 'n' : /clos|last|urgent/i.test(t) ? 'c' : '');
 
@@ -155,7 +167,21 @@ async function latest(db: D1Database, category: string | null, limit: number) {
   return ((await db.prepare(sql).bind(...binds).all()).results as unknown as Post[]).map((p) => ({ ...p, last: lastDate(p.important_dates), url: `/${p.slug}` }));
 }
 
-type Ctx = { latest: any[]; feeds: Record<string, any[]> };
+// One query counts published posts per subject, using the same fields the site search looks at (max 20 subjects)
+async function subjectCounts(db: D1Database, names: string[]): Promise<Record<string, number>> {
+  const list = names.filter(Boolean).slice(0, 20);
+  if (!list.length) return {};
+  try {
+    const one = '(title LIKE ? OR excerpt LIKE ? OR tags LIKE ? OR category LIKE ?)';
+    const sql = `SELECT ${list.map((_, i) => `SUM(CASE WHEN ${one} THEN 1 ELSE 0 END) AS c${i}`).join(', ')} FROM posts WHERE status = 'published' AND published_at <= ?`;
+    const binds: (string | number)[] = list.flatMap((n) => [`%${n}%`, `%${n}%`, `%${n}%`, `%${n}%`]);
+    const row = await db.prepare(sql).bind(...binds, Math.floor(Date.now() / 1000)).first<Record<string, number | null>>();
+    return Object.fromEntries(list.map((n, i) => [n, Number(row?.[`c${i}`] ?? 0)]));
+  } catch { return {}; }
+}
+
+type Ctx = { latest: any[]; feeds: Record<string, any[]>; counts: Record<string, number> };
+const CAROUSEL_JS = `<script>(function(){var s=document.currentScript.parentNode,c=s.querySelector('.car'),p=s.querySelector('.pv'),n=s.querySelector('.nx');if(!c||!p||!n)return;function u(){p.disabled=c.scrollLeft<4;n.disabled=c.scrollLeft+c.clientWidth>=c.scrollWidth-4}function g(d){var k=c.querySelector('.xc');c.scrollBy({left:d*(k?k.offsetWidth+18:300),behavior:'smooth'})}p.onclick=function(){g(-1)};n.onclick=function(){g(1)};c.addEventListener('scroll',u,{passive:true});window.addEventListener('resize',u);u()})();</script>`;
 const FEEDS = ['vacancies', 'study', 'reports'];
 const feed = (id: string) => (d: any, c: Ctx) => {
   const cards = d.source === 'auto' ? (c.feeds[id] ?? []).map((p) => ({ body: p.category ?? '', date: p.last, title: p.title, note: p.excerpt ?? '', url: p.url })) : d.items;
@@ -183,9 +209,21 @@ ${side}</div></section>`;
   },
 
   trust: (d) => `<div class="tr"><div class="w">${d.items.map((i: any) => `<span>${esc(i.text)}</span>`).join('')}</div></div>`,
-  exams: (d) => `<div class="w"><section class="s" id="exams">${head(d)}<div class="cats">${d.items.map((i: any) => `<a href="${href(i.url)}"><b>${esc(i.name)}</b><small>${esc(i.note)}</small></a>`).join('')}</div></section></div>`,
+  exams: (d) => {
+    const cards = d.items.map((i: any, k: number) => {
+      const tags = String(i.tags ?? '').split(',').map((x) => x.trim()).filter(Boolean).slice(0, 4);
+      return `<article class="xc v${k % 5}"><div class="xh"><div class="xw"><b>${esc(i.name)}</b></div></div><div class="xb"><h3>${esc(i.note || i.name)}</h3>${i.text ? `<p>${esc(i.text)}</p>` : '<p></p>'}${tags.length ? `<div class="xt">${tags.map((x) => `<span>${esc(x)}</span>`).join('')}</div>` : ''}<a class="btn o" href="${href(i.url)}">${esc(d.btn || 'Start preparing')}</a></div></article>`;
+    }).join('');
+    return `<div class="w"><section class="s" id="exams"><div class="sh2"><div><h2>${hl(d.title)}</h2>${d.subtitle ? `<p>${esc(d.subtitle)}</p>` : ''}</div><div class="cn"><button type="button" class="pv" aria-label="Previous exams" disabled>&#8249;</button><button type="button" class="nx" aria-label="Next exams">&#8250;</button></div></div><div class="car">${cards}</div>${CAROUSEL_JS}</section></div>`;
+  },
 
-  subjects: (d) => `<div class="w"><section class="s" id="subjects">${head(d)}<div class="gs sj">${d.items.map((i: any) => `<a href="${href(i.url)}"><i>${esc(i.badge)}</i><h3>${esc(i.name)}</h3><p>${esc(i.note)}</p></a>`).join('')}</div></section></div>`,
+  subjects: (d, c) => {
+    const rows = d.items.map((i: any) => {
+      const n = d.counts === 'off' ? 0 : c.counts[i.name] ?? 0;
+      return `<a href="${href(i.url)}"><i>${esc(i.badge)}</i><span class="ln"><b>${esc(i.name)}</b>${i.note ? `<small>${esc(i.note)}</small>` : ''}</span>${n ? `<span class="ct" title="${n} posts">${n}</span>` : ''}</a>`;
+    }).join('');
+    return `<div class="w"><section class="s" id="subjects"><div class="lib"><div class="lh"><h2>${hl(d.title)}</h2>${d.subtitle ? `<p>${esc(d.subtitle)}</p>` : ''}</div><div class="ll">${rows}</div></div></section></div>`;
+  },
   vacancies: feed('vacancies'), study: feed('study'), reports: feed('reports'),
 
   affairs: (d) => `<div class="w"><section class="s" id="affairs">${head(d, true)}<div class="ca"><div class="mag"><div><small>${esc(d.magTag)}</small><h3>${esc(d.magTitle)}</h3><p>${esc(d.magText)}</p></div>${d.magUrl ? `<div><a class="btn w2" href="${href(d.magUrl)}">${esc(d.magBtn)}</a></div>` : ''}</div>
@@ -210,7 +248,9 @@ async function renderHome(db: D1Database, origin: string) {
     const f = L.data(id);
     if (f.source === 'auto' && !L.hidden.has(id)) feeds[id] = await latest(db, f.category, Math.max(1, Math.min(12, Number(f.limit) || 6)));
   }));
-  const ctx: Ctx = { latest: hero.panelMode === 'auto' ? await latest(db, null, 4) : [], feeds };
+  const sj = L.data('subjects');
+  const counts = !L.hidden.has('subjects') && sj.counts !== 'off' ? await subjectCounts(db, (sj.items ?? []).map((i: any) => String(i.name ?? ''))) : {};
+  const ctx: Ctx = { latest: hero.panelMode === 'auto' ? await latest(db, null, 4) : [], feeds, counts };
   const ids = ['header', 'hero', ...L.order, 'footer'].filter((id) => !L.hidden.has(id));
   const body = ids.map((id) => R[id](L.data(id), ctx)).join('\n');
   const ld = { '@context': 'https://schema.org', '@graph': [
@@ -230,7 +270,7 @@ ${body}
 
 export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean }) {
   const L = resolve(await load(db));
-  const ctx: Ctx = { latest: [], feeds: {} };
+  const ctx: Ctx = { latest: [], feeds: {}, counts: {} };
   const og = o.image ? `<meta property="og:image" content="${esc(o.image)}"><meta name="twitter:card" content="summary_large_image">` : '';
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}

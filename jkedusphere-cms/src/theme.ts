@@ -263,9 +263,54 @@ footer a{color:var(--navy)}
 .hero.c .chips,.hero.c .hb{justify-content:center}
 .btn.o{border-color:var(--line);color:var(--navy)}
 .btn.o:hover{border-color:var(--navy)}
-.sj a{display:grid;grid-template-columns:42px 1fr;column-gap:14px;align-items:center;padding:18px}
-.sj i{margin:0;grid-row:span 2}
-.sj h3{font-size:17px}
-.sj p{margin:2px 0 0;font-size:14px}
 @media(max-width:640px){.hero.c .hg{padding:48px 20px 28px}}
+
+/* ---- Library panel (subjects). Deep teal + warm amber: sits beside the navy/sky logo without copying it ---- */
+:root{--tl:#0d7a85;--tl2:#094f5a;--am:#ffd166}
+.lib{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--tl) 0%,var(--tl2) 100%);border-radius:28px;padding:52px 46px;color:#fff}
+.lib::after{content:"";position:absolute;right:-110px;top:-110px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(104,187,234,.32),transparent 68%);pointer-events:none}
+.lh{position:relative;z-index:1}
+.lh h2{color:#fff;font-size:clamp(30px,4.4vw,46px);letter-spacing:-.02em}
+.lh h2 em,.sh2 h2 em{font-style:normal}
+.lh h2 em{color:var(--am)}
+.lh p{margin:12px 0 0;max-width:36em;color:#d2edef;font-size:17px}
+.ll{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 14px;margin-top:34px}
+.ll a{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.12);border-radius:16px;padding:14px 16px;text-decoration:none;color:#fff;transition:background .15s}
+.ll a:hover{background:rgba(255,255,255,.22)}
+.ll i{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.18);font:900 14px Lato,sans-serif;font-style:normal;color:#fff}
+.ln{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.ln b{font-size:17px}
+.ln small{color:#bde2e5;font-size:13.5px}
+.ct{flex:none;min-width:34px;text-align:center;background:rgba(255,255,255,.22);border-radius:99px;padding:3px 11px;font-weight:700;font-size:14px}
+@media(max-width:900px){.ll{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.lib{padding:34px 20px;border-radius:22px}.ll{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- Exam cards: swipeable row ---- */
+.sh2{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px}
+.sh2 h2{font-size:clamp(24px,3.2vw,34px)}
+.sh2 h2 em{color:var(--tl)}
+.sh2 p{margin:6px 0 0;color:var(--mut)}
+.cn{display:flex;gap:10px;flex:none}
+.cn button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);font-size:24px;line-height:1;cursor:pointer;padding:0}
+.cn button:hover:not(:disabled){border-color:var(--navy)}
+.cn button:disabled{opacity:.4;cursor:default}
+.car{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -20px;padding:0 20px 6px;scroll-padding:0 20px}
+.car::-webkit-scrollbar{display:none}
+.xc{--ac:#2f78c4;--acb:#e8f1fb;flex:0 0 min(300px,82%);scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.xc.v1{--ac:#0d7a85;--acb:#e0f3f4}.xc.v2{--ac:#4455c9;--acb:#e9ecfb}.xc.v3{--ac:#b8560f;--acb:#fdf0df}.xc.v4{--ac:#1f6aa8;--acb:#e3f1fa}
+.xh{height:170px;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#3b86d1,#1b2a6b)}
+.xc.v1 .xh{background:linear-gradient(135deg,#17a2a8,#094f5a)}
+.xc.v2 .xh{background:linear-gradient(135deg,#6a7bea,#2c3a9a)}
+.xc.v3 .xh{background:linear-gradient(135deg,#f3b04a,#c2571a)}
+.xc.v4 .xh{background:linear-gradient(135deg,#4cb0e0,#1f6aa8)}
+.xw{position:relative;border:3px solid #fff;border-radius:14px;padding:44px 30px 16px;min-width:150px;text-align:center}
+.xw::before{content:"";position:absolute;left:14px;top:12px;width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:12px 0 #fff,24px 0 #fff}
+.xw::after{content:"";position:absolute;left:0;right:0;top:28px;border-top:3px solid #fff}
+.xw b{display:block;color:#fff;font-size:30px;font-weight:900;letter-spacing:-.01em;line-height:1.1}
+.xb{display:flex;flex-direction:column;flex:1;padding:22px}
+.xb h3{font-size:20px}
+.xb p{flex:1;margin:8px 0 14px;color:var(--mut);font-size:15px;line-height:1.6}
+.xt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.xt span{background:var(--acb);color:var(--ac);border-radius:99px;padding:4px 12px;font-size:13px;font-weight:700}
+.xc .btn{display:block;text-align:center;border-radius:10px;margin-top:auto}
 `;
