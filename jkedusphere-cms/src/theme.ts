@@ -525,9 +525,67 @@ footer.fd .btn { background: #a5b4fc; border-color: #a5b4fc; color: #172554; }
 footer.fd .btn:hover { background: #c7d2fe; border-color: #c7d2fe; }
 
 /* Forms, article media and tables should stay inside the viewport. */
-input, select, textarea { max-width: 100%; }
-.prose img, .hero-img { height: auto; }
-.prose table { max-width: 100%; }
+input, select, textarea { max-width: 100%; min-width: 0; }
+.prose img, .hero-img { height: auto; max-width: 100%; }
+
+/* Responsive tables: scroll the table area, never the whole page. */
+.prose,
+.prose > *,
+.prose .jke-table-wrap,
+.prose .table-wrap,
+.prose .table-responsive {
+  min-width: 0;
+  max-width: 100%;
+}
+.prose .jke-table-wrap,
+.prose .table-wrap,
+.prose .table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  margin: 1rem 0 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.prose table,
+.glance table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-collapse: collapse;
+  -webkit-overflow-scrolling: touch;
+}
+.prose table { margin: 0 0 1.2em; }
+.prose table thead,
+.prose table tbody,
+.prose table tfoot,
+.glance table thead,
+.glance table tbody,
+.glance table tfoot {
+  width: max-content;
+  min-width: 100%;
+}
+.prose th, .prose td,
+.glance th, .glance td {
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+.prose th, .prose td { padding: 10px 12px; }
+.glance th, .glance td { padding: 10px 12px; }
+@media (max-width: 600px) {
+  .prose .jke-table-wrap,
+  .prose .table-wrap,
+  .prose .table-responsive { border-radius: 10px; }
+  .prose table { font-size: 14px; }
+  .prose th, .prose td,
+  .glance th, .glance td { padding: 9px 10px; }
+}
 
 @media (max-width: 980px) {
   .bk { grid-template-columns: repeat(2, minmax(0, 1fr)); }
