@@ -375,6 +375,36 @@ footer a{color:var(--navy)}
 .hd{display:flex;justify-content:center;gap:8px;margin-top:16px}
 .hd button{width:10px;height:10px;border-radius:99px;border:0;padding:0;background:rgba(255,255,255,.3);cursor:pointer;transition:width .2s}
 .hd button.on{width:28px;background:var(--am)}
+/* The notice panel is a white card inside the dark hero: give it dark text (it used to inherit the hero's white) */
+.hero.d .nb{color:var(--ink);text-align:left}
+.hero.d .nb b{color:var(--ink)}
+.hero.d .nb small{color:var(--mut)}
+
+/* ---- Dark footer: big headline, button, link columns, copyright ---- */
+footer.fd{background:linear-gradient(180deg,#17235a 0%,#0f1840 100%);color:#b9c7ee;margin-top:80px;padding:64px 0 26px;border-top:0}
+footer.fd .w{display:block}
+.ft{display:flex;flex-wrap:wrap;gap:22px 32px;justify-content:space-between;align-items:center;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.14)}
+.ft h2{color:#fff;font-size:clamp(28px,4.8vw,50px);letter-spacing:-.02em;line-height:1.1;flex:1 1 340px}
+.ft h2 em{font-style:normal;color:var(--am)}
+footer.fd .btn{background:var(--am);border-color:var(--am);color:#14204f}
+.fg{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(2,minmax(0,1fr));gap:40px;padding:40px 0}
+.fb p{max-width:34em;margin:16px 0 0;color:#b9c7ee;font-size:15px;line-height:1.7}
+.fg nav{display:flex;flex-direction:column;flex-wrap:nowrap;gap:0}
+.fg h3{color:#fff;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 12px}
+footer.fd .fg a{color:#dbe5ff;text-decoration:none;font-weight:600;padding:6px 0}
+footer.fd .fg a:hover{color:var(--am)}
+.fz{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);font-size:14px;color:#8fa0d4}
+footer.fd .fz a{color:#dbe5ff;text-decoration:none;font-weight:700}
+footer.fd .fz a:hover{color:var(--am)}
+footer.fd .jk-logo.dk .jk-wm{background:linear-gradient(90deg,#ffffff 0%,#a9d8f5 55%,#68bbea 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:34px}
+footer.fd .jk-logo.dk .jk-tag{color:#aab8e0}
+@media(max-width:760px){
+  footer.fd{padding:44px 0 22px;margin-top:56px}
+  .ft{flex-direction:column;align-items:flex-start}
+  .fg{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 20px}
+  .fb{grid-column:1/-1}
+}
+
 @media(max-width:900px){
   .hero.d .hg{grid-template-columns:minmax(0,1fr);gap:36px;padding:44px 20px 40px;text-align:center}
   .hero.d h1,.hero.d .tg,.hero.d p.s{margin-left:auto;margin-right:auto}

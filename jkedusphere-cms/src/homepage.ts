@@ -72,7 +72,10 @@ const SECTIONS: Record<string, Section> = {
     showShare: { t: 'select', l: 'Show share buttons', opts: ['yes', 'no'] }, showRelated: { t: 'select', l: 'Show related posts', opts: ['yes', 'no'] },
     relatedTitle: T('Related posts heading'), ctaTitle: T('Call to action heading'), ctaText: T('Call to action text'),
     ctaBtn: T('Call to action button (empty hides the box)'), ctaUrl: T('Call to action link'), disclaimer: A('Note shown under every post') } },
-  footer: { label: 'Footer', hint: 'Disclaimer and footer links.', fields: { text: A('Disclaimer text'), links: LN('Footer links', LINK) } },
+  footer: { label: 'Footer', hint: 'Dark footer: big headline with a button, your disclaimer, two link columns and a copyright line. The last word of the headline is highlighted.', fields: {
+    tagline: T('Big headline'), ctaText: T('Button text (empty hides it)'), ctaUrl: T('Button link'),
+    text: A('Disclaimer text'), exploreTitle: T('First link column heading'), links2: LN('First column links', LINK),
+    linksTitle: T('Second link column heading'), links: LN('Second column links', LINK) } },
 };
 
 const FIRST = ['seo', 'header', 'hero'];
@@ -125,7 +128,10 @@ const DEFAULTS: Record<string, any> = {
   how: { title: 'How we publish', subtitle: 'Every post follows the same three steps.', items: rows(['title', 'text'], [['Start at the official source', "We read the notification on the recruiting body's own site."], ['Summarise in plain language', 'Dates, eligibility and how to apply, without the clutter.'], ['Update when it changes', 'Corrections and new dates go into the same post.']]) },
   join: { title: 'Never miss a notification', text: 'Vacancy and result alerts on Telegram.', btn: 'Join on Telegram', url: 'https://t.me/jkedusphere' },
   faq: { title: 'Frequently asked questions', items: rows(['q', 'a'], [['Are these notifications official?', "We summarise each notification and link to the official source. Confirm dates on the recruiting body's website before applying."], ['Is JKEdusphere free to use?', 'All vacancy, update and scheme posts are free. Some notes and test series on jkedusphere.com are paid.'], ['Is JKEdusphere affiliated with JKSSB or JKPSC?', 'No. We are an independent educational platform.']]) },
-  footer: { text: 'JKEdusphere is an independent educational platform and is not affiliated with JKSSB, JKPSC, JKBOSE, NTA or any government body. Verify exam dates and notifications from official websites.',
+  footer: { tagline: 'Prepare smarter. Clear your exam.', ctaText: 'Join us on Telegram', ctaUrl: 'https://t.me/jkedusphere',
+    text: 'JKEdusphere is an independent educational platform and is not affiliated with JKSSB, JKPSC, JKBOSE, NTA or any government body. Verify exam dates and notifications from official websites.',
+    exploreTitle: 'Explore', links2: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/category/study-material'], ['Current affairs', '/category/current-affairs'], ['Reports', '/category/reports'], ['Vacancies', '/category/vacancies']]),
+    linksTitle: 'About',
     links: rows(LINK, [['About', '/about-us'], ['Contact', '/contact-us'], ['Privacy policy', '/privacy-policy'], ['Disclaimer', '/disclaimer'], ['jkedusphere.com', 'https://jkedusphere.com']]) },
 };
 
@@ -266,7 +272,12 @@ ${side}</div></section>`;
   how: (d) => `<div class="w"><section class="s">${head(d)}<div class="how">${d.items.map((i: any) => `<div><h3>${esc(i.title)}</h3><p>${esc(i.text)}</p></div>`).join('')}</div></section></div>`,
   join: (d) => `<div class="w"><section class="s"><div class="join"><div><h2>${esc(d.title)}</h2><p>${esc(d.text)}</p></div><a class="btn" href="${href(d.url)}">${esc(d.btn)}</a></div></section></div>`,
   faq: (d) => `<div class="w"><section class="s faq"><div class="sh"><h2>${esc(d.title)}</h2></div>${d.items.map((i: any) => `<details><summary>${esc(i.q)}</summary><p>${esc(i.a)}</p></details>`).join('')}</section></div>`,
-  footer: (d) => `<footer><div class="w"><div>${logo(true)}<p>${esc(d.text)}</p></div><nav aria-label="Footer">${d.links.map((l: any) => `<a href="${href(l.url)}">${esc(l.label)}</a>`).join('')}</nav></div></footer>`,
+  footer: (d) => {
+    const col = (title: string, label: string, list: any[]) => (list.length ? `<nav aria-label="${esc(label)}">${title ? `<h3>${esc(title)}</h3>` : ''}${list.map((l) => `<a href="${href(l.url)}">${esc(l.label)}</a>`).join('')}</nav>` : '');
+    return `<footer class="fd"><div class="w">${d.tagline || d.ctaText ? `<div class="ft">${d.tagline ? `<h2>${hl(d.tagline)}</h2>` : '<span></span>'}${d.ctaText ? `<a class="btn" href="${href(d.ctaUrl)}">${esc(d.ctaText)}</a>` : ''}</div>` : ''}
+<div class="fg"><div class="fb">${logo(true)}<p>${esc(d.text)}</p></div>${col(d.exploreTitle, 'Explore', d.links2 ?? [])}${col(d.linksTitle, 'About', d.links ?? [])}</div>
+<div class="fz"><span>&copy; ${new Date().getFullYear()} JKEdusphere. All rights reserved.</span><a href="#">Back to top &uarr;</a></div></div></footer>`;
+  },
 };
 
 async function renderHome(db: D1Database, origin: string) {
