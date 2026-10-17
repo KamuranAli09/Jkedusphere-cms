@@ -95,9 +95,6 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
     return c.html(await shell(db, origin(c), { title: 'Page not found | JKEdusphere', description: 'This page could not be found.', canonical: origin(c) + '/', noindex: true, body }), 404);
   };
   app.notFound((c) => notFound(c));
-  const notFound = async (c: any) => c.html(await shell(c.env.DB, origin(c), { title: 'Page not found | JKEdusphere', description: 'This page could not be found.', canonical: origin(c) + '/', noindex: true,
-    body: '<div class="w lp"><h1>Page not found</h1><p class="s2">The page you are looking for may have moved. Try searching.</p><form class="search" action="/search" role="search" style="margin-top:18px"><input type="search" name="q" placeholder="Search posts" aria-label="Search"><button type="submit">Search</button></form></div>' }), 404);
-
   // ---------- Search ----------
   app.get('/search', async (c) => {
     const q = (c.req.query('q') ?? '').trim().slice(0, 80), page = Math.max(1, parseInt(c.req.query('page') ?? '1', 10) || 1);
