@@ -401,6 +401,7 @@ footer.fd .jk-logo.dk .jk-tag{color:#aab8e0}
 @media(max-width:760px){
   footer.fd{padding:44px 0 22px;margin-top:56px}
   .ft{flex-direction:column;align-items:flex-start}
+  .ft h2{flex:none}
   .fg{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 20px}
   .fb{grid-column:1/-1}
 }
