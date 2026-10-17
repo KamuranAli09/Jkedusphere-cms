@@ -1,6 +1,7 @@
 import type { Hono } from 'hono';
 import { html } from 'hono/html';
 import type { Env } from './types';
+import { siteOrigin } from './types';
 import { adminPage } from './layout';
 import { THEME_CSS } from './theme';
 
@@ -363,7 +364,7 @@ export function registerHomepage(app: Hono<Env>) {
   app.get('/assets/theme.css', (c) => c.body(THEME_CSS, 200, { 'Content-Type': 'text/css; charset=utf-8', 'Cache-Control': 'public, max-age=300' }));
 
   app.get('/', async (c) => {
-    const page = await renderHome(c.env.DB, new URL(c.req.url).origin);
+        const page = await renderHome(c.env.DB, siteOrigin(c.req.url));
     return c.html(page, 200, { 'Cache-Control': 'public, max-age=60' });
   });
 
