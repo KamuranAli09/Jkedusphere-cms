@@ -147,6 +147,6 @@ app.get('/', (c) => c.html(html`<!doctype html><html lang="en"><head><meta chars
 
 app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + siteOrigin(c.req.url) + '/sitemap.xml\n'));
 registerPublic(app);
-app.notFound((c) => c.text('Not found', 404));
+
 
 export default app;
