@@ -53,7 +53,48 @@ export function registerPublic(app: Hono<Env>) {
     return next();
   });
   app.get('/search/label/:label', (c) => c.redirect(`/search?q=${encodeURIComponent(decodeURIComponent(c.req.param('label')))}`, 301));
-  const origin = (c: any) => siteOrigin(c.req.url);
+    const origin = (c: any) => new URL(c.req.url).origin;
+
+  // ---------- Friendly 404 (used for every URL that matches nothing) ----------
+  const SKIP = /\.(php\d?|asp|aspx|jsp|env|git|sql|ini|bak|zip|gz|map|js|css|ico|png|jpe?g|gif|webp|svg|woff2?|txt)$|wp-|xmlrpc|\.well-known/i; // bot probes and missing files: cheap plain 404
+  const notFound = async (c: any) => {
+    const path = new URL(c.req.url).pathname;
+    if (SKIP.test(path)) return c.text('Not found', 404);
+    const db = c.env.DB;
+    let guess = '';
+    try { guess = decodeURIComponent(path.split('/').filter(Boolean).pop() ?? ''); } catch { /* ignore bad encoding */ }
+    guess = guess.replace(/\.html?$/i, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim().slice(0, 60);
+    const words = guess.split(' ').filter((w) => w.length > 2).slice(0, 3);
+    const [near, latest] = await Promise.all([
+      words.length ? published(db, ' AND (' + words.map(() => 'title LIKE ?').join(' OR ') + ')', words.map((w) => `%${w}%`), 1) : Promise.resolve({ rows: [] as Row[] }),
+      published(db, '', [], 1),
+    ]);
+    const maybe = (near.rows as Row[]).slice(0, 3);
+    const fresh = (latest.rows as Row[]).filter((r) => !maybe.some((m) => m.id === r.id)).slice(0, 6);
+    const body = `<style>
+.nf{text-align:center;padding:36px 0 8px}
+.nf .big{font-size:clamp(84px,22vw,168px);font-weight:900;line-height:1;letter-spacing:-.04em;background:linear-gradient(135deg,var(--navy),var(--blue) 55%,var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nf h1{font-size:clamp(24px,4.5vw,36px);margin:6px 0 10px}
+.nf .s2{max-width:560px;margin:0 auto 22px}
+.nf .search{margin:0 auto 18px}
+.nf .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.nf .chips a{padding:8px 16px;border:1px solid var(--line);border-radius:999px;font-weight:700;font-size:14.5px;text-decoration:none;color:var(--navy);background:var(--soft)}
+.nf .chips a:hover{border-color:var(--navy)}
+.nf-h{font-size:20px;margin:34px 0 14px}
+</style>
+<div class="w lp"><div class="nf">
+<div class="big" aria-hidden="true">404</div>
+<h1>This page took a wrong turn</h1>
+<p class="s2">Like a question skipped on the OMR sheet, no harm done. The link may be old, moved or mistyped. Search below or jump to a section.</p>
+<form class="search" action="/search" role="search"><input type="search" name="q" value="${esc(guess)}" placeholder="Search vacancies, exams, schemes" aria-label="Search"><button type="submit">Search</button></form>
+<div class="chips">${CATS.map((x) => `<a href="${catUrl(x)}">${esc(x)}</a>`).join('')}</div>
+<p style="margin-top:22px"><a class="btn" href="/">Back to home</a></p></div>
+${maybe.length ? `<h2 class="nf-h">Were you looking for one of these?</h2><div class="vg">${maybe.map(card).join('')}</div>` : ''}
+${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.map(card).join('')}</div>` : ''}
+</div>`;
+    return c.html(await shell(db, origin(c), { title: 'Page not found | JKEdusphere', description: 'This page could not be found.', canonical: origin(c) + '/', noindex: true, body }), 404);
+  };
+  app.notFound((c) => notFound(c));
   const notFound = async (c: any) => c.html(await shell(c.env.DB, origin(c), { title: 'Page not found | JKEdusphere', description: 'This page could not be found.', canonical: origin(c) + '/', noindex: true,
     body: '<div class="w lp"><h1>Page not found</h1><p class="s2">The page you are looking for may have moved. Try searching.</p><form class="search" action="/search" role="search" style="margin-top:18px"><input type="search" name="q" placeholder="Search posts" aria-label="Search"><button type="submit">Search</button></form></div>' }), 404);
 
