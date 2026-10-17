@@ -4,6 +4,7 @@ import { html } from 'hono/html';
 import { hashPassword, verifyPassword, sha256Hex, newToken, safeEqual } from './auth';
 import { adminPage } from './layout';
 import type { Env } from './types';
+import { siteOrigin } from './types';
 import { registerContent } from './content';
 import { registerHomepage } from './homepage';
 import { registerPublic } from './posts';
@@ -144,7 +145,7 @@ registerImporter(app);
 app.get('/', (c) => c.html(html`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>JKEdusphere</title></head>
   <body style="font-family:system-ui;text-align:center;margin-top:20vh"><h1>JKEdusphere</h1><p>Site coming soon.</p></body></html>`));
 
-app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + new URL(c.req.url).origin + '/sitemap.xml\n'));
+app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + siteOrigin(c.req.url) + '/sitemap.xml\n'));
 registerPublic(app);
 app.notFound((c) => c.text('Not found', 404));
 
