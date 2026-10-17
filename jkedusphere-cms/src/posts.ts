@@ -1,5 +1,6 @@
 import type { Hono } from 'hono';
 import type { Env } from './types';
+import { siteOrigin } from './types';
 import { slugify } from './content';
 import { esc, href, load, resolve, shell } from './homepage';
 
@@ -52,8 +53,7 @@ export function registerPublic(app: Hono<Env>) {
     return next();
   });
   app.get('/search/label/:label', (c) => c.redirect(`/search?q=${encodeURIComponent(decodeURIComponent(c.req.param('label')))}`, 301));
-
-  const origin = (c: any) => new URL(c.req.url).origin;
+  const origin = (c: any) => siteOrigin(c.req.url);
   const notFound = async (c: any) => c.html(await shell(c.env.DB, origin(c), { title: 'Page not found | JKEdusphere', description: 'This page could not be found.', canonical: origin(c) + '/', noindex: true,
     body: '<div class="w lp"><h1>Page not found</h1><p class="s2">The page you are looking for may have moved. Try searching.</p><form class="search" action="/search" role="search" style="margin-top:18px"><input type="search" name="q" placeholder="Search posts" aria-label="Search"><button type="submit">Search</button></form></div>' }), 404);
 
