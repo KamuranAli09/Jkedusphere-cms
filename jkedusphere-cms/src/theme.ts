@@ -1025,4 +1025,164 @@ summary:focus-visible {
   }
 }
 
+/* ===== JKEdusphere: mobile and contrast fixes ===== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+.prep {
+  background: linear-gradient(145deg, #111c3c 0%, #202f70 100%);
+  color: #f8fafc;
+  padding: clamp(36px, 7vw, 76px) 0;
+}
+
+.prep h1,
+.prep h2,
+.prep h3,
+.prep h4,
+.prep p,
+.prep li,
+.prep strong {
+  color: #f8fafc;
+}
+
+.prep p {
+  line-height: 1.75;
+}
+
+.prep a:not(.btn) {
+  color: #c7d2fe;
+}
+
+.prep a:not(.btn):hover {
+  color: #ffffff;
+}
+
+.prep .bc {
+  background: #ffffff;
+  color: #172554;
+  border: 1px solid #dbe4f0;
+  border-top: 5px solid #818cf8;
+  border-radius: 18px;
+  padding: clamp(22px, 4vw, 40px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.prep .bc h2,
+.prep .bc h3,
+.prep .bc h4 {
+  color: #172554;
+}
+
+.prep .bc p,
+.prep .bc li {
+  color: #52627e;
+}
+
+.prep .bc a:not(.btn) {
+  color: #4338ca;
+}
+
+.prep .bc .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  background: #202f70;
+  color: #ffffff;
+  border: 1px solid #202f70;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.prep .bc .btn:hover {
+  background: #3649a0;
+}
+
+.prep .bc .btn.o {
+  background: #ffffff;
+  color: #202f70;
+  border-color: #cbd5e1;
+}
+
+.prep .bc .btn.o:hover {
+  background: #f1f5ff;
+}
+
+.prep .w,
+.prep .gs,
+.prep .vg,
+.prep .ca {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.prep h1,
+.prep h2,
+.prep h3,
+.prep p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .prep {
+    padding: 36px 0 44px;
+  }
+
+  .prep .w {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .prep .bc {
+    padding: 22px;
+    border-radius: 15px;
+  }
+
+  .prep .bc h2 {
+    font-size: 25px;
+    line-height: 1.3;
+  }
+
+  .prep .bc p {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .prep .bc .btn {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .prep .gs,
+  .prep .vg,
+  .prep .ca {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .prep .gs > *,
+  .prep .vg > *,
+  .prep .ca > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+
+
 `;
