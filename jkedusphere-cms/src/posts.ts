@@ -3,6 +3,7 @@ import type { Env } from './types';
 import { siteOrigin } from './types';
 import { slugify } from './content';
 import { esc, href, load, resolve, shell } from './homepage';
+import { notesPaths } from './notes';
 
 const IST = 5.5 * 3600 * 1000;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -121,8 +122,9 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
     const o = origin(c);
     const posts = (await c.env.DB.prepare("SELECT slug, updated_at FROM posts WHERE status='published' AND published_at <= ? ORDER BY published_at DESC LIMIT 2000").bind(now()).all()).results as Row[];
     const pages = (await c.env.DB.prepare('SELECT slug, updated_at FROM pages').all()).results as Row[];
+    const notes = notesPaths(), notesSet = new Set(notes.map((n) => n.path));
     const u = (loc: string, ts?: number) => `<url><loc>${esc(o + loc)}</loc>${ts ? `<lastmod>${iso(ts).slice(0, 10)}</lastmod>` : ''}</url>`;
-    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${u('/')}${CATS.map((x) => u(catUrl(x))).join('')}${posts.map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${pages.map((p) => u(`/${p.slug}`, p.updated_at)).join('')}</urlset>`;
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${u('/')}${CATS.map((x) => u(catUrl(x))).join('')}${posts.filter((p) => !notesSet.has('/' + p.slug)).map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${pages.filter((p) => !notesSet.has('/' + p.slug)).map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${notes.map((n) => `<url><loc>${esc(o + n.path)}</loc><lastmod>${n.lastmod}</lastmod></url>`).join('')}</urlset>`;
     return c.body(xml, 200, { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=300' });
   });
 

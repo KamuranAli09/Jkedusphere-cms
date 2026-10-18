@@ -173,9 +173,8 @@ const CSS = `
 .nt-scrim{display:none}
 .nt-main{min-width:0;max-width:820px}
 .nt-topic{scroll-margin-top:calc(var(--hh,76px) + 18px);padding:4px 0 34px;margin-bottom:34px;border-bottom:1px solid var(--line)}
-.nt-topic>h2{font-size:clamp(25px,3.6vw,34px);letter-spacing:-.02em;line-height:1.18}
+.nt-topic>.nt-t{font-size:clamp(25px,3.6vw,34px);letter-spacing:-.02em;line-height:1.18}
 .nt-anchor{color:var(--sky);text-decoration:none;margin-right:6px;font-weight:700;opacity:.0;transition:opacity .15s}
-.nt-topic>h2:hover .nt-anchor,.nt-anchor:focus{opacity:1}
 .nt-meta{font-size:13.5px;color:var(--mut);margin:6px 0 18px}
 .nt-body{font-size:17px;line-height:1.75}
 .nt-body h3,.nt-body h4{scroll-margin-top:calc(var(--hh,76px) + 18px)}
@@ -204,7 +203,6 @@ const CSS = `
 .bx.mem{background:#f1ecfb;border-color:#cbbdea}.bx.mem .bx-t{color:#5b3fa8}
 .bx.new{background:#fbe9e6;border-color:#eab4ab}.bx.new .bx-t{color:var(--red)}
 .bx.note{background:var(--soft);border-color:var(--line)}.bx.note .bx-t{color:var(--mut)}
-.nt-js .nt-topic{display:none}.nt-js .nt-topic.cur{display:block}
 .nt-pn{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
 .nt-pn a{display:block;max-width:49%;padding:11px 15px;border:1px solid var(--line);border-radius:10px;text-decoration:none;font-weight:700;font-size:14.5px;color:var(--navy)}
 .nt-pn a:hover{border-color:var(--navy)}
@@ -236,104 +234,115 @@ html.nt-lock{overflow:hidden}
 @media print{.nt-side,.nt-bar,.nt-scrim,.nt-pn,.nt-end,.nt-anchor{display:none!important}.nt{display:block}.nt-topic{break-inside:auto}}
 `;
 
-const JS = `
+const js = (ids: string[], first: string, base: string) => `
 (function(){
 var d=document;function $(s,r){return (r||d).querySelector(s)}function $$(s,r){return [].slice.call((r||d).querySelectorAll(s))}
-var side=$('#ntside'),scrim=$('#ntscrim'),openB=$('#ntopen'),closeB=$('#ntclose'),cur=$('#ntcur'),q=$('#ntq');
+var side=$('#ntside'),scrim=$('#ntscrim'),openB=$('#ntopen'),closeB=$('#ntclose'),q=$('#ntq');
 if(!side)return;
-function hh(){var h=$('header');d.documentElement.style.setProperty('--hh',(h?h.offsetHeight:76)+'px')}
+var IDS=${JSON.stringify(ids)},FIRST=${JSON.stringify(first)},BASE=${JSON.stringify(base)};
+var h=decodeURIComponent(location.hash.slice(1));
+if(h&&h!==FIRST&&IDS.indexOf(h)>-1){location.replace(BASE+'/'+h);return}
+function hh(){var x=$('header');d.documentElement.style.setProperty('--hh',(x?x.offsetHeight:76)+'px')}
 hh();addEventListener('resize',hh);
 function setOpen(o){side.classList.toggle('open',o);scrim.classList.toggle('on',o);d.documentElement.classList.toggle('nt-lock',o);openB.setAttribute('aria-expanded',o?'true':'false')}
 openB.addEventListener('click',function(){setOpen(!side.classList.contains('open'))});
 closeB.addEventListener('click',function(){setOpen(false)});
 scrim.addEventListener('click',function(){setOpen(false)});
 addEventListener('keydown',function(e){if(e.key==='Escape')setOpen(false)});
-var links={},active=null,secs=$$('.nt-topic');
-$$('a[data-t]',side).forEach(function(a){links[a.getAttribute('data-t')]=a;a.addEventListener('click',function(){setOpen(false)})});
-function mark(id){
- if(id===active||!links[id])return;
- if(active&&links[active]){links[active].classList.remove('on');links[active].removeAttribute('aria-current')}
- active=id;var a=links[id];a.classList.add('on');a.setAttribute('aria-current','location');
- if(cur)cur.textContent=a.textContent;
- var u=a.closest('details');if(u&&!u.open)u.open=true;
- var r=a.getBoundingClientRect(),s=side.getBoundingClientRect();
- if(r.top<s.top+50||r.bottom>s.bottom-50)side.scrollTop+=r.top-s.top-side.clientHeight/3;
-}
-var shown=null;
-function show(id,scroll){
- var t=d.getElementById(id);
- if(!t||!t.classList.contains('nt-topic'))t=secs[0];
- if(!t)return;
- if(shown)shown.classList.remove('cur');
- t.classList.add('cur');shown=t;mark(t.id);
- d.title=t.querySelector('h2').textContent.replace(/^#/,'')+' | '+DT;
- if(scroll)t.scrollIntoView();
-}
-var DT=d.title;
-d.documentElement.classList.add('nt-js');
-function fromHash(scroll){show(decodeURIComponent(location.hash.slice(1)),scroll)}
-addEventListener('hashchange',function(){fromHash(true)});
-fromHash(!!location.hash);
+var a=$('a.on',side);
+if(a){var u=a.closest('details');if(u)u.open=true;side.scrollTop=Math.max(0,a.offsetTop-side.clientHeight/3)}
 if(q)q.addEventListener('input',function(){
  var v=q.value.trim().toLowerCase();
  $$('details.nt-u',side).forEach(function(u){
   var any=false;
-  $$('a[data-t]',u).forEach(function(a){var m=!v||a.textContent.toLowerCase().indexOf(v)>-1;a.style.display=m?'':'none';if(m)any=true});
+  $$('a',u).forEach(function(a){var m=!v||a.textContent.toLowerCase().indexOf(v)>-1;a.style.display=m?'':'none';if(m)any=true});
   u.style.display=any?'':'none';if(v&&any)u.open=true;
  });
 });
 })();
 `;
 
-type Built = { count: number; units: number; mins: number; side: string; main: string };
+type Built = { units: number; mins: number; flat: Topic[]; pages: Map<string, string> };
+
+const plain = (h: string) => h.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
+const desc = (t: Topic) => {
+  const p = t.html.match(/<p>([\s\S]*?)<\/p>/);
+  const x = plain(p ? p[1] : t.html);
+  return (x.length > 155 ? x.slice(0, 152).replace(/\s+\S*$/, '') + '...' : x) || t.title;
+};
 
 function build(sub: Subject): Built {
   const units = parseNotes(sub.source);
   const flat = units.flatMap((u) => u.topics);
-  const mins = flat.reduce((a, t) => a + t.mins, 0);
-
-  const side = units.map((u) => `<details class="nt-u" open><summary>${esc(u.title)}</summary>${u.topics.map((t) => `<a href="#${t.id}" data-t="${t.id}">${esc(t.title)}</a>`).join('')}</details>`).join('');
-
-  const main = flat.map((t, i) => {
+  const base = '/' + sub.slug;
+  const url = (t: Topic) => (t === flat[0] ? base : `${base}/${t.id}`);
+  const ids = new Set(flat.map((t) => t.id));
+  const fix = (h: string) => h.replace(/href="#([\w-]+)"/g, (m, id: string) => (ids.has(id) ? `href="${url(flat.find((t) => t.id === id)!)}"` : m));
+  const pages = new Map<string, string>();
+  flat.forEach((t, i) => {
     const prev = flat[i - 1], next = flat[i + 1];
+    const side = units.map((u) => `<details class="nt-u" open><summary>${esc(u.title)}</summary>${u.topics.map((x) => `<a href="${url(x)}"${x === t ? ' class="on" aria-current="page"' : ''}>${esc(x.title)}</a>`).join('')}</details>`).join('');
     const pn = prev || next
-      ? `<div class="nt-pn">${prev ? `<a class="pv" href="#${prev.id}"><small>&larr; Previous</small>${esc(prev.title)}</a>` : ''}${next ? `<a class="nx" href="#${next.id}"><small>Next &rarr;</small>${esc(next.title)}</a>` : ''}</div>`
+      ? `<div class="nt-pn">${prev ? `<a class="pv" href="${url(prev)}" rel="prev"><small>&larr; Previous</small>${esc(prev.title)}</a>` : ''}${next ? `<a class="nx" href="${url(next)}" rel="next"><small>Next &rarr;</small>${esc(next.title)}</a>` : ''}</div>`
       : '';
-    return `<section class="nt-topic" id="${t.id}"><h2><a class="nt-anchor" href="#${t.id}" aria-label="Link to this topic">#</a>${esc(t.title)}</h2><div class="nt-meta">${esc(t.unit)} &middot; ${t.mins} min read</div><div class="nt-body">${t.html}</div>${pn}</section>`;
-  }).join('\n');
-
-  return { count: flat.length, units: units.length, mins, side, main };
+    const tag = i === 0 ? 'h2' : 'h1';
+    pages.set(t.id, `<section class="nt-topic" id="${t.id}"><${tag} class="nt-t">${esc(t.title)}</${tag}><div class="nt-meta">${esc(t.unit)} &middot; ${t.mins} min read</div><div class="nt-body">${fix(t.html)}</div>${pn}</section>|||${side}`);
+  });
+  return { units: units.length, mins: flat.reduce((a, t) => a + t.mins, 0), flat, pages };
 }
 
 const cache = new Map<string, Built>();
 const built = (sub: Subject) => { let b = cache.get(sub.slug); if (!b) { b = build(sub); cache.set(sub.slug, b); } return b; };
 
+// Addresses of every notes page, for the sitemap
+export function notesPaths(): { path: string; lastmod: string }[] {
+  return SUBJECTS.flatMap((sub) => built(sub).flat.map((t, i) => ({ path: i === 0 ? '/' + sub.slug : `/${sub.slug}/${t.id}`, lastmod: sub.updated })));
+}
+
 export function registerNotes(app: Hono<Env>) {
   for (const sub of SUBJECTS) {
-    const path = '/' + sub.slug;
-    app.get(path, async (c) => {
-      const o = siteOrigin(c.req.url), url = o + path, b = built(sub);
+    const base = '/' + sub.slug;
+    const render = async (c: any, id: string | null) => {
+      const b = built(sub);
+      const idx = id ? b.flat.findIndex((t) => t.id === id) : 0;
+      if (idx < 0) return c.notFound();
+      const t = b.flat[idx], first = idx === 0, o = siteOrigin(c.req.url), url = o + (first ? base : `${base}/${t.id}`);
+      const [main, side] = (b.pages.get(t.id) as string).split('|||');
+      const head = first
+        ? `<div class="w nt-head"><h1>${esc(sub.h1)}</h1><p class="s2">${esc(sub.intro)}</p>
+<div class="nt-stats"><span><b>${b.flat.length}</b> topics</span><span><b>${b.units}</b> units</span><span>About <b>${Math.round(b.mins / 5) * 5 || b.mins}</b> min of reading</span><span>Updated ${fmtDate(sub.updated)}</span></div></div>`
+        : '';
+      const crumbs = `<nav class="crumb w" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span>${first ? `<span>${esc(sub.short)}</span>` : `<a href="${base}">${esc(sub.short)}</a><span>/</span><span>${esc(t.title)}</span>`}</nav>`;
       const body = `<style>${CSS}</style>
-<nav class="crumb w" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>${esc(sub.short)}</span></nav>
-<div class="w nt-head"><h1>${esc(sub.h1)}</h1><p class="s2">${esc(sub.intro)}</p>
-<div class="nt-stats"><span><b>${b.count}</b> topics</span><span><b>${b.units}</b> units</span><span>About <b>${Math.round(b.mins / 5) * 5 || b.mins}</b> min of reading</span><span>Updated ${fmtDate(sub.updated)}</span></div></div>
-<div class="nt-bar"><button type="button" id="ntopen" aria-expanded="false" aria-controls="ntside">&#9776; Topics</button><span id="ntcur">${esc(sub.short)}</span></div>
+${crumbs}
+${head}
+<div class="nt-bar"><button type="button" id="ntopen" aria-expanded="false" aria-controls="ntside">&#9776; Topics</button><span id="ntcur">${esc(t.title)}</span></div>
 <div class="w nt">
-<div class="nt-side" id="ntside" role="navigation" aria-label="${esc(sub.short)} topics"><div class="nt-sh"><input type="search" id="ntq" placeholder="Search topics" aria-label="Search topics"><button type="button" class="nt-x" id="ntclose" aria-label="Close topics">&times;</button></div>${b.side}</div>
+<div class="nt-side" id="ntside" role="navigation" aria-label="${esc(sub.short)} topics"><div class="nt-sh"><input type="search" id="ntq" placeholder="Search topics" aria-label="Search topics"><button type="button" class="nt-x" id="ntclose" aria-label="Close topics">&times;</button></div>${side}</div>
 <div class="nt-scrim" id="ntscrim"></div>
 <article class="nt-main">
-${b.main}
+${main}
 <section class="nt-end"><h2>Keep practising</h2><p>Notes are only half the work. Test yourself with questions and discuss doubts with other aspirants.</p>
-<div class="nt-cta"><a class="btn" href="https://jkedusphere.com">Free mock tests</a><a class="btn o" href="https://jkedusphere.com/">Polity mock test</a><a class="btn o" href="https://t.me/jkedusphere">Join Telegram</a></div>
+<div class="nt-cta"><a class="btn" href="https://jkedusphere.com">Free mock tests</a><a class="btn o" href="/polity-foundation-mock-test-jkpsc">Polity mock test</a><a class="btn o" href="https://t.me/jkedusphere">Join Telegram</a></div>
 <p class="nt-small">Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them. Found a mistake? <a href="/contact-us">Tell us</a>.</p></section>
 </article></div>
-<script>${JS}</script>`;
+<script>${js(b.flat.map((x) => x.id), b.flat[0].id, base)}</script>`;
+      const title = first ? sub.title : `${t.title}: ${sub.short} Notes | JKEdusphere`;
+      const description = first ? sub.description : desc(t);
+      const crumbLd = [{ '@type': 'ListItem', position: 1, name: 'Home', item: o + '/' }, { '@type': 'ListItem', position: 2, name: sub.short, item: o + base }, ...(first ? [] : [{ '@type': 'ListItem', position: 3, name: t.title, item: url }])];
       const ld = { '@context': 'https://schema.org', '@graph': [
-        { '@type': 'Article', headline: sub.h1, description: sub.description, inLanguage: 'en-IN', datePublished: sub.published, dateModified: sub.updated, mainEntityOfPage: url,
+        { '@type': 'Article', headline: first ? sub.h1 : t.title, description, inLanguage: 'en-IN', datePublished: sub.published, dateModified: sub.updated, mainEntityOfPage: url,
           author: { '@type': 'Organization', name: 'JKEdusphere' }, publisher: { '@type': 'Organization', name: 'JKEdusphere' } },
-        { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: o + '/' }, { '@type': 'ListItem', position: 2, name: sub.short, item: url }] }] };
-      return c.html(await shell(c.env.DB, o, { title: sub.title, description: sub.description, canonical: url, type: 'article', ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
+        { '@type': 'BreadcrumbList', itemListElement: crumbLd }] };
+      return c.html(await shell(c.env.DB, o, { title, description, canonical: url, type: 'article', ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
+    };
+    app.get(base, (c) => render(c, null));
+    app.get(base + '/', (c) => c.redirect(base, 301));
+    app.get(base + '/:topic', (c) => {
+      const id = c.req.param('topic');
+      const t = built(sub).flat;
+      if (id === t[0].id) return c.redirect(base, 301);
+      return render(c, id as string);
     });
-    app.get(path + '/', (c) => c.redirect(path, 301));
   }
 }
