@@ -204,6 +204,7 @@ const CSS = `
 .bx.mem{background:#f1ecfb;border-color:#cbbdea}.bx.mem .bx-t{color:#5b3fa8}
 .bx.new{background:#fbe9e6;border-color:#eab4ab}.bx.new .bx-t{color:var(--red)}
 .bx.note{background:var(--soft);border-color:var(--line)}.bx.note .bx-t{color:var(--mut)}
+.nt-js .nt-topic{display:none}.nt-js .nt-topic.cur{display:block}
 .nt-pn{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}
 .nt-pn a{display:block;max-width:49%;padding:11px 15px;border:1px solid var(--line);border-radius:10px;text-decoration:none;font-weight:700;font-size:14.5px;color:var(--navy)}
 .nt-pn a:hover{border-color:var(--navy)}
@@ -258,17 +259,21 @@ function mark(id){
  var r=a.getBoundingClientRect(),s=side.getBoundingClientRect();
  if(r.top<s.top+50||r.bottom>s.bottom-50)side.scrollTop+=r.top-s.top-side.clientHeight/3;
 }
-var tick=false;
-function onScroll(){
- if(tick)return;tick=true;
- requestAnimationFrame(function(){
-  tick=false;
-  var y=(parseInt(getComputedStyle(d.documentElement).getPropertyValue('--hh'),10)||76)+(innerWidth<=900?90:40),c=secs[0];
-  for(var i=0;i<secs.length;i++){if(secs[i].getBoundingClientRect().top<=y)c=secs[i];else break}
-  if(c)mark(c.id);
- });
+var shown=null;
+function show(id,scroll){
+ var t=d.getElementById(id);
+ if(!t||!t.classList.contains('nt-topic'))t=secs[0];
+ if(!t)return;
+ if(shown)shown.classList.remove('cur');
+ t.classList.add('cur');shown=t;mark(t.id);
+ d.title=t.querySelector('h2').textContent.replace(/^#/,'')+' | '+DT;
+ if(scroll)t.scrollIntoView();
 }
-addEventListener('scroll',onScroll,{passive:true});onScroll();
+var DT=d.title;
+d.documentElement.classList.add('nt-js');
+function fromHash(scroll){show(decodeURIComponent(location.hash.slice(1)),scroll)}
+addEventListener('hashchange',function(){fromHash(true)});
+fromHash(!!location.hash);
 if(q)q.addEventListener('input',function(){
  var v=q.value.trim().toLowerCase();
  $$('details.nt-u',side).forEach(function(u){
