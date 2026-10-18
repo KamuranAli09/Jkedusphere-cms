@@ -9,6 +9,7 @@ import { registerContent } from './content';
 import { registerHomepage } from './homepage';
 import { registerPublic } from './posts';
 import { registerImporter } from './importer';
+import { registerNotes } from './notes';
 
 const app = new Hono<Env>();
 
