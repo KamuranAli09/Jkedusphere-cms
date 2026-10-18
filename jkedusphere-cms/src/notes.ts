@@ -324,7 +324,7 @@ export function registerNotes(app: Hono<Env>) {
 <article class="nt-main">
 ${b.main}
 <section class="nt-end"><h2>Keep practising</h2><p>Notes are only half the work. Test yourself with questions and discuss doubts with other aspirants.</p>
-<div class="nt-cta"><a class="btn" href="https://jkedusphere.com">Free mock tests</a><a class="btn o" href="/polity-foundation-mock-test-jkpsc">Polity mock test</a><a class="btn o" href="https://t.me/jkedusphere">Join Telegram</a></div>
+<div class="nt-cta"><a class="btn" href="https://jkedusphere.com">Free mock tests</a><a class="btn o" href="https://jkedusphere.com/">Polity mock test</a><a class="btn o" href="https://t.me/jkedusphere">Join Telegram</a></div>
 <p class="nt-small">Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them. Found a mistake? <a href="/contact-us">Tell us</a>.</p></section>
 </article></div>
 <script>${JS}</script>`;
