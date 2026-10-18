@@ -15,6 +15,49 @@ export const POLITY: Subject = {
   published: '2026-10-18',
   updated: '2026-10-18',
   source: String.raw`
+@unit Start Here
+
+## Overview: What This Course Covers {#overview}
+
+These notes cover the **Indian Polity** syllabus from start to finish, written for **JKPSC, JKSSB, J&K Police, Naib Tehsildar, SSC and UPSC** aspirants. They are free, topic-wise, and kept short enough to revise in a sitting.
+
+### What you will find
+
+| Unit | What it covers |
+|---|---|
+| **1. Foundations of the Constitution** | Historical background, Constituent Assembly, salient features, Preamble, territory, citizenship, Parts and Schedules. |
+| **2. Rights, Duties and Amendment** | Fundamental Rights, DPSP, Fundamental Duties, amendment procedure and the basic structure. |
+| **3. The Union Government** | President, Vice-President, Prime Minister, Parliament, Bills and the Budget, Supreme Court. |
+| **4. The State Government** | Governor, Chief Minister, State Legislature, High Court. |
+| **5. Federalism and Local Government** | Centre-State relations, Emergency, Panchayats, Municipalities, Union Territories. |
+| **6. Constitutional and Other Bodies** | Election Commission, Public Service Commissions, CAG, Finance Commission, NITI Aayog and more. |
+| **7. Jammu and Kashmir** | Accession, Article 370 and 35A, the 2019 changes, the 2023 verdict, today's UT structure. |
+| **8. Quick Revision** | Landmark cases, key articles, numbers to remember and current office-holders. |
+
+### Why study Polity
+
+- **It is scoring.** Polity is factual and fixed. Articles, cases and dates do not change much, so a well-revised topic is nearly always a safe mark.
+- **It appears everywhere.** The same chapters feed the General Studies paper, the Prelims and the State services exams. You study once and use it in several papers.
+- **It connects to current affairs.** Governor's powers, delimitation, electoral bonds and Article 370 all started as news and became exam questions.
+- **It supports other subjects.** Economy (Finance Commission, Budget), History (Acts before 1947) and Governance all lean on Polity.
+
+### How the exams weigh it
+
+Polity is one of the most predictable sections in General Studies. In **UPSC Prelims** it usually brings a block of roughly **12 to 18 questions out of 100**. In **JKPSC, JKSSB and other State exams**, Polity and the Constitution form a steady part of the General Knowledge or General Studies paper, with **extra weight on Jammu and Kashmir** (Article 370, Reorganisation Act, domicile rules). The exact number changes every year and every paper, so always check the **latest syllabus and the previous year's paper** of your exam.
+
+:::tip How to use these notes
+1. Read **one topic at a time** from the list on the left (or tap **Topics** on a phone).
+2. Note the **Exam tip** and **Memory trick** boxes, then read the **J&K corner** where it appears.
+3. Finish each unit with the free [Polity Foundation Mock Test](/polity-foundation-mock-test-jkpsc).
+4. In the last week, use only **Unit 8: Quick Revision**.
+:::
+
+:::new Kept up to date
+Office-holders, amendments and court rulings are checked against recent events. The page shows the date of the last update at the top.
+:::
+
+Start with the first topic: [Historical Background](#historical-background).
+
 @unit Foundations of the Constitution
 
 ## Historical Background {#historical-background}
