@@ -5,6 +5,8 @@ import type { Env } from './types';
 import { siteOrigin } from './types';
 import { esc, shell } from './homepage';
 import { POLITY } from './notes-polity';
+import { JKGEO } from './notes-jkgeo';
+import { MAPS } from './notes-maps';
 
 export type Subject = {
   slug: string;        // address, e.g. 'polity' -> /polity
@@ -18,7 +20,17 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY];
+const SUBJECTS: Subject[] = [POLITY, JKGEO];
+
+// Buttons and footnote at the end of each page (default: free mock tests + Telegram)
+const CTA: Record<string, [string, string][]> = {
+  polity: [['Free mock tests', 'https://jkedusphere.com'], ['Polity mock test', '/polity-foundation-mock-test-jkpsc'], ['Join Telegram', 'https://t.me/jkedusphere']],
+};
+const CTA_DEFAULT: [string, string][] = [['Free mock tests', 'https://jkedusphere.com'], ['Join Telegram', 'https://t.me/jkedusphere']];
+const NOTE: Record<string, string> = {
+  polity: 'Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them.',
+};
+const NOTE_DEFAULT = 'Prepared for exam revision from standard sources, official publications and the Census. Figures and recent developments change, so check official sources before relying on them.';
 
 type Topic = { id: string; title: string; unit: string; html: string; mins: number };
 type Unit = { title: string; topics: Topic[] };
@@ -44,7 +56,7 @@ function inline(raw: string): string {
 const BOX: Record<string, string> = { tip: 'Exam tip', key: 'Key facts', jk: 'J&K corner', mem: 'Memory trick', new: 'Recent update', note: 'Note' };
 const LIST = /^(\s*)([-*]|\d+[.)])\s+(.*)$/;
 const isList = (l: string) => LIST.test(l);
-const special = (l: string) => /^(#{3,4}\s|\||:::|>\s?|---+\s*$)/.test(l) || isList(l);
+const special = (l: string) => /^(@map\s|#{3,4}\s|\||:::|>\s?|---+\s*$)/.test(l) || isList(l);
 
 function cells(line: string): string[] {
   let t = line.trim();
@@ -96,6 +108,8 @@ function render(lines: string[], tid: string): string {
       out.push(`<aside class="bx ${kind}"><div class="bx-t">${esc(box[2] || BOX[kind])}</div>${render(inner, tid)}</aside>`);
       continue;
     }
+    const mp = ln.match(/^@map\s+([\w-]+)\s*(?:\|\s*(.*))?$/);
+    if (mp) { const svg = MAPS[mp[1]]; if (!svg) throw new Error('Unknown map: ' + mp[1]); out.push(`<figure class="nm">${svg}<figcaption>${inline(mp[2] || '')}</figcaption></figure>`); i++; continue; }
     const h = ln.match(/^(#{3,4})\s+(.+)$/);
     if (h) { out.push(`<h${h[1].length} id="${tid}-${slugify(h[2])}">${inline(h[2])}</h${h[1].length}>`); i++; continue; }
 
@@ -175,6 +189,7 @@ const CSS = `
 .nt-topic{scroll-margin-top:calc(var(--hh,76px) + 18px);padding:4px 0 34px;margin-bottom:34px;border-bottom:1px solid var(--line)}
 .nt-topic>.nt-t{font-size:clamp(25px,3.6vw,34px);letter-spacing:-.02em;line-height:1.18}
 .nt-anchor{color:var(--sky);text-decoration:none;margin-right:6px;font-weight:700;opacity:.0;transition:opacity .15s}
+.nm{margin:18px 0 24px;overflow-x:auto;-webkit-overflow-scrolling:touch}.nm svg{display:block;width:100%;min-width:640px;height:auto;border:1px solid var(--line);border-radius:12px;background:#f4f9fd}.nm figcaption{font-size:13px;color:var(--mut);margin-top:8px;line-height:1.5}
 .nt-meta{font-size:13.5px;color:var(--mut);margin:6px 0 18px}
 .nt-body{font-size:17px;line-height:1.75}
 .nt-body h3,.nt-body h4{scroll-margin-top:calc(var(--hh,76px) + 18px)}
@@ -323,8 +338,8 @@ ${head}
 <article class="nt-main">
 ${main}
 <section class="nt-end"><h2>Keep practising</h2><p>Notes are only half the work. Test yourself with questions and discuss doubts with other aspirants.</p>
-<div class="nt-cta"><a class="btn" href="https://jkedusphere.com">Free mock tests</a><a class="btn o" href="/polity-foundation-mock-test-jkpsc">Polity mock test</a><a class="btn o" href="https://t.me/jkedusphere">Join Telegram</a></div>
-<p class="nt-small">Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them. Found a mistake? <a href="/contact-us">Tell us</a>.</p></section>
+<div class="nt-cta">${(CTA[sub.slug] || CTA_DEFAULT).map(([l, h], k) => `<a class="btn${k ? ' o' : ''}" href="${esc(h)}">${esc(l)}</a>`).join('')}</div>
+<p class="nt-small">${esc(NOTE[sub.slug] || NOTE_DEFAULT)} Found a mistake? <a href="/contact-us">Tell us</a>.</p></section>
 </article></div>
 <script>${js(b.flat.map((x) => x.id), b.flat[0].id, base)}</script>`;
       const title = first ? sub.title : `${t.title}: ${sub.short} Notes | JKEdusphere`;
