@@ -204,7 +204,9 @@ const CSS = `
 .nt-body blockquote{margin:18px 0;padding:6px 18px;border-left:4px solid var(--sky);color:var(--mut);font-style:italic}
 .nt-body hr{border:0;border-top:1px solid var(--line);margin:24px 0}
 .tw{overflow-x:auto;margin:0 0 20px;border:1px solid var(--line);border-radius:10px;-webkit-overflow-scrolling:touch}
-.tw table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
+.tw table{width:100%;min-width:560px;border-collapse:collapse;font-size:15px;line-height:1.5}
+.tw th,.tw td{overflow-wrap:normal;word-break:normal;hyphens:none}
+.tw td:first-child{min-width:96px}
 .tw th,.tw td{text-align:left;vertical-align:top;padding:9px 13px;border-top:1px solid var(--line)}
 .tw thead th{background:var(--soft);color:var(--navy);border-top:0;font-weight:900;white-space:nowrap}
 .tw tbody tr:first-child td{border-top:0}
