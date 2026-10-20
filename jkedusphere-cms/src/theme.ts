@@ -101,8 +101,9 @@ footer p{max-width:44em;margin:14px 0 0}footer nav{display:flex;flex-wrap:wrap;g
 .lp{padding-top:20px;padding-bottom:40px}.lp h1{font-size:clamp(28px,4vw,40px)}.s2{color:var(--mut);margin:8px 0 0}
 .pager{display:flex;gap:12px;margin-top:26px}
 .pg{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:36px;padding-top:12px;padding-bottom:48px}
-@media(max-width:900px){.pg{grid-template-columns:1fr}}
+@media(max-width:900px){.pg{grid-template-columns:minmax(0,1fr)}}
 .art h1{font-size:clamp(28px,4.2vw,42px);letter-spacing:-.02em;margin:10px 0 8px}.art .tag{margin:0}
+.art{min-width:0}
 .meta{color:var(--mut);font-size:14.5px;margin:0 0 18px}
 .hero-img{width:100%;height:auto;border-radius:8px;border:1px solid var(--line);margin:0 0 20px}
 .glance{border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;margin:0 0 24px;overflow:hidden}
