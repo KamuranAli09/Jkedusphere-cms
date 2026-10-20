@@ -223,6 +223,8 @@ const feed = (id: string) => (d: any, c: Ctx) => {
 const MENU_JS = `<script>(function(){var b=document.querySelector('.mb'),d=document.getElementById('drawer');if(!b||!d)return;function o(x){d.hidden=!x;b.setAttribute('aria-expanded',x?'true':'false');document.documentElement.style.overflow=x?'hidden':''}b.onclick=function(){o(d.hidden)};d.addEventListener('click',function(e){if(e.target.closest('[data-x]')||e.target.closest('a'))o(false)});document.addEventListener('keydown',function(e){if(e.key==='Escape')o(false)})})();</script>`;
 // Hero cards: dots follow the swipe and jump to a card when tapped
 const HERO_JS = `<script>(function(){var c=document.querySelector('.hc');if(!c)return;var t=c.querySelector('.ht'),ds=c.querySelectorAll('.hd button'),k=t.children;function s(){return k[1]?k[1].offsetLeft-k[0].offsetLeft:(k[0].offsetWidth||1)}function u(){var i=Math.round(t.scrollLeft/s());ds.forEach(function(b,j){b.className=j===i?'on':''})}ds.forEach(function(b,j){b.onclick=function(){t.scrollTo({left:j*s(),behavior:'smooth'})}});t.addEventListener('scroll',u,{passive:true});u()})();</script>`;
+// Scroll reveal: blocks below the fold fade and slide up the first time they scroll into view
+const REVEAL_JS = `<script>(function(){if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var q='.sh,.sh2,.lib .lh,.ll a,.vc,.gs a,.bc,.how>div,.mag,.lst,.join,.faq details,.ft,.fg,.cta,.glance,.box2,.car,.tr';var els=[].slice.call(document.querySelectorAll(q)).filter(function(e){return e.getBoundingClientRect().top>innerHeight*.92});if(!els.length)return;document.documentElement.classList.add('js');var io=new IntersectionObserver(function(es){es.forEach(function(x){if(!x.isIntersecting)return;var e=x.target;io.unobserve(e);e.classList.add('in');setTimeout(function(){e.classList.remove('rv','in');e.style.removeProperty('--d')},1400)})},{rootMargin:'0px 0px -8% 0px',threshold:.05});els.forEach(function(e){var i=[].indexOf.call(e.parentNode.children,e);e.style.setProperty('--d',Math.min(i,6)*70+'ms');e.classList.add('rv');io.observe(e)})})();</script>`;
 const R: Record<string, (d: any, c: Ctx) => string> = {
   header: (d) => {
     const nav = (d.nav ?? []) as any[], strip = (d.strip ?? []) as any[];
@@ -315,7 +317,7 @@ async function renderHome(db: D1Database, origin: string) {
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>
 ${body}
-</body></html>`;
+${REVEAL_JS}</body></html>`;
 }
 
 
@@ -332,7 +334,7 @@ ${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g
 ${R.header(L.data('header'), ctx)}
 <main>${o.body}</main>
 ${R.footer(L.data('footer'), ctx)}
-</body></html>`;
+${REVEAL_JS}</body></html>`;
 }
 
 // ---------------------------------------------------------------------------------------------

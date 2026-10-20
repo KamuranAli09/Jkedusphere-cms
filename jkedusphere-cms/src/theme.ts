@@ -188,7 +188,8 @@ section.s{margin-top:88px}
 .vt{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--mut);font-weight:500}
 .vt span{background:var(--soft2);color:var(--navy);padding:3px 11px;border-radius:99px;font-weight:600}
 .vc h3{font-size:18.5px;font-weight:650;line-height:1.35;margin:16px 0 8px;letter-spacing:-.015em}
-.vc p{margin:0 0 16px;color:var(--mut);font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.vc p{display:none}
+.vc h3{margin-bottom:18px}
 .vc>a{margin-top:auto;font-weight:600;font-size:14.5px;color:var(--blue);text-decoration:none}
 .vc a::after{content:"";position:absolute;inset:0;border-radius:inherit}
 .vc a:hover{text-decoration:underline;text-underline-offset:4px}
@@ -337,6 +338,11 @@ footer.fd .fz a:hover{color:var(--blue)}
 .prose .jke-step-num{font-weight:800;font-size:24px;color:var(--blue)}
 .prose .jke-faq-q{font-weight:600;border-left:3px solid var(--blue);padding-left:12px;margin:16px 0 4px}
 .prose .jke-faq-a{padding-left:15px;color:var(--mut)}
+
+/* ---- Scroll reveal (class added by a small script, so no-JS visitors see everything) ---- */
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
 
 /* ---- Responsive ---- */
 @media(max-width:980px){
