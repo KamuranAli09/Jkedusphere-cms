@@ -339,6 +339,33 @@ footer.fd .fz a:hover{color:var(--blue)}
 .prose .jke-faq-q{font-weight:600;border-left:3px solid var(--blue);padding-left:12px;margin:16px 0 4px}
 .prose .jke-faq-a{padding-left:15px;color:var(--mut)}
 
+
+/* ---- Search: live suggestions and results ---- */
+mark{background:rgba(104,187,234,.3);color:inherit;padding:0 2px;border-radius:4px}
+.sg{position:fixed;z-index:50;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 22px 50px -18px rgba(14,22,48,.3);padding:6px;max-height:min(70vh,440px);overflow:auto}
+.sg[hidden]{display:none}
+.sg a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 14px;border-radius:14px;text-decoration:none;color:var(--ink)}
+.sg a b{font-weight:600;font-size:15px;min-width:0;line-height:1.35}
+.sg a small{flex:none;max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut);font-size:12.5px;background:var(--soft);padding:2px 10px;border-radius:99px}
+.sg a:hover,.sg a.on{background:var(--soft)}
+.sg a.all{justify-content:center;color:var(--blue);font-weight:600;font-size:14.5px;border-top:1px solid var(--line);border-radius:0 0 14px 14px;margin-top:4px}
+.st{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}
+.st a{padding:7px 16px;border-radius:99px;border:1px solid var(--line2);font-size:14px;font-weight:600;color:var(--mut);text-decoration:none;transition:background .15s}
+.st a:hover{background:var(--soft)}
+.st a span{margin-left:4px;font-weight:500;color:#8590a8}
+.st a.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.st a.on span{color:#c9d3f0}
+.srl{display:flex;flex-direction:column}
+.sr{padding:22px 0;border-bottom:1px solid var(--line)}
+.sr-m{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);margin-bottom:8px}
+.sr-m .tag{margin:0}
+.sr h3{font-size:20px;font-weight:650;line-height:1.3;margin:0 0 6px}
+.sr h3 a{text-decoration:none}
+.sr h3 a:hover{color:var(--blue)}
+.sr p{margin:0;color:var(--mut);font-size:15.5px;max-width:46em}
+.sr small{display:block;margin-top:6px;color:#8590a8;font-size:13px}
+.sr-none h2{font-size:24px}
+
 /* ---- Scroll reveal (class added by a small script, so no-JS visitors see everything) ---- */
 .js .rv{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
 .js .rv.in{opacity:1;transform:none}

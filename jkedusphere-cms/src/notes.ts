@@ -316,6 +316,16 @@ export function notesPaths(): { path: string; lastmod: string }[] {
   return SUBJECTS.flatMap((sub) => built(sub).flat.map((t, i) => ({ path: i === 0 ? '/' + sub.slug : `/${sub.slug}/${t.id}`, lastmod: sub.updated })));
 }
 
+
+// ---------- Plain-text index of every notes topic, used by site search ----------
+export const plainText = (h: string) => h.replace(/<(script|style|svg)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+export type NoteHit = { url: string; title: string; where: string; text: string };
+let NOTE_INDEX: NoteHit[] | null = null;
+export function notesIndex(): NoteHit[] {
+  if (!NOTE_INDEX) NOTE_INDEX = SUBJECTS.flatMap((sub) => built(sub).flat.map((t, i) => ({ url: i === 0 ? '/' + sub.slug : `/${sub.slug}/${t.id}`, title: t.title, where: sub.short + ' notes', text: plainText(t.html) })));
+  return NOTE_INDEX;
+}
+
 export function registerNotes(app: Hono<Env>) {
   for (const sub of SUBJECTS) {
     const base = '/' + sub.slug;

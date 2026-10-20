@@ -3,7 +3,7 @@ import type { Env } from './types';
 import { siteOrigin } from './types';
 import { slugify } from './content';
 import { esc, href, load, resolve, shell } from './homepage';
-import { notesPaths } from './notes';
+import { notesPaths, notesIndex, plainText } from './notes';
 
 const IST = 5.5 * 3600 * 1000;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -31,6 +31,102 @@ async function published(db: D1Database, where: string, binds: (string | number)
   const sql = `SELECT id,title,slug,excerpt,category,published_at FROM posts WHERE status='published' AND published_at <= ?${where} ORDER BY published_at DESC LIMIT ? OFFSET ?`;
   const rows = (await db.prepare(sql).bind(now(), ...binds, PER + 1, (page - 1) * PER).all()).results as Row[];
   return { rows: rows.slice(0, PER), more: rows.length > PER };
+}
+
+// ---------------------------------------------------------------------------------------------
+// Site search: looks inside post bodies, page bodies and the subject notes, ranks the results,
+// and returns a short snippet around the match. Every word must match somewhere (AND).
+// "quoted text" is treated as one exact phrase.
+// ---------------------------------------------------------------------------------------------
+type Hit = { kind: 'post' | 'page' | 'note'; title: string; url: string; score: number; label: string; when: string; ts: number; snip: string };
+const LIKE = (t: string) => '%' + t.replace(/[\\%_]/g, (m) => '\\' + m) + '%';
+const ESC = "ESCAPE '\\'";
+function queryTerms(q: string): string[] {
+  const all: string[] = [];
+  for (const m of q.matchAll(/"([^"]+)"|(\S+)/g)) { const t = (m[1] ?? m[2]).trim().toLowerCase(); if (t && !all.includes(t)) all.push(t); }
+  const long = all.filter((t) => t.length > 1);
+  return (long.length ? long : all).slice(0, 6);
+}
+const rx = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const mark = (text: string, ts: string[]) => {
+  if (!ts.length) return esc(text);
+  return text.split(new RegExp('(' + ts.map(rx).join('|') + ')', 'gi')).map((p, i) => (i % 2 ? `<mark>${esc(p)}</mark>` : esc(p))).join('');
+};
+// Cleans a slice of raw HTML (it may start or end in the middle of a tag) into readable text
+const clean = (raw: string) => plainText(String(raw ?? '').replace(/^[^<]*>/, ' ').replace(/<[^>]*$/, ' '));
+const around = (text: string, ts: string[]) => {
+  const low = text.toLowerCase(); let at = -1;
+  for (const t of ts) { const i = low.indexOf(t); if (i >= 0 && (at < 0 || i < at)) at = i; }
+  if (at < 0) return text.slice(0, 220) + (text.length > 220 ? '...' : '');
+  const a = Math.max(0, at - 80), b = Math.min(text.length, at + 200);
+  return (a > 0 ? '...' : '') + text.slice(a, b).trim() + (b < text.length ? '...' : '');
+};
+
+async function searchAll(db: D1Database, q: string): Promise<{ hits: Hit[]; ts: string[] }> {
+  const ts = queryTerms(q), hits: Hit[] = [];
+  if (!ts.length) return { hits, ts };
+  const phrase = ts.length > 1 ? q.toLowerCase().replace(/"/g, '').trim() : '';
+  const run = async <T>(sql: string, binds: (string | number)[]) => { try { return ((await db.prepare(sql).bind(...binds).all()).results ?? []) as unknown as T[]; } catch { return [] as T[]; } };
+
+  // Posts: title, excerpt, tags, category and the full body
+  {
+    const score = ts.map(() => `(CASE WHEN title LIKE ? ${ESC} THEN 10 ELSE 0 END + CASE WHEN tags LIKE ? ${ESC} THEN 5 ELSE 0 END + CASE WHEN category LIKE ? ${ESC} THEN 4 ELSE 0 END + CASE WHEN excerpt LIKE ? ${ESC} THEN 3 ELSE 0 END + CASE WHEN body LIKE ? ${ESC} THEN 1 ELSE 0 END)`).join(' + ')
+      + (phrase ? ` + (CASE WHEN title LIKE ? ${ESC} THEN 20 ELSE 0 END)` : '');
+    const sBinds: string[] = ts.flatMap((t) => [LIKE(t), LIKE(t), LIKE(t), LIKE(t), LIKE(t)]).concat(phrase ? [LIKE(phrase)] : []);
+    const anchors = ts.slice(0, 3);
+    const snip = `CASE ${anchors.map(() => 'WHEN instr(lower(body), ?) > 0 THEN substr(body, max(1, instr(lower(body), ?) - 90), 360)').join(' ')} ELSE substr(COALESCE(NULLIF(excerpt, ''), body), 1, 300) END`;
+    const snipBinds = anchors.flatMap((t) => [t, t]);
+    const where = ts.map(() => `(title LIKE ? ${ESC} OR excerpt LIKE ? ${ESC} OR tags LIKE ? ${ESC} OR category LIKE ? ${ESC} OR body LIKE ? ${ESC})`).join(' AND ');
+    const wBinds = ts.flatMap((t) => [LIKE(t), LIKE(t), LIKE(t), LIKE(t), LIKE(t)]);
+    const rows = await run<Row>(`SELECT title, slug, category, published_at, (${score}) AS score, ${snip} AS snip FROM posts WHERE status = 'published' AND published_at <= ? AND ${where} ORDER BY score DESC, published_at DESC LIMIT 80`,
+      [...sBinds, ...snipBinds, now(), ...wBinds]);
+    for (const r of rows) hits.push({ kind: 'post', title: r.title, url: '/' + r.slug, score: Number(r.score) + 1, label: r.category || 'Post', when: day(r.published_at), ts: r.published_at, snip: around(clean(r.snip), ts) });
+  }
+
+  // Pages (About, Contact, Privacy and so on)
+  {
+    const score = ts.map(() => `(CASE WHEN title LIKE ? ${ESC} THEN 10 ELSE 0 END + CASE WHEN seo_description LIKE ? ${ESC} THEN 3 ELSE 0 END + CASE WHEN body LIKE ? ${ESC} THEN 1 ELSE 0 END)`).join(' + ');
+    const sBinds = ts.flatMap((t) => [LIKE(t), LIKE(t), LIKE(t)]);
+    const anchors = ts.slice(0, 3);
+    const snip = `CASE ${anchors.map(() => 'WHEN instr(lower(body), ?) > 0 THEN substr(body, max(1, instr(lower(body), ?) - 90), 360)').join(' ')} ELSE substr(COALESCE(NULLIF(seo_description, ''), body), 1, 300) END`;
+    const where = ts.map(() => `(title LIKE ? ${ESC} OR seo_description LIKE ? ${ESC} OR body LIKE ? ${ESC})`).join(' AND ');
+    const rows = await run<Row>(`SELECT title, slug, (${score}) AS score, ${snip} AS snip FROM pages WHERE ${where} ORDER BY score DESC LIMIT 20`,
+      [...sBinds, ...anchors.flatMap((t) => [t, t]), ...ts.flatMap((t) => [LIKE(t), LIKE(t), LIKE(t)])]);
+    for (const r of rows) hits.push({ kind: 'page', title: r.title, url: '/' + r.slug, score: Number(r.score), label: 'Page', when: '', ts: 0, snip: around(clean(r.snip), ts) });
+  }
+
+  // Subject notes (Polity, J&K Geography and any you add later)
+  try {
+    for (const n of notesIndex()) {
+      const low = n.text.toLowerCase(), tl = n.title.toLowerCase();
+      if (!ts.every((t) => tl.includes(t) || low.includes(t))) continue;
+      let score = 1;
+      for (const t of ts) { if (tl.includes(t)) score += 10; const c = low.split(t).length - 1; score += Math.min(c, 5) * 0.4; }
+      if (phrase && tl.includes(phrase)) score += 20;
+      hits.push({ kind: 'note', title: n.title, url: n.url, score, label: n.where, when: '', ts: 0, snip: around(n.text, ts) });
+    }
+  } catch { /* notes are optional */ }
+
+  hits.sort((a, b) => b.score - a.score || b.ts - a.ts);
+  return { hits: hits.slice(0, 120), ts };
+}
+
+const KINDS: [string, string][] = [['', 'All'], ['post', 'Posts'], ['note', 'Notes'], ['page', 'Pages']];
+function searchBody(q: string, type: string, hits: Hit[], ts: string[], page: number) {
+  const counts: Record<string, number> = { '': hits.length, post: 0, note: 0, page: 0 };
+  hits.forEach((h) => { counts[h.kind]++; });
+  const shown = type ? hits.filter((h) => h.kind === type) : hits;
+  const rows = shown.slice((page - 1) * PER, page * PER), more = shown.length > page * PER;
+  const base = `/search?q=${encodeURIComponent(q)}${type ? '&type=' + type : ''}`;
+  const form = `<form class="search" action="/search" role="search" style="margin:20px 0 22px"><input type="search" name="q" value="${esc(q)}" placeholder="Search posts, notes, pages and anything inside them" aria-label="Search" autocomplete="off"><button type="submit">Search</button></form>`;
+  const tabs = q && hits.length ? `<div class="st" role="tablist">${KINDS.filter(([k]) => !k || counts[k]).map(([k, l]) => `<a href="/search?q=${encodeURIComponent(q)}${k ? '&type=' + k : ''}"${k === type ? ' class="on" aria-current="true"' : ''}>${l} <span>${counts[k]}</span></a>`).join('')}</div>` : '';
+  const item = (h: Hit) => `<article class="sr"><div class="sr-m"><span class="tag">${esc(h.label)}</span>${h.when ? `<span>${esc(h.when)}</span>` : ''}</div><h3><a href="${esc(h.url)}">${mark(h.title, ts)}</a></h3>${h.snip ? `<p>${mark(h.snip, ts)}</p>` : ''}<small>${esc(h.url)}</small></article>`;
+  let main: string;
+  if (!q) main = `<p class="s2">Type a word or phrase. We search titles, full post text, notes and pages. Use "quotes" for an exact phrase.</p><div class="chips" style="margin-top:18px">${CATS.map((x) => `<a href="${catUrl(x)}">${esc(x)}</a>`).join('')}</div>`;
+  else if (!shown.length) main = `<div class="sr-none"><h2>No results for "${esc(q)}"</h2><p class="s2">Try fewer or different words, check the spelling, or browse a category.</p><div class="chips" style="margin-top:16px">${CATS.map((x) => `<a href="${catUrl(x)}">${esc(x)}</a>`).join('')}</div></div>`;
+  else main = `<p class="s2" style="margin-bottom:6px">${shown.length}${hits.length >= 120 ? '+' : ''} result${shown.length === 1 ? '' : 's'} for "${esc(q)}"</p>${tabs}<div class="srl">${rows.map(item).join('')}</div>`;
+  const pager = `<div class="pager">${page > 1 ? `<a class="btn o" href="${base}&page=${page - 1}">Previous</a>` : ''}${more ? `<a class="btn" href="${base}&page=${page + 1}">More results</a>` : ''}</div>`;
+  return crumbs([['Home', '/'], ['Search', '/search']]) + `<div class="w lp"><h1>${q ? 'Search results' : 'Search'}</h1>${form}${main}${shown.length ? pager : ''}</div>`;
 }
 
 export function registerPublic(app: Hono<Env>) {
@@ -96,13 +192,28 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
     return c.html(await shell(db, origin(c), { title: 'Page not found | JKEdusphere', description: 'This page could not be found.', canonical: origin(c) + '/', noindex: true, body }), 404);
   };
   app.notFound((c) => notFound(c));
-  // ---------- Search ----------
+  // ---------- Search (full text) ----------
   app.get('/search', async (c) => {
     const q = (c.req.query('q') ?? '').trim().slice(0, 80), page = Math.max(1, parseInt(c.req.query('page') ?? '1', 10) || 1);
-    const like = `%${q}%`;
-    const { rows, more } = q ? await published(c.env.DB, ' AND (title LIKE ? OR excerpt LIKE ? OR tags LIKE ? OR category LIKE ?)', [like, like, like, like], page) : { rows: [], more: false };
-    const body = crumbs([['Home', '/'], ['Search', '/search']]) + listing(q ? `Search results for "${q}"` : 'Search', q ? '' : 'Type a post, exam or scheme name.', rows, q, page, more, `/search?q=${encodeURIComponent(q)}`);
-    return c.html(await shell(c.env.DB, origin(c), { title: `Search${q ? ': ' + q : ''} | JKEdusphere`, description: 'Search vacancies, updates, schemes and current affairs.', canonical: origin(c) + '/search', noindex: true, body }));
+    const t = c.req.query('type') ?? '', type = ['post', 'page', 'note'].includes(t) ? t : '';
+    const { hits, ts } = q ? await searchAll(c.env.DB, q) : { hits: [] as Hit[], ts: [] as string[] };
+    const body = searchBody(q, type, hits, ts, page);
+    return c.html(await shell(c.env.DB, origin(c), { title: `Search${q ? ': ' + q : ''} | JKEdusphere`, description: 'Search vacancies, study notes, updates, schemes and current affairs.', canonical: origin(c) + '/search', noindex: true, body }));
+  });
+
+  // Live suggestions for the search box (titles only, so it stays fast)
+  app.get('/search/suggest', async (c) => {
+    const q = (c.req.query('q') ?? '').trim().slice(0, 60), ts = queryTerms(q), out: { t: string; u: string; k: string }[] = [];
+    const json = (v: unknown) => c.json(v, 200, { 'Cache-Control': 'public, max-age=60' });
+    if (q.length < 2 || !ts.length) return json([]);
+    try {
+      const one = `(title LIKE ? ${ESC} OR tags LIKE ? ${ESC} OR category LIKE ? ${ESC})`;
+      const rows = (await c.env.DB.prepare(`SELECT title, slug, category FROM posts WHERE status = 'published' AND published_at <= ? AND ${ts.map(() => one).join(' AND ')} ORDER BY (CASE WHEN title LIKE ? ${ESC} THEN 0 ELSE 1 END), published_at DESC LIMIT 5`)
+        .bind(now(), ...ts.flatMap((t) => [LIKE(t), LIKE(t), LIKE(t)]), LIKE(ts[0]).slice(1)).all()).results as Row[];
+      rows.forEach((r) => out.push({ t: r.title, u: '/' + r.slug, k: r.category || 'Post' }));
+    } catch { /* ignore */ }
+    try { notesIndex().filter((n) => ts.every((t) => n.title.toLowerCase().includes(t))).slice(0, 4).forEach((n) => out.push({ t: n.title, u: n.url, k: n.where })); } catch { /* ignore */ }
+    return json(out.slice(0, 8));
   });
 
   // ---------- Category ----------

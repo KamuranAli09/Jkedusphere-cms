@@ -223,6 +223,15 @@ const feed = (id: string) => (d: any, c: Ctx) => {
 const MENU_JS = `<script>(function(){var b=document.querySelector('.mb'),d=document.getElementById('drawer');if(!b||!d)return;function o(x){d.hidden=!x;b.setAttribute('aria-expanded',x?'true':'false');document.documentElement.style.overflow=x?'hidden':''}b.onclick=function(){o(d.hidden)};d.addEventListener('click',function(e){if(e.target.closest('[data-x]')||e.target.closest('a'))o(false)});document.addEventListener('keydown',function(e){if(e.key==='Escape')o(false)})})();</script>`;
 // Hero cards: dots follow the swipe and jump to a card when tapped
 const HERO_JS = `<script>(function(){var c=document.querySelector('.hc');if(!c)return;var t=c.querySelector('.ht'),ds=c.querySelectorAll('.hd button'),k=t.children;function s(){return k[1]?k[1].offsetLeft-k[0].offsetLeft:(k[0].offsetWidth||1)}function u(){var i=Math.round(t.scrollLeft/s());ds.forEach(function(b,j){b.className=j===i?'on':''})}ds.forEach(function(b,j){b.onclick=function(){t.scrollTo({left:j*s(),behavior:'smooth'})}});t.addEventListener('scroll',u,{passive:true});u()})();</script>`;
+// Live search suggestions under every search box (titles of posts and notes, fetched from /search/suggest)
+const SUGGEST_JS = `<script>(function(){var inputs=[].slice.call(document.querySelectorAll('form.search input[name=q]'));if(!inputs.length||!window.fetch)return;var box=document.createElement('div');box.className='sg';box.hidden=true;box.setAttribute('role','listbox');document.body.appendChild(box);var cur=null,items=[],act=-1,t,ctl,cache={};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function place(){if(!cur)return;var r=cur.closest('form').getBoundingClientRect();box.style.left=r.left+'px';box.style.top=(r.bottom+8)+'px';box.style.width=r.width+'px'}
+function hide(){box.hidden=true;act=-1}
+function paint(q,list){if(!list.length){hide();return}box.innerHTML=list.map(function(x){return '<a role="option" href="'+esc(x.u)+'"><b>'+esc(x.t)+'</b><small>'+esc(x.k)+'</small></a>'}).join('')+'<a class="all" href="/search?q='+encodeURIComponent(q)+'">See all results for &ldquo;'+esc(q)+'&rdquo;</a>';items=[].slice.call(box.querySelectorAll('a'));act=-1;place();box.hidden=false}
+function go(inp){var q=inp.value.trim();if(q.length<2){hide();return}if(cache[q]){paint(q,cache[q]);return}clearTimeout(t);t=setTimeout(function(){if(ctl)ctl.abort();ctl=new AbortController();fetch('/search/suggest?q='+encodeURIComponent(q),{signal:ctl.signal}).then(function(r){return r.json()}).then(function(l){cache[q]=l;if(cur===inp&&inp.value.trim()===q)paint(q,l)}).catch(function(){})},180)}
+inputs.forEach(function(inp){inp.setAttribute('autocomplete','off');inp.addEventListener('input',function(){cur=inp;go(inp)});inp.addEventListener('focus',function(){cur=inp;if(inp.value.trim().length>1)go(inp)});inp.addEventListener('keydown',function(e){if(box.hidden)return;var n=items.length;if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();act=e.key==='ArrowDown'?(act+1)%n:(act<=0?n-1:act-1);items.forEach(function(a,i){a.classList.toggle('on',i===act)})}else if(e.key==='Enter'&&act>-1){e.preventDefault();location.href=items[act].href}else if(e.key==='Escape')hide()})});
+document.addEventListener('click',function(e){if(!box.contains(e.target)&&!(cur&&cur.contains(e.target)))hide()});addEventListener('resize',place);addEventListener('scroll',function(){if(!box.hidden)place()},{passive:true})})();</script>`;
 // Scroll reveal: blocks below the fold fade and slide up the first time they scroll into view
 const REVEAL_JS = `<script>(function(){if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var q='.sh,.sh2,.lib .lh,.ll a,.vc,.gs a,.bc,.how>div,.mag,.lst,.join,.faq details,.ft,.fg,.cta,.glance,.box2,.car,.tr';var els=[].slice.call(document.querySelectorAll(q)).filter(function(e){return e.getBoundingClientRect().top>innerHeight*.92});if(!els.length)return;document.documentElement.classList.add('js');var io=new IntersectionObserver(function(es){es.forEach(function(x){if(!x.isIntersecting)return;var e=x.target;io.unobserve(e);e.classList.add('in');setTimeout(function(){e.classList.remove('rv','in');e.style.removeProperty('--d')},1400)})},{rootMargin:'0px 0px -8% 0px',threshold:.05});els.forEach(function(e){var i=[].indexOf.call(e.parentNode.children,e);e.style.setProperty('--d',Math.min(i,6)*70+'ms');e.classList.add('rv');io.observe(e)})})();</script>`;
 const R: Record<string, (d: any, c: Ctx) => string> = {
@@ -317,7 +326,7 @@ async function renderHome(db: D1Database, origin: string) {
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>
 ${body}
-${REVEAL_JS}</body></html>`;
+${REVEAL_JS}${SUGGEST_JS}</body></html>`;
 }
 
 
@@ -334,7 +343,7 @@ ${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g
 ${R.header(L.data('header'), ctx)}
 <main>${o.body}</main>
 ${R.footer(L.data('footer'), ctx)}
-${REVEAL_JS}</body></html>`;
+${REVEAL_JS}${SUGGEST_JS}</body></html>`;
 }
 
 // ---------------------------------------------------------------------------------------------
