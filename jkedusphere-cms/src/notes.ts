@@ -7,6 +7,7 @@ import { esc, shell } from './homepage';
 import { POLITY } from './notes-polity';
 import { JKGEO } from './notes-jkgeo';
 import { MAPS } from './notes-maps';
+import { COMPUTER } from './notes-computer';
 
 export type Subject = {
   slug: string;        // address, e.g. 'polity' -> /polity
@@ -20,7 +21,7 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, COMPUTER];
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
 const CTA: Record<string, [string, string][]> = {
@@ -29,6 +30,7 @@ const CTA: Record<string, [string, string][]> = {
 const CTA_DEFAULT: [string, string][] = [['Free mock tests', 'https://jkedusphere.com'], ['Join Telegram', 'https://t.me/jkedusphere']];
 const NOTE: Record<string, string> = {
   polity: 'Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them.',
+  'computer-knowledge': 'Prepared for exam revision from standard computer textbooks, Microsoft documentation and official sources. Features differ between Excel and Word versions (2016, 2019, 2021, 365), so check which version your exam follows.',
 };
 const NOTE_DEFAULT = 'Prepared for exam revision from standard sources, official publications and the Census. Figures and recent developments change, so check official sources before relying on them.';
 
@@ -42,7 +44,9 @@ const safeUrl = (u: string) => (/^(https?:\/\/|\/|#|mailto:)/i.test(u) ? u : '#'
 
 // ---------- Notes format -> HTML ----------
 function inline(raw: string): string {
-  let s = esc(raw);
+  // {{formula}} becomes inline code; stashed first so *, ==, [ ] inside a formula are left alone
+  const codes: string[] = [];
+  let s = esc(raw).replace(/\{\{(.+?)\}\}/g, (_m, c: string) => { codes.push(c); return '\u0001' + (codes.length - 1) + '\u0001'; });
   s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_m, t: string, u: string) => {
     const url = safeUrl(u.replace(/&amp;/g, '&'));
     return `<a href="${esc(url)}"${/^https?:\/\//i.test(url) ? ' target="_blank" rel="noopener"' : ''}>${t}</a>`;
@@ -50,7 +54,8 @@ function inline(raw: string): string {
   s = s.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
   s = s.replace(/(^|[^*\w])\*([^*\s][^*]*?)\*(?![*\w])/g, '$1<em>$2</em>');
   s = s.replace(/==([^=]+?)==/g, '<mark>$1</mark>');
-  return s.replace(/&lt;br&gt;/g, '<br>');
+  s = s.replace(/&lt;br&gt;/g, '<br>');
+  return s.replace(/\u0001(\d+)\u0001/g, (_m, n: string) => '<code>' + codes[+n] + '</code>');
 }
 
 const BOX: Record<string, string> = { tip: 'Exam tip', key: 'Key facts', jk: 'J&K corner', mem: 'Memory trick', new: 'Recent update', note: 'Note' };
@@ -200,6 +205,7 @@ const CSS = `
 .nt-body ul,.nt-body ol{margin:0 0 16px;padding-left:22px}
 .nt-body li{margin:5px 0}
 .nt-body li>ul,.nt-body li>ol{margin:4px 0 6px}
+.nt-body code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:#eef2f8;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--navy);overflow-wrap:anywhere}
 .nt-body mark{background:#fff1b8;padding:0 3px;border-radius:3px;color:inherit}
 .nt-body blockquote{margin:18px 0;padding:6px 18px;border-left:4px solid var(--sky);color:var(--mut);font-style:italic}
 .nt-body hr{border:0;border-top:1px solid var(--line);margin:24px 0}
