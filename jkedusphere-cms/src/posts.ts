@@ -2,7 +2,7 @@ import type { Hono } from 'hono';
 import type { Env } from './types';
 import { siteOrigin } from './types';
 import { slugify } from './content';
-import { esc, href, load, resolve, shell } from './homepage';
+import { DEFAULT_OG, esc, href, load, orgNode, resolve, shell, siteRef, stripMicrodata } from './homepage';
 import { notesPaths, notesIndex, plainText } from './notes';
 
 const IST = 5.5 * 3600 * 1000;
@@ -142,7 +142,7 @@ export function registerPublic(app: Hono<Env>) {
         if (slug && await db.prepare('SELECT 1 AS x FROM posts WHERE slug = ? UNION SELECT 1 FROM pages WHERE slug = ?').bind(slug, slug).first()) return c.redirect(`/${slug}`, 301);
       }
     }
-    const legacy: [RegExp, string][] = [[/^\/p\/premium-notes-store/, 'https://jkedusphere.com'], [/^\/p\/vacanc/, '/category/vacancies'], [/^\/p\/current-affairs/, '/category/current-affairs']];
+    const legacy: [RegExp, string][] = [[/^\/p\/premium-notes-store/, 'https://jkedusphere.com'], [/^\/p\/vacanc/, '/category/vacancies'], [/^\/vacancies$/, '/category/vacancies'], [/^\/p\/current-affairs/, '/category/current-affairs']];
     const hit = legacy.find(([re]) => re.test(path));
     if (hit) return c.redirect(hit[1], 301);
     const r = await db.prepare('SELECT to_path, status FROM redirects WHERE from_path = ?').bind(path).first<{ to_path: string; status: number }>();
@@ -224,7 +224,8 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
     const { rows, more } = await published(c.env.DB, ' AND category = ?', [cat], page);
     const o = origin(c), items: [string, string][] = [['Home', '/'], [cat, catUrl(cat)]];
     return c.html(await shell(c.env.DB, o, { title: `${cat} | JKEdusphere`, description: `Latest ${cat.toLowerCase()} for Jammu & Kashmir aspirants.`, canonical: o + catUrl(cat),
-      ld: { '@context': 'https://schema.org', '@graph': [crumbLd(o, items)] }, body: crumbs(items) + listing(cat, `Latest ${cat.toLowerCase()} for Jammu & Kashmir aspirants.`, rows, '', page, more, catUrl(cat)) }), 200, { 'Cache-Control': 'public, max-age=60' });
+      ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, 'JKEdusphere'), { '@type': 'CollectionPage', '@id': o + catUrl(cat) + '#webpage', url: o + catUrl(cat), name: `${cat} | JKEdusphere`, description: `Latest ${cat.toLowerCase()} for Jammu & Kashmir aspirants.`, inLanguage: 'en-IN', isPartOf: siteRef(o), publisher: { '@id': o + '/#organization' },
+        ...(rows.length ? { mainEntity: { '@type': 'ItemList', itemListElement: rows.map((r: Row, i: number) => ({ '@type': 'ListItem', position: i + 1, url: `${o}/${r.slug}`, name: r.title })) } } : {}) }, crumbLd(o, items)] }, body: crumbs(items) + listing(cat, `Latest ${cat.toLowerCase()} for Jammu & Kashmir aspirants.`, rows, '', page, more, catUrl(cat)) }), 200, { 'Cache-Control': 'public, max-age=60' });
   });
   app.get('/category/:cat/', (c) => c.redirect(`/category/${c.req.param('cat')}`, 301));
 
@@ -262,20 +263,22 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
 <p class="meta">${esc(T.authorLine)}. Published ${day(p.published_at)}${p.updated_at - p.published_at > 86400 ? `, updated ${day(p.updated_at)}` : ''}</p>
 ${showHero ? `<img class="hero-img" src="${esc(p.image)}" alt="${esc(p.image_alt || p.title)}" width="1200" height="630">` : ''}
 ${T.showDates === 'yes' && dates.length ? `<div class="glance"><h2>Important dates</h2><table>${dates.map((d) => `<tr><th>${esc(d.event)}</th><td>${esc(d.date)}</td></tr>`).join('')}</table></div>` : ''}
-<div class="prose">${p.body}</div>${cta}${share}
+<div class="prose">${stripMicrodata(p.body)}</div>${cta}${share}
 ${T.disclaimer ? `<p class="dnote">${esc(T.disclaimer)}</p>` : ''}</article>
 <aside class="side">${related.length ? `<div class="box2"><h2>${esc(T.relatedTitle)}</h2>${related.map((r) => `<a href="/${esc(r.slug)}">${esc(r.title)}<small>${day(r.published_at)}</small></a>`).join('')}</div>` : ''}</aside></div>`;
       const ld = { '@context': 'https://schema.org', '@graph': [
-        { '@type': 'Article', headline: p.title, description: p.seo_description || p.excerpt || '', datePublished: iso(p.published_at), dateModified: iso(p.updated_at), mainEntityOfPage: url,
-          image: p.image ? [abs(o, p.image)] : undefined, author: { '@type': 'Organization', name: site }, publisher: { '@type': 'Organization', name: site } }, crumbLd(o, items)] };
+        orgNode(o, site),
+        { '@type': 'Article', '@id': url + '#article', headline: String(p.title).slice(0, 110), description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, url, datePublished: iso(p.published_at), dateModified: iso(Math.max(p.updated_at, p.published_at)), mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+          image: [p.image ? abs(o, p.image) : o + DEFAULT_OG], inLanguage: 'en-IN', ...(p.category ? { articleSection: p.category } : {}), isPartOf: siteRef(o),
+          author: { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] };
       return c.html(await shell(db, o, { title: p.seo_title || `${p.title} | ${site}`, description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, canonical: url, type: 'article', image: p.image ? abs(o, p.image) : undefined, ld, body }), 200, { 'Cache-Control': 'public, max-age=60' });
     }
 
     const g = await db.prepare('SELECT * FROM pages WHERE slug = ?').bind(slug).first<Row>();
     if (g) {
       const url = `${o}/${g.slug}`, items: [string, string][] = [['Home', '/'], [g.title, `/${g.slug}`]];
-      const body = `${crumbs(items)}<div class="w lp"><article class="art" style="max-width:820px"><h1>${esc(g.title)}</h1><div class="prose">${g.body}</div></article></div>`;
-      return c.html(await shell(db, o, { title: `${g.title} | ${site}`, description: g.seo_description || `${g.title} - ${site}`, canonical: url, ld: { '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', name: g.title, url }, crumbLd(o, items)] }, body }), 200, { 'Cache-Control': 'public, max-age=60' });
+      const body = `${crumbs(items)}<div class="w lp"><article class="art" style="max-width:820px"><h1>${esc(g.title)}</h1><div class="prose">${stripMicrodata(g.body)}</div></article></div>`;
+      return c.html(await shell(db, o, { title: `${g.title} | ${site}`, description: g.seo_description || `${g.title} - ${site}`, canonical: url, ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, site), { '@type': g.slug === 'about-us' ? 'AboutPage' : g.slug === 'contact-us' ? 'ContactPage' : 'WebPage', '@id': url + '#webpage', name: g.title, url, description: g.seo_description || `${g.title} - ${site}`, inLanguage: 'en-IN', isPartOf: siteRef(o), publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] }, body }), 200, { 'Cache-Control': 'public, max-age=60' });
     }
     return notFound(c);
   });

@@ -6,7 +6,7 @@ import { APP_JS } from './editor';
 
 const IST_MS = 5.5 * 3600 * 1000; // admin times are entered/shown in Indian Standard Time
 const CATS = ['Vacancies', 'Current Affairs', 'Govt Schemes', 'Reports', 'Updates', 'Study Material'];
-const RESERVED = new Set(['admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search']);
+const RESERVED = new Set(['admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'llms.txt', 'favicon.svg', 'vacancies']);
 const now = () => Math.floor(Date.now() / 1000);
 
 export const slugify = (s: string) =>

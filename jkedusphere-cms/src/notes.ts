@@ -3,7 +3,7 @@
 import type { Hono } from 'hono';
 import type { Env } from './types';
 import { siteOrigin } from './types';
-import { esc, shell } from './homepage';
+import { DEFAULT_OG, esc, orgNode, shell, siteRef } from './homepage';
 import { POLITY } from './notes-polity';
 import { JKGEO } from './notes-jkgeo';
 import { MAPS } from './notes-maps';
@@ -365,8 +365,9 @@ ${main}
       const description = first ? sub.description : desc(t);
       const crumbLd = [{ '@type': 'ListItem', position: 1, name: 'Home', item: o + '/' }, { '@type': 'ListItem', position: 2, name: sub.short, item: o + base }, ...(first ? [] : [{ '@type': 'ListItem', position: 3, name: t.title, item: url }])];
       const ld = { '@context': 'https://schema.org', '@graph': [
-        { '@type': 'Article', headline: first ? sub.h1 : t.title, description, inLanguage: 'en-IN', datePublished: sub.published, dateModified: sub.updated, mainEntityOfPage: url,
-          author: { '@type': 'Organization', name: 'JKEdusphere' }, publisher: { '@type': 'Organization', name: 'JKEdusphere' } },
+        orgNode(o, 'JKEdusphere'),
+        { '@type': 'Article', '@id': url + '#article', headline: String(first ? sub.h1 : t.title).slice(0, 110), description, url, inLanguage: 'en-IN', datePublished: sub.published, dateModified: sub.updated, mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+          image: [o + DEFAULT_OG], isPartOf: siteRef(o), author: { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } },
         { '@type': 'BreadcrumbList', itemListElement: crumbLd }] };
       return c.html(await shell(c.env.DB, o, { title, description, canonical: url, type: 'article', ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
     };

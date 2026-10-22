@@ -4,6 +4,38 @@ import type { Env } from './types';
 import { siteOrigin } from './types';
 import { adminPage } from './layout';
 import { THEME_CSS } from './theme';
+import { LOGO_PNG_B64, OG_PNG_B64 } from './brand';
+
+// ---------------------------------------------------------------------------------------------
+// Shared SEO helpers (used by every public page so markup stays identical site-wide)
+// ---------------------------------------------------------------------------------------------
+const b64bytes = (b64: string) => Uint8Array.from(atob(b64), (ch) => ch.charCodeAt(0));
+export const DEFAULT_OG = '/og-default.png';
+/** One Organization entity per page; everything else points at it by @id instead of repeating it. */
+export const orgNode = (origin: string, name: string) => ({
+  '@type': 'Organization', '@id': origin + '/#organization', name, url: origin + '/',
+  logo: { '@type': 'ImageObject', '@id': origin + '/#logo', url: origin + '/logo.png', contentUrl: origin + '/logo.png', width: 512, height: 512, caption: name },
+  image: { '@id': origin + '/#logo' },
+});
+/** Self-describing pointer to the site-wide WebSite entity (the full node lives on the homepage). */
+export const siteRef = (origin: string) => ({ '@type': 'WebSite', '@id': origin + '/#website', url: origin + '/', name: 'JKEdusphere' });
+export const siteNode = (origin: string, name: string) => ({
+  '@type': 'WebSite', '@id': origin + '/#website', name, alternateName: 'JKEdusphere.online', url: origin + '/', inLanguage: 'en-IN',
+  publisher: { '@id': origin + '/#organization' },
+  potentialAction: { '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: origin + '/search?q={search_term_string}' }, 'query-input': 'required name=search_term_string' },
+});
+/** Removes schema.org microdata attributes that may sit inside saved post/page HTML, so each page has one clean JSON-LD source of truth. */
+export const stripMicrodata = (h: unknown) => String(h ?? '').replace(/\s(?:itemscope|itemtype|itemprop|itemid|itemref)(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+))?/gi, '');
+/** Open Graph + Twitter Card tags. Every page gets a card and an image (falls back to the default share image). */
+export function socialTags(o: { origin: string; title: string; description: string; url: string; type: string; siteName: string; image?: string }) {
+  const img = o.image ? (o.image.startsWith('/') ? o.origin + o.image : o.image) : o.origin + DEFAULT_OG;
+  const m = (k: string, v: string, attr = 'property') => `<meta ${attr}="${k}" content="${esc(v)}">`;
+  return [
+    m('og:title', o.title), m('og:description', o.description), m('og:type', o.type), m('og:url', o.url), m('og:site_name', o.siteName), m('og:locale', 'en_IN'),
+    m('og:image', img), m('og:image:alt', o.title),
+    m('twitter:card', 'summary_large_image', 'name'), m('twitter:title', o.title, 'name'), m('twitter:description', o.description, 'name'), m('twitter:image', img, 'name'), m('twitter:image:alt', o.title, 'name'),
+  ].join('');
+}
 
 // ---------------------------------------------------------------------------------------------
 // 1. Sections and their editable fields. The admin form AND the public homepage both read this.
@@ -316,12 +348,13 @@ async function renderHome(db: D1Database, origin: string) {
   const ids = ['header', 'hero', ...L.order, 'footer'].filter((id) => !L.hidden.has(id));
   const body = ids.map((id) => R[id](L.data(id), ctx)).join('\n');
   const ld = { '@context': 'https://schema.org', '@graph': [
-    { '@type': 'WebSite', name: seo.siteName, url: origin + '/', potentialAction: { '@type': 'SearchAction', target: origin + '/search?q={q}', 'query-input': 'required name=q' } },
-    { '@type': 'Organization', name: seo.siteName, url: origin + '/' }] };
-  const og = seo.ogImage ? `<meta property="og:image" content="${esc(seo.ogImage.startsWith('/') ? origin + seo.ogImage : seo.ogImage)}"><meta name="twitter:card" content="summary_large_image">` : '';
+    siteNode(origin, seo.siteName),
+    orgNode(origin, seo.siteName),
+    { '@type': 'WebPage', '@id': origin + '/#webpage', url: origin + '/', name: seo.title, description: seo.description, inLanguage: 'en-IN', isPartOf: { '@id': origin + '/#website' }, about: { '@id': origin + '/#organization' }, primaryImageOfPage: { '@id': origin + '/#logo' } }] };
+  const og = socialTags({ origin, title: seo.title, description: seo.description, url: origin + '/', type: 'website', siteName: seo.siteName, image: seo.ogImage || undefined });
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(seo.title)}</title><meta name="description" content="${esc(seo.description)}"><link rel="canonical" href="${esc(origin)}/">
-<meta property="og:title" content="${esc(seo.title)}"><meta property="og:description" content="${esc(seo.description)}"><meta property="og:type" content="website"><meta property="og:url" content="${esc(origin)}/">${og}
+${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script></head><body>
@@ -333,10 +366,10 @@ ${REVEAL_JS}${SUGGEST_JS}</body></html>`;
 export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean }) {
   const L = resolve(await load(db));
   const ctx: Ctx = { latest: [], feeds: {}, counts: {} };
-  const og = o.image ? `<meta property="og:image" content="${esc(o.image)}"><meta name="twitter:card" content="summary_large_image">` : '';
+  const og = socialTags({ origin, title: o.title, description: o.description, url: o.canonical, type: o.type ?? 'website', siteName: L.data('seo').siteName, image: o.image });
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
-<meta property="og:title" content="${esc(o.title)}"><meta property="og:description" content="${esc(o.description)}"><meta property="og:type" content="${o.type ?? 'website'}"><meta property="og:url" content="${esc(o.canonical)}"><meta property="og:site_name" content="${esc(L.data('seo').siteName)}">${og}
+${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
 ${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}</head><body>
@@ -371,6 +404,8 @@ export function registerHomepage(app: Hono<Env>) {
     await next();
   });
   app.get('/favicon.svg', (c) => c.body(FAVICON, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' }));
+  app.get('/logo.png', (c) => c.body(b64bytes(LOGO_PNG_B64), 200, { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800' }));
+  app.get(DEFAULT_OG, (c) => c.body(b64bytes(OG_PNG_B64), 200, { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800' }));
   app.get('/favicon.ico', (c) => c.redirect('/favicon.svg', 301));
   app.get('/assets/theme.css', (c) => c.body(THEME_CSS, 200, { 'Content-Type': 'text/css; charset=utf-8', 'Cache-Control': 'public, max-age=300' }));
 

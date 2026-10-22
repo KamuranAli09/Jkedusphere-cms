@@ -142,13 +142,8 @@ registerContent(app);
 registerHomepage(app);
 registerImporter(app);
 
-// ---------- Public placeholder ----------
-app.get('/', (c) => c.html(html`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>JKEdusphere</title></head>
-  <body style="font-family:system-ui;text-align:center;margin-top:20vh"><h1>JKEdusphere</h1><p>Site coming soon.</p></body></html>`));
-
 app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + siteOrigin(c.req.url) + '/sitemap.xml\n'));
-   registerNotes(app);
-   registerPublic(app);
+registerNotes(app);
 registerPublic(app);
 
 

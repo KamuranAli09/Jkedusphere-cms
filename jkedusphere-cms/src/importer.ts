@@ -4,7 +4,7 @@ import type { Env } from './types';
 import { adminPage } from './layout';
 import { cleanHtml, slugify } from './content';
 
-const RESERVED = new Set(['admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'category']);
+const RESERVED = new Set(['admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'llms.txt', 'favicon.svg', 'vacancies', 'category']);
 const BATCH = 5; // kept small so each request stays well inside Worker limits
 const SAME = new Set(['about-us', 'contact-us', 'privacy-policy', 'disclaimer']);
 
