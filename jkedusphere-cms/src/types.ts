@@ -1,5 +1,5 @@
 export type Env = {
-  Bindings: { DB: D1Database; SETUP_KEY?: string };
+  Bindings: { DB: D1Database; SETUP_KEY?: string; GOOGLE_SERVICE_ACCOUNT?: string; GA4_PROPERTY_ID?: string; GSC_SITE?: string; GA4_HOSTNAME?: string };
   Variables: { user: { id: number; email: string } };
 };
 export const SITE_URL = 'https://www.jkedusphere.online';

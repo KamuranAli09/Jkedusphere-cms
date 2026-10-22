@@ -324,6 +324,13 @@ export function notesPaths(): { path: string; lastmod: string }[] {
 }
 
 
+// Subjects and topics with their addresses, for the admin Notes and Analytics screens
+export type NoteSubject = { slug: string; short: string; h1: string; updated: string; topics: { path: string; id: string; title: string; unit: string; mins: number }[] };
+export function notesCatalog(): NoteSubject[] {
+  return SUBJECTS.map((sub) => ({ slug: sub.slug, short: sub.short, h1: sub.h1, updated: sub.updated,
+    topics: built(sub).flat.map((t, i) => ({ path: i === 0 ? '/' + sub.slug : `/${sub.slug}/${t.id}`, id: t.id, title: t.title, unit: t.unit, mins: t.mins })) }));
+}
+
 // ---------- Plain-text index of every notes topic, used by site search ----------
 export const plainText = (h: string) => h.replace(/<(script|style|svg)[\s\S]*?<\/\1>/gi, ' ').replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 export type NoteHit = { url: string; title: string; where: string; text: string };

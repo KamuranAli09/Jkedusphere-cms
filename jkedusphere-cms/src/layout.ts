@@ -472,7 +472,7 @@ button:focus-visible {
 }
 
 </style></head><body>
-${nav ? html`<header><div><b>JKEdusphere Admin</b><nav><a href="/admin">Dashboard</a><a href="/admin/posts">Posts</a><a href="/admin/categories">Categories</a><a href="/admin/pages">Pages</a><a href="/admin/layout">Layout</a><a href="/admin/import">Import</a></nav></div><form method="post" action="/admin/logout"><button class="ghost">Log out</button></form></header>` : ''}
+${nav ? html`<header><div><b>JKEdusphere Admin</b><nav><a href="/admin">Dashboard</a><a href="/admin/analytics">Analytics</a><a href="/admin/posts">Posts</a><a href="/admin/categories">Categories</a><a href="/admin/pages">Pages</a><a href="/admin/notes">Notes</a><a href="/admin/layout">Layout</a><a href="/admin/import">Import</a></nav></div><form method="post" action="/admin/logout"><button class="ghost">Log out</button></form></header>` : ''}
 <main>${body}</main>
 ${nav ? html`<script src="/admin/assets/app.js" defer></script>` : ''}
 </body></html>`;

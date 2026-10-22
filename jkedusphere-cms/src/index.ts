@@ -10,6 +10,8 @@ import { registerHomepage } from './homepage';
 import { registerPublic } from './posts';
 import { registerImporter } from './importer';
 import { registerNotes } from './notes';
+import { registerAnalytics } from './analytics';
+import { trackMiddleware } from './track';
 
 const app = new Hono<Env>();
 
@@ -28,6 +30,9 @@ app.use('*', async (c, next) => {
     c.header('Cache-Control', 'no-store');
   }
 });
+
+// Count public page views (first-party analytics)
+app.use('*', trackMiddleware);
 
 // Block cross-site form posts
 app.use('*', async (c, next) => {
@@ -119,28 +124,10 @@ app.post('/admin/logout', async (c) => {
   return c.redirect('/admin/login');
 });
 
-// ---------- Dashboard (shell) ----------
-app.get('/admin', async (c) => {
-  const q = (sql: string) => c.env.DB.prepare(sql).first<{ n: number }>().then((r) => r?.n ?? 0);
-  const [published, drafts, pages, views] = await Promise.all([
-    q(`SELECT COUNT(*) AS n FROM posts WHERE status='published' AND published_at <= ${now()}`),
-    q("SELECT COUNT(*) AS n FROM posts WHERE status='draft'"),
-    q('SELECT COUNT(*) AS n FROM pages'),
-    q('SELECT COALESCE(SUM(views),0) AS n FROM posts'),
-  ]);
-  return c.html(adminPage('Dashboard', html`
-    <div class="card"><h2>Welcome, ${c.get('user').email}</h2><p class="muted">Stage 2 is live: post editor, pages manager and image uploads. Analytics and the public theme come next.</p></div>
-    <div class="grid">
-      <div class="card"><div class="stat">${published}</div><div class="muted">Published posts</div></div>
-      <div class="card"><div class="stat">${drafts}</div><div class="muted">Drafts</div></div>
-      <div class="card"><div class="stat">${pages}</div><div class="muted">Pages</div></div>
-      <div class="card"><div class="stat">${views}</div><div class="muted">Total views</div></div>
-    </div>`, true));
-});
-
 registerContent(app);
 registerHomepage(app);
 registerImporter(app);
+registerAnalytics(app); // dashboard, analytics and notes manager
 
 app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + siteOrigin(c.req.url) + '/sitemap.xml\n'));
 registerNotes(app);
