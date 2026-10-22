@@ -37,6 +37,9 @@ function pick(cb){
 var fb=document.getElementById('pickFeatured');
 if(fb){fb.onclick=function(){pick(function(u){var f=document.getElementById('image');f.value=u;var t=document.getElementById('thumb');if(t){t.src=u;t.style.display='block';}});};}
 
+var cs=document.getElementById('category'),nc=document.getElementById('newCategory');
+if(cs&&nc){var tog=function(){var on=cs.value==='__new__';nc.style.display=on?'block':'none';if(on)nc.focus();};cs.addEventListener('change',tog);tog();}
+
 var ed=document.getElementById('editor');if(!ed)return;
 var src=document.getElementById('source'),tb=document.getElementById('toolbar'),form=ed.closest('form'),srcMode=false;
 ed.innerHTML=src.value;

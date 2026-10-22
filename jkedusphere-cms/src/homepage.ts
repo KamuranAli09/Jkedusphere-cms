@@ -3,6 +3,7 @@ import { html } from 'hono/html';
 import type { Env } from './types';
 import { siteOrigin } from './types';
 import { adminPage } from './layout';
+import { getCats } from './categories';
 import { THEME_CSS } from './theme';
 import { LOGO_PNG_B64, OG_PNG_B64 } from './brand';
 
@@ -47,7 +48,6 @@ type Section = { label: string; hint: string; fields: Record<string, Field> };
 const ICON = `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`;
 const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#1b2a6b"/><stop offset="1" stop-color="#63b7ea"/></linearGradient></defs><rect width="64" height="64" rx="14" fill="url(#g)"/><text x="32" y="43" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="800" text-anchor="middle" fill="#fff">JK</text></svg>';
 const GA = ICON + `<script async src="https://www.googletagmanager.com/gtag/js?id=G-V15TG71Q95"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-V15TG71Q95');</script>`;
-const CATS = ['Vacancies', 'Current Affairs', 'Govt Schemes', 'Reports', 'Updates', 'Study Material'];
 const T = (l: string): Field => ({ t: 'text', l });
 const A = (l: string): Field => ({ t: 'area', l });
 const LN = (l: string, cols: string[]): Field => ({ t: 'lines', l, cols });
@@ -55,7 +55,7 @@ const LINK = ['label', 'url'];
 const FEED: Record<string, Field> = {
   title: T('Heading'), subtitle: T('Subheading'), linkText: T('Link text'), linkUrl: T('Link'),
   source: { t: 'select', l: 'Cards come from', opts: ['auto', 'manual'] },
-  category: { t: 'select', l: 'Post category (auto)', opts: CATS }, limit: { t: 'number', l: 'How many cards (auto)' },
+  category: { t: 'select', l: 'Post category (auto)', opts: [] }, limit: { t: 'number', l: 'How many cards (auto)' },
   items: LN('Manual cards', ['body', 'date', 'title', 'note', 'url']),
 };
 
@@ -385,6 +385,10 @@ ${REVEAL_JS}${SUGGEST_JS}</body></html>`;
 const toText = (f: Field, v: any) => (f.t === 'lines' ? ((v ?? []) as any[]).map((o) => f.cols!.map((k) => o[k] ?? '').join(' | ').replace(/( \| )+$/, '')).join('\n') : String(v ?? ''));
 const cell = (s: string) => s.replace(/[\r\n]+/g, ' ').trim().slice(0, 600);
 
+// The category list is editable (Admin > Categories), so fill the 'category' dropdown from the database
+const withCats = (fields: Record<string, Field>, cats: string[]): Record<string, Field> =>
+  Object.fromEntries(Object.entries(fields).map(([k, f]) => [k, k === 'category' && f.t === 'select' ? { ...f, opts: cats } : f]));
+
 function fromForm(f: Field, raw: string, current: any) {
   if (f.t === 'lines') {
     return raw.split('\n').map((l) => l.split('|').map(cell)).filter((a) => a.some(Boolean)).slice(0, 40)
@@ -440,10 +444,11 @@ export function registerHomepage(app: Hono<Env>) {
     const id = c.req.param('id'), s = SECTIONS[id];
     if (!s) return c.text('Not found', 404);
     const d = resolve(await load(c.env.DB)).data(id);
+    const fields = withCats(s.fields, await getCats(c.env.DB));
     return c.html(adminPage(s.label, html`
       <h2>${s.label}</h2>${c.req.query('saved') ? html`<div class="ok">Saved. The homepage updates within a minute.</div>` : ''}
       <form method="post" action="/admin/layout/${id}" class="card">
-        ${Object.entries(s.fields).map(([k, f]) => html`<label>${f.l}${f.t === 'lines' ? html` <span class="muted">(one per line: ${f.cols!.join(' | ')})</span>` : ''}</label>
+        ${Object.entries(fields).map(([k, f]) => html`<label>${f.l}${f.t === 'lines' ? html` <span class="muted">(one per line: ${f.cols!.join(' | ')})</span>` : ''}</label>
           ${f.t === 'area' ? html`<textarea name="${k}" rows="4">${toText(f, d[k])}</textarea>`
             : f.t === 'lines' ? html`<textarea name="${k}" rows="${Math.max(5, Math.min(14, (d[k] ?? []).length + 2))}" style="font-family:ui-monospace,Consolas,monospace;font-size:14px">${toText(f, d[k])}</textarea>`
             : f.t === 'select' ? html`<select name="${k}">${f.opts!.map((o) => (o === d[k] ? html`<option selected>${o}</option>` : html`<option>${o}</option>`))}</select>`
@@ -458,7 +463,7 @@ export function registerHomepage(app: Hono<Env>) {
     const id = c.req.param('id'), s = SECTIONS[id];
     if (!s) return c.text('Not found', 404);
     const f = await c.req.formData(), st = await load(c.env.DB), cur = resolve(st).data(id), next: Record<string, any> = {};
-    for (const [k, fld] of Object.entries(s.fields)) next[k] = fromForm(fld, String(f.get(k) ?? ''), cur[k]);
+    for (const [k, fld] of Object.entries(withCats(s.fields, await getCats(c.env.DB)))) next[k] = fromForm(fld, String(f.get(k) ?? ''), cur[k]);
     st.data = { ...(st.data ?? {}), [id]: next };
     await store(c.env.DB, st);
     return c.redirect(`/admin/layout/${id}?saved=1`);

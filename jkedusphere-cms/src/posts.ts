@@ -4,10 +4,10 @@ import { siteOrigin } from './types';
 import { slugify } from './content';
 import { DEFAULT_OG, esc, href, load, orgNode, resolve, shell, siteRef, stripMicrodata } from './homepage';
 import { notesPaths, notesIndex, plainText } from './notes';
+import { getCats } from './categories';
 
 const IST = 5.5 * 3600 * 1000;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-const CATS = ['Vacancies', 'Current Affairs', 'Govt Schemes', 'Reports', 'Updates', 'Study Material'];
 const now = () => Math.floor(Date.now() / 1000);
 const day = (ts: number) => { const d = new Date(ts * 1000 + IST); return `${d.getUTCDate()} ${MON[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
 const iso = (ts: number) => new Date(ts * 1000).toISOString();
@@ -112,7 +112,7 @@ async function searchAll(db: D1Database, q: string): Promise<{ hits: Hit[]; ts: 
 }
 
 const KINDS: [string, string][] = [['', 'All'], ['post', 'Posts'], ['note', 'Notes'], ['page', 'Pages']];
-function searchBody(q: string, type: string, hits: Hit[], ts: string[], page: number) {
+function searchBody(q: string, type: string, hits: Hit[], ts: string[], page: number, CATS: string[]) {
   const counts: Record<string, number> = { '': hits.length, post: 0, note: 0, page: 0 };
   hits.forEach((h) => { counts[h.kind]++; });
   const shown = type ? hits.filter((h) => h.kind === type) : hits;
@@ -158,6 +158,7 @@ export function registerPublic(app: Hono<Env>) {
     const path = new URL(c.req.url).pathname;
     if (SKIP.test(path)) return c.text('Not found', 404);
     const db = c.env.DB;
+    const CATS = await getCats(db);
     let guess = '';
     try { guess = decodeURIComponent(path.split('/').filter(Boolean).pop() ?? ''); } catch { /* ignore bad encoding */ }
     guess = guess.replace(/\.html?$/i, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim().slice(0, 60);
@@ -197,7 +198,7 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
     const q = (c.req.query('q') ?? '').trim().slice(0, 80), page = Math.max(1, parseInt(c.req.query('page') ?? '1', 10) || 1);
     const t = c.req.query('type') ?? '', type = ['post', 'page', 'note'].includes(t) ? t : '';
     const { hits, ts } = q ? await searchAll(c.env.DB, q) : { hits: [] as Hit[], ts: [] as string[] };
-    const body = searchBody(q, type, hits, ts, page);
+    const body = searchBody(q, type, hits, ts, page, await getCats(c.env.DB));
     return c.html(await shell(c.env.DB, origin(c), { title: `Search${q ? ': ' + q : ''} | JKEdusphere`, description: 'Search vacancies, study notes, updates, schemes and current affairs.', canonical: origin(c) + '/search', noindex: true, body }));
   });
 
@@ -218,7 +219,7 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
 
   // ---------- Category ----------
   app.get('/category/:cat', async (c) => {
-    const cat = CATS.find((x) => slugify(x) === c.req.param('cat'));
+    const cat = (await getCats(c.env.DB)).find((x) => slugify(x) === c.req.param('cat'));
     if (!cat) return notFound(c);
     const page = Math.max(1, parseInt(c.req.query('page') ?? '1', 10) || 1);
     const { rows, more } = await published(c.env.DB, ' AND category = ?', [cat], page);
@@ -232,6 +233,7 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
   // ---------- Sitemap ----------
   app.get('/sitemap.xml', async (c) => {
     const o = origin(c);
+    const CATS = await getCats(c.env.DB);
     const posts = (await c.env.DB.prepare("SELECT slug, updated_at FROM posts WHERE status='published' AND published_at <= ? ORDER BY published_at DESC LIMIT 2000").bind(now()).all()).results as Row[];
     const pages = (await c.env.DB.prepare('SELECT slug, updated_at FROM pages').all()).results as Row[];
     const notes = notesPaths(), notesSet = new Set(notes.map((n) => n.path));

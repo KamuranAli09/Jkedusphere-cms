@@ -3,9 +3,9 @@ import { html } from 'hono/html';
 import type { Env } from './types';
 import { adminPage } from './layout';
 import { APP_JS } from './editor';
+import { getCats, addCat, removeCat, cleanCat } from './categories';
 
 const IST_MS = 5.5 * 3600 * 1000; // admin times are entered/shown in Indian Standard Time
-const CATS = ['Vacancies', 'Current Affairs', 'Govt Schemes', 'Reports', 'Updates', 'Study Material'];
 const RESERVED = new Set(['admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'llms.txt', 'favicon.svg', 'vacancies']);
 const now = () => Math.floor(Date.now() / 1000);
 
@@ -44,14 +44,15 @@ const bodyEditor = (body: string) => html`
 
 type P = Record<string, any>;
 
-const postForm = (p: P, action: string, msg = '', ok = false) => adminPage(p.id ? 'Edit post' : 'New post', html`
+const postForm = (p: P, action: string, cats: string[], msg = '', ok = false) => adminPage(p.id ? 'Edit post' : 'New post', html`
   <h2>${p.id ? 'Edit post' : 'New post'}</h2>
   ${msg ? html`<div class="${ok ? 'ok' : 'err'}">${msg}</div>` : ''}
   <form method="post" action="${action}" class="card">
     <label>Title</label><input name="title" value="${p.title ?? ''}" required maxlength="200">
     <div class="row">
       <div><label>Custom link (slug)</label><input name="slug" value="${p.slug ?? ''}" placeholder="auto from title" maxlength="100"></div>
-      <div><label>Category</label><select name="category"><option value="">- choose -</option>${CATS.map((c) => opt(c, p.category ?? ''))}</select></div>
+      <div><label>Category</label><select name="category" id="category"><option value="">- choose -</option>${(p.category && !cats.includes(p.category) ? [...cats, p.category] : cats).map((c) => opt(c, p.category ?? ''))}<option value="__new__">+ Add new category...</option></select>
+        <input name="new_category" id="newCategory" placeholder="New category name, e.g. Opinion" maxlength="40" style="display:none;margin-top:8px"></div>
     </div>
     <div class="row">
       <div><label>Status</label><select name="status">${opt('draft', p.status ?? 'draft', 'Draft')}${opt('published', p.status ?? 'draft', 'Published')}</select></div>
@@ -78,10 +79,9 @@ function readPost(f: FormData) {
   const g = (k: string) => String(f.get(k) ?? '').trim();
   const dates = g('important_dates').split('\n').map((l) => l.split('|'))
     .map((a) => ({ event: (a[0] ?? '').trim(), date: (a.slice(1).join('|') ?? '').trim() })).filter((d) => d.event);
-  const cat = g('category');
   return {
     title: g('title'), slug: slugify(g('slug') || g('title')), body: cleanHtml(String(f.get('body') ?? '')),
-    excerpt: g('excerpt'), category: CATS.includes(cat) ? cat : '', status: g('status') === 'published' ? 'published' : 'draft',
+    excerpt: g('excerpt'), category: g('category'), newCategory: g('new_category'), status: g('status') === 'published' ? 'published' : 'draft',
     tags: g('tags').split(',').map((s) => s.trim()).filter(Boolean).join(', '),
     image: g('image'), image_alt: g('image_alt'), seo_title: g('seo_title'), seo_description: g('seo_description'),
     important_dates: JSON.stringify(dates), important_dates_text: dates.map((d) => `${d.event} | ${d.date}`).join('\n'),
@@ -136,12 +136,20 @@ export function registerContent(app: Hono<Env>) {
       </table></div>`, true));
   });
 
-  app.get('/admin/posts/new', (c) => c.html(postForm({ status: 'draft' }, '/admin/posts')));
+  app.get('/admin/posts/new', async (c) => c.html(postForm({ status: 'draft' }, '/admin/posts', await getCats(c.env.DB))));
 
   async function savePost(c: any, id: number | null) {
     const p = readPost(await c.req.formData());
-    const back = (msg: string, status: number) => c.html(postForm({ ...p, id }, id ? `/admin/posts/${id}` : '/admin/posts', msg), status);
+    let cats = await getCats(c.env.DB);
+    const back = (msg: string, status: number) => c.html(postForm({ ...p, id, category: p.category === '__new__' ? '' : p.category }, id ? `/admin/posts/${id}` : '/admin/posts', cats, msg), status);
     if (!p.title) return back('Title is required.', 400);
+    if (p.category === '__new__') {
+      const r = await addCat(c.env.DB, p.newCategory);
+      if ('error' in r) return back(r.error, 400);
+      p.category = r.name; cats = await getCats(c.env.DB);
+    } else if (!cats.includes(p.category)) {
+      p.category = '';
+    }
     if (!p.slug || RESERVED.has(p.slug)) return back('That custom link is not allowed. Try a different one.', 400);
     if (await slugTaken(c.env.DB, p.slug, 'posts', id)) return back('Another post or page already uses this custom link.', 409);
     const vals = [p.title, p.slug, p.body, p.excerpt, p.category, p.tags, p.image, p.image_alt, p.seo_title, p.seo_description, p.important_dates, p.status, p.published_at];
@@ -161,12 +169,40 @@ export function registerContent(app: Hono<Env>) {
     const p = await c.env.DB.prepare('SELECT * FROM posts WHERE id = ?').bind(id).first<P>();
     if (!p) return c.text('Not found', 404);
     try { p.important_dates_text = (JSON.parse(p.important_dates || '[]') as P[]).map((d) => `${d.event} | ${d.date}`).join('\n'); } catch { p.important_dates_text = ''; }
-    return c.html(postForm(p, `/admin/posts/${id}`, c.req.query('saved') ? 'Saved.' : '', true));
+    return c.html(postForm(p, `/admin/posts/${id}`, await getCats(c.env.DB), c.req.query('saved') ? 'Saved.' : '', true));
   });
   app.post('/admin/posts/:id', (c) => savePost(c, Number(c.req.param('id'))));
   app.post('/admin/posts/:id/delete', async (c) => {
     await c.env.DB.prepare('DELETE FROM posts WHERE id = ?').bind(Number(c.req.param('id'))).run();
     return c.redirect('/admin/posts');
+  });
+
+  // ---------- Categories ----------
+  const catsPage = async (c: any, msg = '', ok = false) => {
+    const cats = await getCats(c.env.DB);
+    const counts = new Map<string, number>(((await c.env.DB.prepare('SELECT category, COUNT(*) AS n FROM posts GROUP BY category').all()).results as P[]).map((r) => [r.category, r.n]));
+    return adminPage('Categories', html`
+      <h2>Categories</h2>
+      ${msg ? html`<div class="${ok ? 'ok' : 'err'}">${msg}</div>` : ''}
+      <form method="post" action="/admin/categories" class="card">
+        <label>Add a category</label>
+        <div class="row"><div><input name="name" placeholder="e.g. Opinion, Editorial" maxlength="40" required></div><div><button style="margin:0">Add category</button></div></div>
+        <p class="muted">It appears straight away in the post category list. Its public page is /category/&lt;name&gt;.</p>
+      </form>
+      <div class="card" style="padding:6px 14px;overflow:auto"><table><tr><th>Category</th><th>Posts</th><th></th></tr>
+      ${cats.map((x) => html`<tr><td>${x}</td><td>${counts.get(x) ?? 0}</td><td><form method="post" action="/admin/categories/delete" data-confirm="Delete the category ${x}? Homepage sections that use it will show no posts."><input type="hidden" name="name" value="${x}"><button class="danger" style="margin:0;padding:6px 10px">Delete</button></form></td></tr>`)}
+      </table></div>`, true);
+  };
+  app.get('/admin/categories', (c) => catsPage(c).then((r) => c.html(r)));
+  app.post('/admin/categories', async (c) => {
+    const f = await c.req.formData();
+    const r = await addCat(c.env.DB, cleanCat(String(f.get('name') ?? '')));
+    return c.html(await catsPage(c, 'error' in r ? r.error : `Added "${r.name}".`, !('error' in r)), 'error' in r ? 400 : 200);
+  });
+  app.post('/admin/categories/delete', async (c) => {
+    const f = await c.req.formData();
+    const r = await removeCat(c.env.DB, String(f.get('name') ?? ''));
+    return c.html(await catsPage(c, 'error' in r ? r.error : 'Category deleted.', !('error' in r)), 'error' in r ? 400 : 200);
   });
 
   // ---------- Pages ----------
