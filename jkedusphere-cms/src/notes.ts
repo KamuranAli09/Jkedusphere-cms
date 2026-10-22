@@ -8,6 +8,7 @@ import { POLITY } from './notes-polity';
 import { JKGEO } from './notes-jkgeo';
 import { MAPS } from './notes-maps';
 import { COMPUTER } from './notes-computer';
+import { JKHISTORY } from './notes-jkhistory';
 
 export type Subject = {
   slug: string;        // address, e.g. 'polity' -> /polity
@@ -21,7 +22,7 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO, COMPUTER];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER];
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
 const CTA: Record<string, [string, string][]> = {
