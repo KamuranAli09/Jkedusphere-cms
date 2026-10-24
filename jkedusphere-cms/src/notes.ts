@@ -9,6 +9,7 @@ import { JKGEO } from './notes-jkgeo';
 import { MAPS } from './notes-maps';
 import { COMPUTER } from './notes-computer';
 import { JKHISTORY } from './notes-jkhistory';
+import { MODERNHISTORY } from './notes-modernhistory';
 
 export type Subject = {
   slug: string;        // address, e.g. 'polity' -> /polity
@@ -22,7 +23,8 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY];
+
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
 const CTA: Record<string, [string, string][]> = {
@@ -31,7 +33,8 @@ const CTA: Record<string, [string, string][]> = {
 const CTA_DEFAULT: [string, string][] = [['Free mock tests', 'https://jkedusphere.com'], ['Join Telegram', 'https://t.me/jkedusphere']];
 const NOTE: Record<string, string> = {
   polity: 'Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them.',
-  'computer-knowledge': 'Prepared for exam revision from standard computer textbooks, Microsoft documentation and official sources. Features differ between Excel and Word versions (2016, 2019, 2021, 365), so check which version your exam follows.',
+  'computer-knowledge': 'Prepared for exam revision from standard computer textbooks, Microsoft documentation and official sources. Features differ between Excel and Word versions (2016, 2019, 2021, 365) so check which version your exam follows.'
+  ,'modern-indian-history': 'Prepared for exam revision from standard sources such as NCERT, Bipan Chandra, Spectrum and official records. Historians differ on some dates, figures and interpretations, so check your exam syllabus and a standard textbook.',
 };
 const NOTE_DEFAULT = 'Prepared for exam revision from standard sources, official publications and the Census. Figures and recent developments change, so check official sources before relying on them.';
 
