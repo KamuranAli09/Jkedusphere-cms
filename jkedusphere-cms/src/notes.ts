@@ -10,6 +10,8 @@ import { MAPS } from './notes-maps';
 import { COMPUTER } from './notes-computer';
 import { JKHISTORY } from './notes-jkhistory';
 import { MODERNHISTORY } from './notes-modernhistory';
+import { ECONOMY } from './notes-economy';
+import { ECON_CHARTS } from './notes-econ-charts';
 
 export type Subject = {
   slug: string;        // address, e.g. 'polity' -> /polity
@@ -23,7 +25,7 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY];
 
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
@@ -31,9 +33,11 @@ const CTA: Record<string, [string, string][]> = {
   polity: [['Free mock tests', 'https://jkedusphere.com'], ['Polity mock test', '/polity-foundation-mock-test-jkpsc'], ['Join Telegram', 'https://t.me/jkedusphere']],
 };
 const CTA_DEFAULT: [string, string][] = [['Free mock tests', 'https://jkedusphere.com'], ['Join Telegram', 'https://t.me/jkedusphere']];
+const NOTE_ECON = 'Prepared for exam revision from the J&K Economic Survey 2025-26, J&K Budget 2026-27, PRS Legislative Research, NITI Aayog and replies in Parliament and the Legislative Assembly. Figures are advance estimates or latest available and official replies sometimes differ, so check the latest Economic Survey and Budget before relying on them.';
 const NOTE: Record<string, string> = {
   polity: 'Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them.',
   'computer-knowledge': 'Prepared for exam revision from standard computer textbooks, Microsoft documentation and official sources. Features differ between Excel and Word versions (2016, 2019, 2021, 365) so check which version your exam follows.'
+  ,'economy-of-jandk': NOTE_ECON
   ,'modern-indian-history': 'Prepared for exam revision from standard sources such as NCERT, Bipan Chandra, Spectrum and official records. Historians differ on some dates, figures and interpretations, so check your exam syllabus and a standard textbook.',
 };
 const NOTE_DEFAULT = 'Prepared for exam revision from standard sources, official publications and the Census. Figures and recent developments change, so check official sources before relying on them.';
@@ -118,7 +122,7 @@ function render(lines: string[], tid: string): string {
       continue;
     }
     const mp = ln.match(/^@map\s+([\w-]+)\s*(?:\|\s*(.*))?$/);
-    if (mp) { const svg = MAPS[mp[1]]; if (!svg) throw new Error('Unknown map: ' + mp[1]); out.push(`<figure class="nm">${svg}<figcaption>${inline(mp[2] || '')}</figcaption></figure>`); i++; continue; }
+    if (mp) { const svg = MAPS[mp[1]] || ECON_CHARTS[mp[1]]; if (!svg) throw new Error('Unknown map: ' + mp[1]); out.push(`<figure class="nm">${svg}<figcaption>${inline(mp[2] || '')}</figcaption></figure>`); i++; continue; }
     const h = ln.match(/^(#{3,4})\s+(.+)$/);
     if (h) { out.push(`<h${h[1].length} id="${tid}-${slugify(h[2])}">${inline(h[2])}</h${h[1].length}>`); i++; continue; }
 
