@@ -11,7 +11,7 @@ export const JKHISTORY: Subject = {
   description: 'Complete history of J&K and Ladakh from the Stone Age to 2024: Karkotas, Sultans, Mughals, Dogras, 1931, accession, Article 370 and quick revision for JKPSC and JKSSB.',
   intro: 'Topic-wise notes for JKPSC, JKSSB, J&K Police and UPSC: dynasties, rulers, treaties, movements, accession and modern J&K, with timelines and practice questions.',
   published: '2026-10-22',
-  updated: '2026-10-22',
+  updated: '2026-10-25',
   source: String.raw`
 @unit Start Here
 
@@ -28,11 +28,12 @@ These notes cover the **History of Jammu and Kashmir** (including Ladakh and Gil
 | **4. Sultanate Kashmir** | Coming of Islam, Shah Mir dynasty, Zain-ul-Abidin, Chaks, saints and poets, art. |
 | **5. Mughal and Afghan Rule** | Mughal conquest, emperors, gardens, Afghan governors, fall to the Sikhs. |
 | **6. Ladakh, Baltistan and Gilgit** | Ladakh kings, Namgyal dynasty, Zorawar Singh, Gilgit-Baltistan. |
-| **7. Sikh and Dogra Rule** | Sikh governors, Treaty of Amritsar, the five Dogra Maharajas, administration, reforms. |
-| **8. Freedom Struggle and Accession** | 1931, Muslim Conference, National Conference, Naya Kashmir, 1947, accession, first war. |
-| **9. Since 1947** | Sheikh Abdullah era, Article 370, wars, militancy, 2019 changes, 2024 elections. |
-| **10. Culture and Heritage** | Shaivism, Buddhism, Sufism, monuments, literature, crafts, trade routes. |
-| **11. Quick Revision** | Master timeline, dynasty tables, who's who, books, firsts, practice questions. |
+| **7. History of Jammu (Duggar)** | Sources, Jambu Lochan legend, Rai, Dhar and Dev dynasties, Jammu under the Sikhs. |
+| **8. Sikh and Dogra Rule** | Sikh governors, Treaty of Amritsar, the five Dogra Maharajas, administration, reforms. |
+| **9. Freedom Struggle and Accession** | 1931, Muslim Conference, National Conference, Naya Kashmir, 1947, accession, first war. |
+| **10. Since 1947** | Sheikh Abdullah era, Article 370, wars, militancy, 2019 changes, 2024 elections. |
+| **11. Culture and Heritage** | Shaivism, Buddhism, Sufism, monuments, literature, crafts, trade routes. |
+| **12. Quick Revision** | Master timeline, dynasty tables, who's who, books, firsts, practice questions. |
 
 ### Why this subject scores
 
@@ -46,10 +47,14 @@ These notes cover the **History of Jammu and Kashmir** (including Ladakh and Gil
 1. Read **one topic at a time** from the list on the left (or tap **Topics** on a phone).
 2. Make a **one-page timeline** of your own as you go. Rulers and dates stick when you write them.
 3. Read the **Exam tip** boxes, since they hold the points most often asked.
-4. In the last week, use **Unit 11: Quick Revision** only.
+4. In the last week, use **Unit 12: Quick Revision** only.
 
 :::note A word on dates and names
 Early dates are **approximate** because the main source, **Kalhana's Rajatarangini**, mixes legend with history before about 600 CE. Rulers' names are spelt differently in different books (Kalhana or Kalhan, Zain-ul-Abidin or Zainul Abidin). Learn the **sound and the sequence**, and expect the exam to use one of the common spellings.
+:::
+
+:::note Last updated: 25 October 2026
+The notes were **expanded on 25 October 2026** with the full set of details from the **Remo Sir (Study Norms) history notes**: Kashmir's name and sources, Palaeolithic and Neolithic sites, every Hindu dynasty in detail, Shah Mir and Chak rulers, each Mughal and Afghan governor, the **complete history of Jammu**, and the Dogra reforms. Where books **disagree on a date**, both versions are shown. See [Dates That Differ Between Books](#dates-differ).
 :::
 
 :::new How up to date is it?
@@ -121,6 +126,45 @@ The exam loves **"which book covers which period?"**. Remember the chain: **Kalh
 **Kalhana's Rajatarangini** has **8 Tarangas** (chapters) and about **7,800 verses**. Tarangas 7 and 8 (Harsha to Jayasimha) are the **most detailed and the most reliable**, because Kalhana lived through those times.
 :::
 
+### More on the Rajatarangini and the Nilamata Purana
+
+- **Nilamata Purana** is the **earliest known text of Kashmir**. It tells Kashmir's story **before the Rajatarangini era** and says the **Nagas** were the earliest inhabitants.
+- **Kalhana** (Pandit Kalhan) was the **court poet of King Jayasimha** of the Lohara dynasty. He wrote in Sanskrit in **1149 to 1150 CE** (some books give 1148 to 1149).
+- The word **Rajatarangini** means **"river of kings"**.
+- It was **translated into Persian by Mulla Ahmad** on the orders of **Sultan Zain-ul-Abidin** (15th century), and into **English by Sir Aurel Stein** (1900).
+- Under **Akbar**, **Abul Fazl** used some of its material in the **Ain-i-Akbari**.
+- **Jonaraja** carried Kalhana's work forward, **his pupil Srivara** followed, and then **Suka**, up to the time of **Akbar**.
+
+### Persian sources, one by one
+
+| Source | Author | What it is |
+|---|---|---|
+| **Tarikh-i-Kashmir** | **Sayyid Ali** | Written in the time of **Yusuf Shah Chak**. |
+| **Tarikh-i-Kashmir** | **Malik Haidar (Chadura)** | A Kashmiri nobleman at the court of **Yusuf Shah Chak**. Tells the story from **earliest times to about 1617 CE**. |
+| **Waqiat-i-Kashmir** | **Khwaja Muhammad Azam Kaul Didamari** | Growth of **religious life, social trends and literature** under the **Mughals**. |
+| **Muktasar Tarikh-i-Kashmir** | **Pandit Birbal Kachru** | A **short account** of Kashmir under the **Mughals, Afghans and Sikhs**. |
+| **Tarikh-i-Rashidi** | **Mirza Haidar Dughlat** | Mongol and Kashmir history. |
+| **Zafarnama** | **Sharaf-ud-Din Yazdi** | A **Persian biography of Timur**. Shows the relation between **Sultan Sikandar and Timur**. |
+| **Malfuzat-i-Timuri** | **Timur** (autobiography) | Timur speaks of his dealings with **Sikandar of Kashmir**. |
+| **Akbarnama** | **Abul Fazl** | Geography, history, antiquities, administration, farming, arts, industry and economy of Kashmir under the **Shah Miris and Mughals**. |
+| **Tabaqat-i-Akbari** | **Nizamuddin** | Court history of Akbar's reign. |
+| **Tuzuk-i-Jahangiri** | **Emperor Jahangir** | His memoirs, with many pages on Kashmir. |
+| **Kitab-ul-Hind (Tarikh-i-Hind)** | **Al-Biruni** (in **Arabic**) | He came to India with **Mahmud** and lived here for many years. |
+| **Si-Yu-Ki (Buddhist Records of the Western World)** | **Hiuen Tsang (Xuanzang)** | Chinese traveller; **spent two years in Kashmir**. |
+
+### Sources in English
+
+| Book | Author |
+|---|---|
+| **Travels in the Himalayan Provinces** | **William Moorcroft** |
+| **The Jammu and Kashmir Territories** | **Frederic Drew** |
+| **The Valley of Kashmir** | **Walter Lawrence** |
+| **The Land of the Lamas** | **William Rockhill** |
+
+### Sources for Jammu
+
+- Jammu has its own sources, described in [Sources of Jammu History](#jammu-sources).
+
 ## Prehistory: Stone Age and Neolithic Kashmir {#prehistory}
 
 The oldest human traces in J&K come from the **Stone Age**. The best-known sites are in the **Kashmir Valley**, on the flat-topped **Karewa** terraces.
@@ -166,6 +210,32 @@ Burzahom is **not Harappan**. It is a **separate Kashmiri Neolithic culture**, w
 
 :::mem Memory trick
 **B**urzahom = **B**irch, **B**urial of dogs, **B**elow-ground houses. **G**ufkral = **G**uf (cave) of the **G**-potter.
+:::
+
+### Palaeolithic Kashmir: the finds
+
+Very few **human fossils** are known, so **stone tools** are the main proof of early people.
+
+| Find | Place |
+|---|---|
+| A **hand axe** and a **large flake** | **Lidder valley, Pahalgam** |
+| **Choppers, discoids and scrapers** | **Rembiara river valley, Balapura, Shopian** |
+| **Fossils of elephant** | **Sombur (Samboora), Pulwama**, and **Glandar, Pampore** |
+| **Stone tools** | **Bhatchak, Huin, Kalladur and Tapriballa** in **Baramulla** district; **Khan Saheb and Hab Shah Sahib** in **Budgam** |
+
+### Neolithic sites of the Valley
+
+- **Burzahom** is the **earliest Neolithic site** found in the Kashmir Valley.
+- Other Neolithic sites: **Begagund, Gufkral (Pulwama), Hariparigom, Jayadevi-Udar, Olchibag, Pampore, Panzgom, Sombur** and **Thajiwor**.
+- **Finds:** **coarse grey ware, burnished ware, combed ware and gritty red ware**, together with **mace heads and celts** (polished stone axes).
+- **Pit dwellings** were found at **Gufkral, Olchibag and Damodar Udar** (and at Burzahom).
+
+### Megalithic age
+
+- **Menhirs** (large standing stones) have been found at **Burzahom and Gufkral**.
+
+:::tip
+Learn the **list of Neolithic sites** as one line: **Burzahom, Begagund, Gufkral, Hariparigom, Jayadevi-Udar, Olchibag, Pampore, Panzgom, Sombur, Thajiwor**. **Pit dwellings**: Gufkral, Olchibag, Damodar Udar. **Menhirs**: Burzahom, Gufkral.
 :::
 
 ## Harappan Manda and Early Historical Sites {#manda-early-sites}
@@ -234,6 +304,49 @@ Geology agrees with the legend. The Valley **was** a lake in the past, and the *
 For **"first dynasty of Kashmir"** the exam answer is the **Gonanda dynasty** (traditional), and the **first historical** person is **Ashoka** or the Mauryas. Do not mix them.
 :::
 
+### The name Kashmir: more points
+
+- Tradition says Kashmir took its name from the **saint Kashyapa**, who lived by the mountain lake **Satisar**. People called the valley **Kashyap-mar** or **Kashyap-pura**.
+- In Sanskrit, **"Ka"** means **water** and **"shameera"** means **to dry up**. So **Kashmir = land from which water was drained**.
+- **Greeks** called Kashmir **Kasperia**, **Hiuen Tsang** (Chinese) wrote **Ki-Pin**, and **Kashmiris** call their land **Kasheer**.
+
+### The Nagas, the earliest people
+
+- According to the **Nilamata Purana**, the **Nagas** (serpent-worshipping tribe) were the **earliest inhabitants**. They lived on the mountains around **Satisar**.
+- When the **Aryans** came, the Nagas **kept their power for some time**, and the Aryans slowly took over.
+
+### Rulers from the Mahabharata age to 627 CE
+
+| Order | Dynasty or rulers |
+|---|---|
+| 1 | **Gonanda dynasty** |
+| 2 | **Pandu (Pandava) line** (said to rule until the **3rd century BCE**) |
+| 3 | **Mauryas**, 3rd century BCE to about 1st century CE |
+| 4 | **Kushanas**, till about **178 CE** |
+| 5 | **Huns** |
+| 6 | **Second Gonanda dynasty** |
+
+### The Mahabharata period (Kalhana's account)
+
+- Kalhana begins the story **just before the great war**. **Gonanda**, the **first king** in his list, **fought for Jarasandha against Krishna at Mathura** and was **killed** (Kalhana names **Balarama** as the one who killed him).
+- His son **Damodara** was also **defeated by Krishna at Gandhara**. Krishna put **Damodara's pregnant widow Yashovati** on the throne. Her son became **Gonanda II**.
+- Gonanda II was followed by **35 kings**. Some historians link these kings with the **Pandavas**, or with the **ancestors of Maharaja Gulab Singh**.
+
+### The Achaemenians in Kashmir
+
+- Some historians think Kashmir came **under the Achaemenians of Persia** for a time. The key rulers were **Cyrus (558 to 530 BCE)**, **founder of the Persian Empire**, and **Darius**.
+
+### Alexander's invasion (326 BCE)
+
+- By the time **Alexander** invaded in **326 BCE**, the Persians had **lost control** of Kashmir.
+- When Alexander attacked **King Porus**, Kashmir was ruled by king **Abhisara**, who **surrendered** to him.
+- Several **villages in J&K** have **Greek-origin** names. **Mendhar** in **Poonch** is linked to the town of **Menander**.
+- A local story names **Buffliaz** (Poonch, on the **Mughal Road**) as the place where Alexander lost his horse **Bucephalus**. Treat this as **local tradition**.
+
+:::note Where the books differ
+Kalhana says **Balarama** killed Gonanda I; some exam notes say **Krishna**. For multiple-choice, read the options and pick the one the **question's source** uses; if both appear, choose **Krishna** only when Balarama is absent.
+:::
+
 ## The Mauryas and Buddhism in Kashmir {#mauryas-ashoka}
 
 ### Ashoka in Kashmir
@@ -258,6 +371,13 @@ For **"first dynasty of Kashmir"** the exam answer is the **Gonanda dynasty** (t
 :::jk J&K corner
 Ancient **Puranadhisthana** (Pandrethan) was the **capital before Pravarapura (Srinagar)**. The word **Pandrethan** is a form of *Puran-adhishthan*, **"the old capital"**.
 :::
+
+### Ashoka: more details
+
+- **Ashoka** conquered Kashmir (about **250 BCE**, as some notes give) and **introduced Buddhism**.
+- He built the city **Srinagari**. Kalhana calls this capital **Puranadhishthana** ("old capital"), now identified with **Pandrethan**, about **three miles** from today's Srinagar.
+- He built **many viharas and temples**, including a **Shiva temple**, and **repaired an old Shiva temple, Vijayeshwara, at Bijbehara**.
+- After Ashoka, Kashmir was ruled by his son **Jaluka**, and after Jaluka by **Damodara II**.
 
 ## The Kushanas and the Fourth Buddhist Council {#kushanas}
 
@@ -294,6 +414,17 @@ Say **"in Kashmir (Kundalvana, near Harwan), under Kanishka"** for the Fourth Co
 **Kanishka = Kundalvana = Fourth Council.** The three **-pura** towns of the Kushanas: **Kanishkapura, Hushkapura, Jushkapura** (three **K-H-J**).
 :::
 
+### The three Kushana kings and their towns
+
+| Kushana king | Town founded | Modern name |
+|---|---|---|
+| **Huska (Huvishka)** | **Huskapura** | **Ushkur**, Baramulla |
+| **Juska (Jushka)** | **Juskapura** | **Zukur**, Srinagar |
+| **Kanishka** | **Kanishkapura** | **Kanispora**, Baramulla |
+
+- Kushana rule in Kashmir is said to have lasted **till about 178 CE**.
+- **Kanishka's Fourth Buddhist Council** at **Kundalvana (Kashmir)** is said in many textbooks to have led to the **split of Buddhism into two sects: Mahayana and Hinayana**.
+
 ## Huns, Mihirakula and the Gonanda Line {#huns-gonandas}
 
 ### The Huns in Kashmir
@@ -319,6 +450,22 @@ Say **"in Kashmir (Kundalvana, near Harwan), under Kanishka"** for the Fourth Co
 :::tip
 **"Who founded Srinagar?"** The usual exam answer is **Pravarasena II**. If an option says **Ashoka**, check whether the question says "**old** Srinagar" (Pandrethan) or "**present** city" (Pravarapura).
 :::
+
+### More on the Huns (Alchon Huns)
+
+- The **Huns** were a **nomadic people** who set up states in **Central Asia and South Asia** between the **4th and 6th centuries CE**. They were first noticed near **Paropamisus** and then moved **south-east into the Punjab and Central India**.
+- During the **Gupta** period, Kashmir was an **independent principality**. After the **Gupta empire fell**, Kashmir was **captured by the Huns**.
+- Their chief **Mihirakula**, when driven out of the Punjab, **took shelter in Kashmir** and then **seized the throne**.
+- He was **cruel**, **persecuted Buddhists**, **killed monks** and **destroyed many viharas**.
+- Another Hun ruler, **Aksha**, founded **Akshavala**, today's **Achabal (Anantnag)**.
+- A ruler named **Gopaditya** built the **Jyeshteshwara temple**, now called the **Shankaracharya Temple**, on **Gopadri (Gopa Hill)**, as Kalhana records.
+- Some exam notes call **Pravarasena II**, the founder of **Pravarapura (Srinagar)**, a king of the **Alchon Huns line**.
+
+### The Second Gonanda dynasty
+
+- This dynasty ruled **just before the Karkotas**.
+- **Meghavahana** was its **founder** and **Baladitya** its **last king**.
+- After Baladitya's death Kashmir passed to **Durlabhavardhana**, his **son-in-law**, the founder of the **Karkota dynasty**.
 
 @unit Hindu Dynasties of Kashmir
 
@@ -355,6 +502,19 @@ The **Karkota dynasty** was the first great historical dynasty of Kashmir. It tr
 
 :::mem Memory trick
 **D-D-C-T-L**: **D**urlabhavardhana, **D**urlabhaka, **C**handrapida, **T**arapida, **L**alitaditya. The first five Karkota kings, in order.
+:::
+
+### More about the early Karkotas
+
+- **Durlabhavardhana** ruled for about **36 years** and was followed by his son. Some books date the start of the dynasty to **627 CE**, others to **625 CE**; both are in use.
+- **Pratapaditya (Durlabhaka)**, son of Durlabhavardhana (**661 to 711 CE**), **founded Pratapapura** (now **Tapar, Baramulla**). **His coins have been found in Uttar Pradesh**, which shows Kashmir's **economic and political links** with the plains.
+- He had **three sons**, who ruled in turn:
+  1. **Chandrapida (Vajraditya), 711 to 719**. Some exam notes say he was **invaded by Muhammad bin Qasim** (the Arab invasion of Sindh was at this time).
+  2. **Tarapida (Udayaditya), 720 to 724**.
+  3. **Muktapida (Lalitaditya), 724 to 760**.
+
+:::mem Memory trick
+**D-P-C-T-M**: **D**urlabhavardhana, **P**rataparitya (Durlabhaka), **C**handrapida, **T**arapida, **M**uktapida. The three sons are **C-T-M**.
 :::
 
 ## Lalitaditya Muktapida {#lalitaditya}
@@ -394,6 +554,46 @@ Kalhana wrote **four centuries later** and loved a grand tale. The sure points a
 **Martand** means the **Sun**. The village name **Mattan** (Anantnag) comes from it. **Pilgrims** still visit the nearby **spring (Mattan tirtha)**, and **Martand** is among the best-known ruined temples of India.
 :::
 
+### Lalitaditya: the full account (as taught in exam notes)
+
+- He was the **5th ruler** and the **greatest king** of the **Karkota dynasty**, and ruled for **36 years** (724 to 760 CE). He is called the **"Samudragupta of Kashmir"**.
+
+### Conquests
+
+| Area | What is said |
+|---|---|
+| **Kangra and the Punjab** | He held **some districts of Kangra and Punjab**. When he marched across the **plains of the Punjab**, the people **submitted without a fight**. |
+| **Kannauj** | He defeated **Yashovarman**, ruler of Kannauj. His **commander Chankunya** (Chankuna) played a big part. **Punjab, Jalandhar and Kangra** came under him. The poets **Vakpati** and **Bhavabhuti** were **brought from Kannauj to Kashmir**. |
+| **Bengal, Bihar and Orissa** | After Kannauj he began a **world-conquering march (digvijaya)**, reached **Kalinga**, and the **king of Gauda (west Bengal)** accepted his **overlordship** and sent his **elephant** with him. |
+| **South India** | He moved south. The ruler of **Dakshinapatha** was a **Karnata queen named Ratta**, a powerful ruler, who **bowed before him**. |
+| **Dardistan** | Also captured. |
+| **Tibet and Ladakh** | **Tibet** was growing strong and was a **threat**. He turned his army and **captured it**. |
+
+:::note Handle with care
+These far-away conquests come from **Kalhana's poetic account**. Historians accept the **victory over Yashovarman** and the strong hold on the **north-west**, and treat the rest as **exaggeration**.
+:::
+
+### Reforms of Lalitaditya
+
+**Irrigation and farming**
+- Because the **Jhelum had silted up**, Kashmir had **yearly floods**. He **cleared the river bed**.
+- **Swampy land** was made fit for **cultivation**, **embankments** were built for **low-lying fields**, and **many irrigation canals** carried water to villages.
+- Farming flourished and **Kashmir grew prosperous**.
+
+**New towns**
+- He founded **many towns**: **Sunishchatapura** and **Darotpura** (now lost), **Parihaspura** (Baramulla), **Prontsa** (Poonch), **Lalitapura** (modern **Latapur**) and **Lokapunya** (modern **Lokbhavan**).
+- At **Hushkapura (Ushkur)** he built a large **vihara** and **Buddhist temple**, which served as a **rest place for the Chinese traveller Ou-Kong**.
+- Two monuments made his name immortal: the **Martand Sun Temple (Anantnag)** and the city of **Parihaspur**, his capital.
+
+### Lalitaditya: key facts
+
+| Item | Answer |
+|---|---|
+| **Capital** | **Parihaspur (Baramulla district)** |
+| **Court poet** | **Bhavabhuti** |
+| **Commander** | **Chankunya** |
+| **Famous temple** | **Martand (Mattan, Anantnag)** |
+
 ## Later Karkotas and Decline {#later-karkotas}
 
 ### Jayapida (c. 779 to 813)
@@ -419,6 +619,15 @@ Kalhana wrote **four centuries later** and loved a grand tale. The sure points a
 :::tip
 **Bhavabhuti and Vakpati** went from the court of **Yashovarman of Kannauj** to that of **Lalitaditya** after his victory (as Kalhana tells it).
 :::
+
+### More on Jayapida and the fall of the Karkotas
+
+- **Jayapida** was the **last able king** of the Karkotas. He founded **Jayapura**, identified with **Inderkote (Andarkoth) in Sumbal, Bandipora**.
+- **Anangapida** is named in some books as the **last king** of the Karkota line (Kalhana lists **Utpalapida** as the last).
+- After **Lalitaditya**, kings were **weak** and power slipped to ministers such as **Utpala, Padma and Kalyana**. They ruled for **36 years and 9 months**.
+  - **Padma** built **Padmapura** (modern **Pampore**).
+  - **Utpala** built **Utpalapura** (modern **Kakapur**).
+- In the **anarchy**, **Avantivarman**, a **grandson of Utpala**, took over (855 CE).
 
 ## The Utpala Dynasty (855 to 1003 CE) {#utpala}
 
@@ -450,6 +659,55 @@ The **Utpala dynasty** was founded by **Avantivarman** in **855 CE**. Its rule s
 **A-S-A-S**: **A**vantivarman built **A**vantipora; **S**hankaravarman built **S**hankarapura (Pattan). One king, one town.
 :::
 
+### Avantivarman: details from the exam notes
+
+- He brought **political stability and prosperity**. He gave his energy to **public welfare**, **art, architecture and learning**.
+- Two things helped him: he **gave up the policy of conquest**, and he had the **loyalty of his Prime Minister, Sura (Sheru)**.
+
+**Irrigation and farming**
+- His **public works minister Suyya** was a great **engineer**. **Heavy flooding** caused crop failure, and the **price of rice rose** sharply.
+- Suyya **widened and deepened the river channel**, built **embankments** so **rocks and boulders** would not fall into it, and **changed the confluence of the Jhelum and the Sindh**, which had been creating **swamps on good farmland**.
+
+**Towns and temples**
+- **Avantipura** on the Jhelum was founded by Avantivarman. The **Avanteeshwara** temple is dedicated to **Vishnu** in some notes (strictly, **Avantiswami = Vishnu** and **Avantishvara = Shiva**).
+- The Prime Minister **Sura** built a **Sura matha** and a **Shiva temple on the eastern bank of the Dal Lake**, and the town **Surapura (modern Harpor, near Shopian)**.
+- **Suyya** founded **Suyyapura** (modern **Sopore**).
+
+**Learning**
+- He appointed **Ramana**, a famed teacher of **grammar**, in the **Vishnu temple** he founded.
+- **Sivaswamin** wrote the Buddhist text **Kapphanabhyudaya**.
+- Kalhana names scholars such as **Bhatta Kallata** (pupil of **Vasugupta**, founder of Kashmir Shaivism), the poet **Ratnakara** and **Anandavardhana**.
+
+| Avantivarman: key facts | |
+|---|---|
+| **Capital** | **Avantipura** |
+| **Court poets** | **Ratnakara and Anandavardhana** |
+| **Prime Minister** | **Sura (Sheru)** |
+| **Engineer** | **Suyya** |
+| **Temple** | **Avantishvara / Avantiswami** |
+
+### Shankaravarman (883 to 901/902)
+
+- He **revived the policy of conquest (digvijaya)**. He had a very large army (Kalhana gives **9 lakh foot soldiers, 1 lakh horsemen and 300 elephants**).
+- He led an expedition against **Naravardhana of Darvabhisara (Bhimber)**, who fled. He also fought the **Gurjara Pratiharas**.
+- He built **Shankarapura** (modern **Pattan**, Baramulla, about **17 miles from Srinagar**) and two temples, including the **Shankaragaurishvara** temple to Shiva at Pattan.
+- He **introduced forced labour**. He was **killed during the invasion of Hazara**, and his queen **Sugandha** came to the throne.
+
+### Sugandha (904 to 906)
+
+- She was **queen regent** for her son **Gopalavarman** (902 to 904), then was **declared monarch in her own right** in 904, as **Sri Sugandha Deva**.
+
+### Unmattavanti, Suravarman II and the Brahmin interlude
+
+- **Unmattavanti (937 to 939)**, "**Mad Avanti**", murdered his father **Partha** and starved his brother.
+- The **last Utpala king was Suravarman II**. He fled when his commander revolted.
+- A **council of ministers** chose **Yashaskara** as king (**939 to 948**), a period called **Brahmin rule**.
+- Yashaskara was followed by his **infant son Sangrama**, who was **killed by the powerful minister Parvagupta**. Parvagupta began the **Gupta Kula**.
+
+:::note Dates in different books
+Many books count the **Utpala dynasty as 855 to 939** and give **948 to 1003** to the **Parvagupta (Gupta Kula) line** that ends with **Didda**. Others stretch **Utpala** to **1003**. Both appear in exams; the **names and order** are the same.
+:::
+
 ## Queen Didda and the Last Utpalas {#didda}
 
 **Didda** (958 to 1003) is the **most famous queen in the history of Kashmir**.
@@ -474,6 +732,40 @@ The **Utpala dynasty** was founded by **Avantivarman** in **855 CE**. Its rule s
 :::tip
 **Didda** is called the **"Lame Queen"** and the **first powerful woman ruler** of Kashmir. For the exam: **Didda → Sangramaraja → Lohara dynasty (1003)**.
 :::
+
+### The Guptakula dynasty (948 to 1003)
+
+**Parvagupta (948 to 950)**
+- **Founder** of the **Gupta Kula**. He **oppressed the people** and **extorted money by all means**.
+- He built a **Shiva temple, Parvagupteshwara**. He died in **950** and his son **Kshemagupta** followed.
+
+**Kshemagupta (950 to 958)**
+- An **unable ruler** who lived in **luxury**. He **plundered the Jayendra Vihara** and used **molten gold and silver Buddha images** to make **his own deities** in his temple **Kshemagaurisha**.
+
+### Didda: more details
+
+- **Didda**, daughter of **Simharaja**, ruler of **Lohara (Poonch)**, married Kshemagupta (the exam notes say at the age of **26**). She is called the **"Catherine of Kashmir"**. She dominated the scene for **more than half a century** as **queen, queen mother and ruler**.
+
+**As queen**
+- The **real power** was hers, and her husband was a **puppet**. **Coins** carried **both names** (**Didda and Kshemagupta**).
+- She built a Shiva temple, **Bhimakeshwara**, named after her **mother's father**.
+- Kshemagupta died in **958**.
+
+**As queen mother (958 to 980)**
+- She was **guardian** of her infant son **Abhimanyu**, and **took revenge** on those she was jealous of.
+- She **retired the prime minister Phalguna** to **Prontsa (Poonch)**. He was the father of **Chandralekha**, another wife of Kshemagupta.
+- The **commander-in-chief Yashodhara was executed** by Didda. She improved some administration.
+- When Abhimanyu died, her grandson **Nandigupta** was put on the throne. She built **Abhimanyupura**.
+
+**Her works of mercy**
+- She built the Vishnu temple **Diddaswamin**, the towns **Diddapura** and **Kankanapura (modern Kangan, Ganderbal)**, and the **Didda math** in Srinagar.
+- After a year her nature changed and she began a life of **pleasure**. She is said to have **killed Nandigupta by witchcraft**, then another grandson **Tribhuvana**, and openly lived with her lover **Tunga**.
+- After the death of the last grandson **Bhimagupta**, she **crowned herself ruler**.
+
+**As sovereign queen (about 25 years)**
+- She issued **coins in her own name**, and made **Tunga prime minister**.
+- There were revolts, among them that of **Prithvipala of Rajauri**. **Tunga put them down**.
+- With **no heir**, she gave the throne to **Sangramaraja**, her **brother's son**. This ended the **Gupta Kula**.
 
 ## The Lohara Dynasty and Kalhana's Age (1003 to c. 1171 CE) {#lohara}
 
@@ -521,6 +813,17 @@ The **Lohara dynasty** takes its name from the **Lohara fort and valley** (in th
 **S-A-K-H-U-S-J**: **S**angramaraja, **A**nanta, **K**alasha, **H**arsha, **U**ccala, **S**ussala, **J**ayasimha. Seven Lohara kings in order.
 :::
 
+### More from the exam notes
+
+- **Sangramaraja (1003 to 1028)** was the **founder** of the Lohara dynasty and founded the town of **Loharan** (in Poonch).
+- **Harsha (1089 to 1101)** was **not an able ruler**, a **pleasure-loving king**. He **plundered the treasury**, **melted gold and silver statues of temples** and **imposed heavy taxes**. People and nobles grew unhappy and two brothers, **Uchchala and Sussala**, rose against him. Harsha was **attacked and killed along with his son Bhoja**.
+- **Jayasimha (1128 to 1149)**: in his reign **Kalhana wrote the Rajatarangini (1149 to 1150)**.
+- **Vanitadeva (Vantideva)** was the **last ruler of the Lohara dynasty**, who died in **1171**.
+
+:::mem Memory trick
+**Lohara**: Sangramaraja **founded** it (1003), **Harsha** ruined it (1101), **Jayasimha** saw **Kalhana** (1149), **Vanitadeva** ended it (1171).
+:::
+
 ## The Fall of Hindu Rule: Suhadeva to Kota Rani (1301 to 1339) {#end-hindu-rule}
 
 The **last Hindu dynasty** of Kashmir ended in **a single generation of troubles**: a Mongol raid, a Buddhist who became Muslim king, and a Hindu queen.
@@ -553,6 +856,51 @@ The **last Hindu dynasty** of Kashmir ended in **a single generation of troubles
 :::mem Memory trick
 **Sh-R-U-K-Sh**: **S**uhadeva → **R**inchana → **U**dayana → **K**ota Rani → **Sh**ah Mir. Five names, 1301 to 1339.
 :::
+
+### Decline of Hindu rule (1171 to 1339): more detail
+
+- After the Lohara line ended, Kashmir was **weakened by internal conflicts** for about **a century and a half**, so that nothing could stop **conquest by outsiders**.
+- **Vuppagupta (1171 to 1180)**: after Vanitadeva, prominent citizens put **Vuppagupta** on the throne. His main hobby was the **study of stones and pebbles**.
+
+### Suhadeva (1301 to 1320)
+
+- After a time of **anarchy and confusion**, he brought the **whole kingdom under his authority** and tried to set up a stable government with the help of his **Prime Minister and commander-in-chief, Ramachandra**.
+- In his reign **two foreign adventurers** came: **Shah Mir from Swat** and **Rinchana from Tibet**. They later helped **overthrow Hindu rule** and bring in **Muslim rule**.
+
+### The rise of Rinchana
+
+- **Rinchana** was originally a **prince of Ladakh**. He came to Kashmir and was **protected by Ramachandra**.
+- About **1320**, **Dulucha**, a **Tartar chief from Central Asia**, invaded and **Suhadeva fled**.
+- Rinchana used this chance. He **killed his rival Ramachandra** and **married Kota Rani**, Ramachandra's daughter.
+
+### Rinchana as ruler (1320 to 1323)
+
+- He **restored peace**, made the administration strong with the help of **Shah Mir** (appointed **Prime Minister**), gave **equal justice** to poor and rich and **equality before law**.
+
+### Rinchana's conversion
+
+- To consolidate his position, he wanted to **join the religion of his subjects**. **Shaivism** was widely followed. He asked **Sri Devaswami** to admit him to Hinduism, but **was refused**.
+- **Shah Mir consoled him**, and he **embraced Islam**, taking the name **Sadruddin Shah**.
+
+### Works of Rinchana
+
+- He founded the town **Rinchanapura**.
+- He built the **first mosque in Kashmir**, the **Bud Masjid**, and a **hospice (khanqah) for Bulbul Shah (Sharf-ud-Din Rahman Shah)**.
+- He started a **free kitchen (langar)** in Srinagar, which became known as **Bulbul Langar**.
+- Bulbul Shah is said by some to have entered the valley in **1324** (in Rinchana's reign, other sources place his arrival earlier). He is buried near his khanqah at **Bulbul Lankar, Srinagar**.
+- Rinchana died in **1323** and his **infant son Haidar** succeeded. **Shah Mir and Kota Rani** offered the throne to **Udayanadeva**, brother of Suhadeva.
+
+### Udayanadeva (1323 to 1338)
+
+- An **orthodox Hindu** who spent most of his time in **bathing, penance and prayer**, and was **not an able administrator**.
+- He **married Kota Rani**, widow of Rinchana.
+- In his time **Achala**, a **Turkish adventurer**, invaded, and **Udayana fled to Tibet**. **Shah Mir saved Kashmir**. Udayana returned after Achala's death and **died in 1338**.
+
+### Kota Rani
+
+- After Udayana's death she **proclaimed herself ruler**. She **moved her headquarters from Srinagar to Inderkote (Sumbal, Bandipora)**. Shah Mir and other ministers obeyed her.
+- **Shah Mir besieged Inderkote** and asked her to marry him and share the throne. She **decided to fight** and was **taken prisoner** (tradition adds that she ended her life).
+- **Shah Mir proclaimed himself ruler**, with the title **Sultan Shamsuddin Shah Mir**.
 
 @unit Sultanate Kashmir
 
@@ -628,6 +976,35 @@ The Shah Mir dynasty ruled **1339 to 1561**. It was founded by **Shah Mir (Shams
 **S-J-A-S-Q-S-A-Z**: **S**hams, **J**amshid, **A**la, **S**hihab, **Q**utb, **S**ikandar, **A**li, **Z**ain. The first eight Sultans, in order.
 :::
 
+### The Shah Miris ruler by ruler: more detail
+
+The dynasty ruled Kashmir for almost **222 years (1339 to 1561)**.
+
+**Shams-ud-Din Shah Mir (1339 to 1342)**
+- Crowned under the title **Shams-ud-Din**. He **abolished arbitrary taxes** and cruel ways of collecting them, and **fixed land revenue at one-sixth of the produce**.
+- He appointed the **Chaks**, who had come from **Dardistan** and settled in Kashmir in the time of Suhadeva, in the army, with **Lanka Chak** as **commander-in-chief**.
+- He **made no distinction between Hindu and Muslim subjects**.
+
+**Jamshid (1342 to 1343)**: ruled **one year**, was followed by his younger brother. He built the town of **Jamnagar**.
+
+**Ala-ud-Din / Ali Sher (1343 to 1354)**: ruled **12 years**, built **Alauddinpura** and **shifted the capital there from Inderkote**. He was succeeded by his eldest son **Shihab-ud-Din**.
+
+**Shihab-ud-Din (1354 to 1373)**
+- His real name was **Sherashamak**. He is called the **"Lalitaditya of medieval Kashmir"** for his conquests.
+- He built **Shihabuddinpura (modern Shadipura)**.
+- His conquests, as the exam notes list them: he **defeated Udabhandapura (Ohind, near Attock)**, **besieged Peshawar** and advanced as far as the **Hindu Kush**; in the south he **crossed the Sutlej** and met the ruler of **Nagarkot**; he **invaded Firoz Shah Tughlaq of Delhi**, who gave up territories **between Sirhind and Kashmir**, and a **marriage alliance** followed.
+- His rule is counted among the **glorious periods** of Kashmir. His younger brother **Hindal Khan** succeeded under the name **Qutb-ud-Din**.
+
+**Qutb-ud-Din (Hindal Khan, 1373 to 1389)**
+- The Iranian saint **Mir Sayyid Ali Hamadani** arrived in his reign.
+
+**Sikandar (1389 to 1413)**
+- **Timur invaded India** in his time. Sikandar is known for his **religious policy** (see [Hamadani and Sikandar](#hamadani-sikandar)).
+- He was followed by **Ali Shah**, then by his younger brother **Zain-ul-Abidin**.
+
+**Habib Shah**
+- The **last ruler of the Shah Mir line**. His reign led to the **rise of the Chaks**. He built the wooden **Habba (Habak) Kadal** bridge on the Jhelum in Srinagar.
+
 ## Mir Sayyid Ali Hamadani and Sikandar Butshikan {#hamadani-sikandar}
 
 ### Mir Sayyid Ali Hamadani (1314 to 1385)
@@ -656,6 +1033,23 @@ The best-known description of Sikandar's rule comes from **Persian chronicles wr
 
 :::tip
 **Khanqah-i-Mualla** was built **in 1395**, after Hamadani's death (**1385**), by **Sikandar**. **Jama Masjid, Srinagar** was begun by **Sikandar** too. Both are **wooden** and both are important.
+:::
+
+### Sikandar's rule as the exam notes describe it
+
+- He decided to **enforce Islamic law strictly** and spread the faith **by force**. He was helped by **Mir Muhammad Hamadani** and his **Prime Minister Malik Suha Bhatta**.
+- He **broke gold and silver idols** and used the metal as money, ordered that **only Muslims could live in Kashmir**, banned the **tilak** on the forehead and banned **Sati**.
+- As a result **some Hindus took poison, some left Kashmir and some converted** to escape his anger. After the migration he ordered **temples to be pulled down**, and was called **Butshikan (destroyer of idols)**.
+- **Sacred Hindu books were destroyed**, and **even recent converts were made to pay the jizya**.
+- **Timur and Sikandar**: the **Zafarnama** (Sharaf-ud-Din Yazdi) and Timur's own **Malfuzat-i-Timuri** speak of their relationship.
+
+### Buildings
+
+- **Khanqah-e-Moula** (also called **Shah-e-Hamadan Masjid** and Khanqah) is in the **old city of Srinagar**, built **in memory of Mir Sayyid Ali Hamadani**, one of the finest examples of **Kashmiri wooden architecture**.
+- **Jama Masjid, Srinagar**, was **commissioned by Sultan Sikandar in 1394 and completed in 1402**, at the wish of **Mir Muhammad Hamadani**, son of Mir Sayyid Ali Hamadani.
+
+:::note Titles of Hamadani
+Hamadani was called **Shah-e-Hamadan (King of Hamadan)**, **Amir-i-Kabir (the Great Commander)** and **Ali Sani (Second Ali)**. He is buried in **Tajikistan**.
 :::
 
 ## Sultan Zain-ul-Abidin "Budshah" (1420 to 1470) {#zain-ul-abidin}
@@ -705,6 +1099,56 @@ The best-known description of Sikandar's rule comes from **Persian chronicles wr
 Zain-ul-Abidin is the **best-loved Sultan of Kashmir**. A saying remembers how **his reign was a golden age**. After him the Sultanate **decayed** within a few years.
 :::
 
+### Zain-ul-Abidin: the full account from the exam notes
+
+- His original name was **Shahi Khan** (some notes write **Shahrukh**, known as **Shahi Khan** to the people). He is famous for his **religious policy** and his contribution to **arts and crafts**.
+- He **recaptured Ladakh and Baltistan**. **Persian chronicles** say he also **captured Kashgar**.
+- His **pen name was Qutb**. He is called the **"Akbar of Kashmir"**.
+
+:::note His dates
+Most scholars give **1420 to 1470**. Some exam notes give **1420 to 1460**, with his death in **1460**. Know both, and use the one the question's options match.
+:::
+
+**Administrative reforms**
+- He **re-appointed Pandits** in the administration and worked to **remove corruption**.
+
+**Judicial reforms**
+- The **village-head method** was applied; **suitable jobs were given to criminals**; he **codified laws and displayed them in public**; and he set up **equality before law**.
+
+**Economic reforms**
+- **Fixed the prices of goods** and **displayed them publicly**.
+- Issued **many silver and copper coins**, **abolished arbitrary taxes** and **repealed the jizya**.
+
+**Agriculture**
+- The country was divided into **parganas**, each with a number of villages. **Jarib** was the **land-measuring unit**.
+- **Revenue was fixed at one-third of the produce**. Revenue officials were **forbidden to accept gifts from peasants**.
+- He built **many canals**, among them the **Kakapur canal, Karla, Chakdar, Shahkul, Avantipur, Zainganga, Mar canal, Lal Kul and Shak Kul**.
+
+**Trade, art and crafts**
+- He sent people to **Samarkand** to learn **paper making and book binding**.
+- He invited **teachers from other countries** to train locals in **stone cutting, polishing and bottle (glass) making**.
+- He imported the art of making **pashmina shawls from Tibet**, and sent people to **Persia** to learn **carpet making**.
+
+**Architecture and towns**
+- He **introduced wooden architecture** in Kashmir.
+- He built a town called **Naushahar (Naushera in Srinagar)** and made it his **capital**, and adorned **Zain Nagar (Naushahar)** with many fine buildings.
+- His royal palace **Rajdhan** was a unique **12-storey** building with many rooms, halls and staircases, decorated with carving.
+- He founded towns after his name: **Zainpur (Shopian), Zainkote (near Srinagar)** and **Zaingiri (near Sopore)**. He also founded **Hallapura**.
+
+**Gardens and structures**
+- Four famous gardens: **Bagh-i-Zaingiri, Bagh-i-Zaindab, Bagh-i-Zainpur and Bagh-i-Zainkut**. They no longer exist.
+- The artificial island **Zaina Lank** in **Wular Lake**, with a mosque and garden.
+- The wooden bridge over the Jhelum called **Zaina Kadal**.
+
+**Learning and literature**
+- He was a **great linguist**, skilled in **Persian, Kashmiri, Tibetan and Sanskrit**. He wrote a **Shikayat** on **human vanity and the passing nature of the world**.
+- **Jonaraja** wrote the **second Rajatarangini**. The Sanskrit scholar **Nothosoma** wrote **Zain Charita**, and **Yodhabhatta** wrote **Zain Prakasha**.
+- He had the **Mahabharata, Ramayana and Rajatarangini translated from Sanskrit into Persian**.
+- He built many **schools**, gave **scholarships**, **free meals and boarding for poor students**, founded a **big library** and opened **dispensaries**.
+
+**Music and fine arts**
+- He enjoyed music. **Mulla Udi** played the **ud**, **Mulla Zaidi** the **lute**, **Mulla Jamil** was a **vocalist**, and **Tara and Utsava** were famous **dancers**.
+
 ## Decline of the Shah Miris and the Dughlat Interlude {#shahmir-decline}
 
 ### Causes of decline
@@ -726,6 +1170,13 @@ Zain-ul-Abidin is the **best-loved Sultan of Kashmir**. A saying remembers how *
 :::tip
 **Tarikh-i-Rashidi** (Mirza Haidar Dughlat, 1546 to 1547) is a **Persian chronicle** and an **eyewitness account** of Kashmir under his own rule.
 :::
+
+### Mirza Haidar Dughlat in more detail
+
+- **Mirza Haidar Dughlat** was a **Turko-Mongol military general** and a **cousin of Babur on his mother's side**.
+- During the **fifth rule of Sultan Muhammad Shah Shahmiri (1530 to 1537)** he invaded Kashmir and **suffered defeat**.
+- Again, during the rule of **Ismail Shah (1538 to 1540)**, Mirza Haidar invaded and **occupied Kashmir**. He placed **Nazuk Shah** on the throne as **nominal king**.
+- **Habib Shah** was the **last ruler of the Shah Miri dynasty**.
 
 ## The Chak Dynasty (1561 to 1586) {#chaks}
 
@@ -757,6 +1208,49 @@ The **Chaks** were nobles of **Dard (Dardic) origin**, mainly **Shia Muslims**. 
 
 :::mem Memory trick
 **G-H-A-Y-Y**: **G**hazi, **H**ussain, **A**li, **Y**usuf, **Y**aqub. Five Chak kings, 1561 to 1586.
+:::
+
+### Chak rule in detail (1561 to 1586)
+
+**Rulers in order (as the exam notes list them)**
+
+| Ruler | Period |
+|---|---|
+| **Ghazi Chak** | 1561 to 1563 |
+| **Hussain Shah** | 1563 to 1570 |
+| **Ali Shah** | 1570 to 1578 |
+| **Yusuf Shah Chak (first reign)** | 1578 to 1579 |
+| **Syed Mubarak Shah** | 1579 |
+| **Lohar Shah Chak** | 1579 to 1580 |
+| **Yusuf Shah (second reign)** | 1580 to 1586 |
+| **Yaqub Shah** | 1586 to 1588 |
+
+**Background**
+- The Chaks belonged to **Dardistan** and settled in Kashmir during the **Shah Mir** period. **Shah Mir recruited them in the army**. They **established their rule** and ruled Kashmir **till Akbar captured it**.
+- **Ghazi Chak** was the **founder** of Chak rule and had been **commander-in-chief of Habib Shah**.
+
+**Yusuf Shah Chak**
+- He married **Habba Khatun**, the celebrated poetess. He **developed Gulmarg and Sonamarg as holiday resorts**.
+- In **December 1585** a **Mughal army under Bhagwan Das** invaded by the **Jhelum valley route**. Yusuf Shah was forced to surrender and agreed to be presented before Akbar. His nobles and the locals decided to install **Prince Yaqub** as the new Sultan, and **Kashmiris under Yaqub continued the struggle**.
+- A **treaty** was signed between the Kashmiris and the Mughals on these terms:
+  1. The **Mughal army would withdraw** from Kashmir.
+  2. **Yusuf Shah would keep his throne**.
+  3. He would **accept Akbar as sovereign** and **read the khutba in Akbar's name**.
+  4. **Revenues from the mint, saffron and shawls** would be collected by **Mughal officers** and paid to the imperial treasury.
+  5. **Yusuf Shah and Prince Yaqub would appear before Akbar**.
+- **Akbar refused to approve the treaty** and **ordered Yusuf imprisoned**. After about **two and a half years**, on the request of **Raja Man Singh**, Yusuf Shah was released and given a **mansab of 500 horse**, but **was not allowed to return to Kashmir**. Man Singh took him to **Bihar**, where he **died in 1592** and was buried in the **Patna district**.
+
+**Yaqub Shah (1586 to 1588), the last Chak ruler**
+- After the Mughal army withdrew he **refused the treaty** and crowned himself **Nasir-ud-Din Muhammad Badshah Ghazi**. He was **Shia and an intolerant ruler** who committed **atrocities on Sunnis**.
+- In **July 1586** an army under **Qasim Khan Mir Bahr** was sent. Yaqub fled to **Kishtwar**. On **14 October 1586** the **Mughals entered Kashmir** and it became part of the **Mughal Empire (Kabul province)**.
+- Yaqub **kept resisting** with the help of Kashmiri people. Qasim Khan lost hope and asked Akbar for another commander, **Mirza Yusuf Khan Rizvi**. Akbar **visited Kashmir for the first time in June 1589**, after Rizvi had pacified it.
+- Rizvi finally **defeated Yaqub**, who **surrendered on 7 August 1589**. He was sent to **Raja Man Singh in Bihar**, kept as a prisoner, later released and given a **mansab of 500 horse**. He died in Bihar and was buried near his father's grave.
+
+**Architecture under the Chaks**
+- The **Red Fort**, also called **Muzaffarabad Fort**, was built by the Chaks.
+
+:::note Dates differ
+Some books give the **end of Chak rule** as **1586** (Mughal entry) and others as **1589** (Yaqub's surrender). Both dates are correct for different events.
 :::
 
 ## Saints, Rishis and Poets of Medieval Kashmir {#saints-poets}
@@ -839,7 +1333,7 @@ For **166 years** (1586 to 1752) Kashmir was a **province (suba) of the Mughal E
 
 ### Conquest (1586)
 
-- **Akbar** had tried and failed to take Kashmir by force more than once. The final march of **1586**, under **Qasim Khan** and **Raja Bhagwan Das**, succeeded because the **Chak nobles were divided**. **Yaqub Shah Chak** surrendered, and the **Chak dynasty ended**.
+- **Akbar** had tried and failed to take Kashmir by force more than once. The final march of **1586**, under **Qasim Khan** and **Raja Bhagwan Das**, succeeded because the **Chak nobles were divided**. The Mughals entered the Valley in **October 1586**; **Yaqub Shah Chak** kept resisting until **August 1589**, and the **Chak dynasty ended**.
 - Akbar **visited Kashmir three times**: **1589, 1592 and 1597**.
 
 ### Akbar's works in Srinagar
@@ -860,6 +1354,35 @@ For **166 years** (1586 to 1752) Kashmir was a **province (suba) of the Mughal E
 :::key Key fact
 **Kashmir was annexed by Akbar in 1586.** Chak ruler **Yaqub Shah** was the last independent king of Kashmir before the Mughals.
 :::
+
+### Mughal governors (Subedars) in order
+
+The Mughals ruled Kashmir through **appointed governors**. (Some books give the Mughal period as **1586 to 1753**; **Babur and Humayun** had tried to capture Kashmir but could not. **Akbar** succeeded in 1586 through his general **Qasim Khan Mir Bahr**.)
+
+**Under Akbar**
+
+| Governor | Period | Notes |
+|---|---|---|
+| **Qasim Khan** | 1586 to 1587 | **First Mughal governor.** |
+| **Mirza Yusuf Khan Rizvi** | 1587 to 1590 | **Established peace**; Akbar's **first visit**. **Abolished the jizya.** Ordered a new town, **Nagar**; held a **grand darbar** with alms of gold and silver and **free meals**. For **employment**, he built the **bastion wall round Hari Parbat (Koh-i-Maran)**, with a **palace and a city inside**. |
+| **Quli Khan** | 1590 to 1601 | Akbar's **second visit**, after the wall was done. During the **third visit**, **Ladakh and Baltistan were captured**. |
+| **Mirza Ali Akbar** | 1601 to 1606 | Could do little; **Akbar died** in his time. |
+
+**Under Jahangir (from 1606)**
+- **Jahangir and Noor Jahan loved Kashmir.** Mirza Ali Akbar served **three more years**, followed by five governors: **Hashim Khan, Sardar Khan, Ahmad Beg, Dilawar Khan, Iradat Khan and Itqad Khan**.
+- Under **Dilawar Khan**, **Kishtwar was subjugated**.
+- Under **Iradat Khan**: the **Shalimar garden by Jahangir**, the **Nishat Bagh by Asif Khan** (brother of Noor Jahan), and the **Verinag and Achabal gardens** in Anantnag.
+- **Itqad Khan** was the **worst governor under Jahangir**: **harsh taxes**, **free fruit for the court**, **begar** to carry the luggage of himself and companions, and he **oppressed Shias** (he was a Sunni). During his time Jahangir made his **last visit** and **died on the way back**. He was **buried at Lahore**, though he wished to be buried at **Verinag**.
+
+**Under Shah Jahan (1627 to 1658)**
+- **Nine governors** ruled, among them **Zafar Khan, Ali Mardan Khan and Lashkar Khan**. Shah Jahan **visited Kashmir four times**. Itqad Khan continued for a time and was replaced by **Zafar Khan**.
+- **Zafar Khan** **abolished many taxes** (on **saffron, wood and a poll tax**) and **reduced the boat tax**. He built **Gulshan Bagh at Buda Kadal, Srinagar**, and the **Hasanabad garden** on the **Dal canal**. He **defeated and captured Baltistan** and its ruler **Abdal Rai** accepted Mughal overlordship. He was replaced by **Prince Murad**, then by **Ali Mardan Khan**.
+
+**Under Aurangzeb**
+- Governor **Saif Khan** built **Saif Kadal** (a wooden bridge on the Jhelum).
+- **Iftikhar Khan** tyrannised the **Kashmiri Brahmins** so badly that they approached **Guru Tegh Bahadur**, the **ninth Sikh Guru**.
+
+**The last Mughal ruler** of Kashmir was **Ahmad Shah** (Mughal emperor), in whose time Kashmir **fell to the Afghans**.
 
 ## The Mughal Emperors and Kashmir {#mughal-emperors}
 
@@ -884,6 +1407,15 @@ For **166 years** (1586 to 1752) Kashmir was a **province (suba) of the Mughal E
 
 :::mem Memory trick
 **A-J-S-A** for the visits: **A**kbar annexed, **J**ahangir gardened, **S**hah Jahan built more, **A**urangzeb came once.
+:::
+
+### More on Shah Jahan's reign
+
+- **Chashma Shahi** and its pavilion were built by **Ali Mardan Khan**. **Pari Mahal** was built by **Dara Shikoh**, Shah Jahan's son.
+- The **first building of the Hazratbal shrine** was constructed by the governor **Sadiq Khan** during Shah Jahan's reign.
+
+:::key Key fact
+**Hazratbal Shrine** holds the **Moi-e-Muqaddas**, believed to be a **hair of the Prophet Muhammad**. It was first brought to Kashmir by **Syed Abdullah Madani**, said to be a descendant of the Prophet who left **Medina** and settled in **south India**. It was later brought to Kashmir, and the shrine was set up by **Begum, daughter of Khwaja Nur-ud-Din Eshai**, who was the custodian of the relic.
 :::
 
 ## Mughal Gardens and Monuments {#mughal-gardens}
@@ -955,6 +1487,39 @@ The **Mughal Gardens** are on the **Dal Lake** (Shalimar, Nishat, Chashma Shahi,
 :::mem Memory trick
 **52 in, 19 out.** The Afghans came in **1752** and left in **1819**.
 :::
+
+### The Afghans in detail (1753 to 1819)
+
+**How the conquest happened**
+- In **1753**, **Ahmad Shah Abdali**, returning after **looting Delhi**, was **invited to invade Kashmir by Mir Muqim and Khwaja Zahir Didamari**. He sent an army under **Abdullah Khan Ishaq Aqasi**, who entered Srinagar and **planted the Afghan flag on the fort Nagar**.
+- About **28 governors** ruled for roughly **67 years**.
+
+**Five Afghan kings who ruled Kashmir**
+
+| King | Period |
+|---|---|
+| **Ahmad Shah Abdali** | 1753 to 1772 |
+| **Timur Shah** | 1772 to 1793 |
+| **Zaman Shah** | 1793 to 1801 |
+| **Mahmud Shah** | 1801 to 1803, and 1809 to 1819 |
+| **Shah Shuja** | 1803 to 1809 |
+
+**Abdullah Khan Ishaq Aqasi**
+- The **first Afghan governor**. A **despot** who emptied the treasury. He **called nobles and merchants of all communities to his palace** and ordered them to **surrender their wealth**; in **six months** he collected about **one crore of rupees** in cash and goods.
+- He left, appointing **Khwaja Abdullah Khan Kabuli** as deputy and the **Hindu Khatri Sukh Jiwan Mal** as chief adviser.
+
+**Raja Sukh Jiwan Mal (1754 to 1762)**
+- With the local noble **Abdul Hassan Khan Bandey**, he **murdered the deputy** and became the **virtual ruler**, conveying his submission to Abdali.
+- In **1754** he **declared independence** and made Abdul Hasan Bandey his chief minister. **Abdali split the two** by driving a wedge between them and sent an army under **Nur-ud-Din Khan Bamzai**.
+- A large part of Sukh Jiwan's army, including his **commander-in-chief Bakht Mal**, **betrayed** him. He was **captured and killed at Lahore**.
+
+**Other governors**
+- **Amir Khan Jawansher** built the **Amira Kadal** (wooden bridge on the Jhelum) and the **Sher Garhi Fort** in Srinagar.
+- **Atta Mohammad Khan** built a strong **fort on Hari Parbat** and **fortifications at Sopore and Baramulla**. To win the people's goodwill he **minted coins in the name of Sheikh Nooruddin**.
+- **Azim Khan** was the **last Afghan governor**. He left the administration to his brother **Jabbar Khan**. Kashmir was under Jabbar Khan when **Ranjit Singh** annexed it in **1819**.
+
+**An estimate of Afghan rule**
+- The whole period was one of **anarchy and oppression**. **Heavy taxes** and **extortion** were common, and **Kashmiris were sold as slaves**.
 
 @unit Ladakh, Baltistan and Gilgit
 
@@ -1092,6 +1657,124 @@ After the conquest, the **Namgyal** royal family were given an estate (**jagir**
 **40, 42, 77, 89, 35, 47**: **Baltistan 1840**, **Gilgit 1842**, **Agency 1877**, **re-set 1889**, **lease 1935**, **revolt 1947**. Dates run in order.
 :::
 
+@unit History of Jammu (Duggar)
+
+## Sources of Jammu History {#jammu-sources}
+
+**Jammu** (the **Duggar** country) has a history of its own, separate from the Valley.
+
+### What the sources say
+
+- **No literary sources** on Jammu's history **up to the 11th century CE** have been found.
+- The words **Durgara or Duggar state** are first found in an **inscription on two copper plates found in Chamba**, issued in the **11th century CE**. It describes events from the **early 10th century**, in the reign of **Sahil Varman of Chamba**.
+- **Kalhana's Rajatarangini** gives **no information about Jammu** itself but mentions **Poonch, Rajouri and Kishtwar**.
+- **Jammu** is mentioned in the **Malfuzat-i-Timuri** (Timur's autobiography). Timur **plundered the town in 1399**.
+
+### Genealogical sources (Vansavalis)
+
+- The historian **Ganesh Das Wadhera** used **manuscript vansavalis** (family genealogies) to write Jammu's history.
+- The vansavalis say the **first raja of Jammu was Agnibaran**, a **descendant of Lord Rama**. **Four rulers** followed him and the **fifth was Bahu Lochan**.
+
+### Other literary sources
+
+| Source | Author |
+|---|---|
+| **Vedas** | They mention the ancient tribe of Jammu as the **Madras** |
+| **Gulabnama** | **Diwan Kirpa Ram** |
+| **Rajdarshani** | **Ganesh Das Wadhera** |
+| **Akbarnama** | **Abul Fazl** |
+| **Tarikh-i-Feroz Shahi** | (Persian chronicle of Firoz Shah Tughlaq's time) |
+
+### Ancient archaeological sites in Jammu
+
+- **Manda**, on the **Chenab bank at Akhnoor**: an **Indus Valley civilisation** site.
+- **Ambaran**, **Akhnoor**: a **Buddhist** site.
+
+:::tip
+**"Gulabnama" = Diwan Kirpa Ram. "Rajdarshani" = Ganesh Das Wadhera.** These two author-book pairs are often asked.
+:::
+
+## Origin of Jammu and the Early Rulers {#jammu-origin}
+
+### The founding legend
+
+- By the **most accepted popular legend**, **Raja Jambu Lochan** founded **Jammu** (the exam notes give the **14th century BCE**).
+- Once he crossed the **Tawi** river and saw **a goat and a lion drinking water at the same place**. Struck by this harmony, he set up a town named after himself, **Jambu Nagar**, later **Jammu**.
+
+### Prominent early rulers
+
+| Ruler | Notes |
+|---|---|
+| **Bahu Lochan** | Credited with building the **Bahu Fort** on the **Tawi**. Founded the new city of **Dharanagri** and moved his capital there. |
+| **Jambu Lochan** | **Brother of Bahu Lochan**; the exam notes say he ruled in **2500 BCE**. |
+| **Puran Karan** | The **only son of Jambu Lochan**. |
+| **Shakti Karan (Raja Shastri)** | Introduced the **Dogri script**. |
+
+- This line ended in the reign of **Raja Shiv Prakash**, who was **defeated by Raja Shalya of Sialkot** (identified as **maternal uncle of the Pandavas**). After Shalya's death the **Pandavas annexed Jammu**. **Arjuna's son Babruvahana** then founded **Babbapura**, modern **Babore**.
+
+:::note A caution on dates
+These are **legends from vansavalis**. The **dates (14th century BCE, 2500 BCE)** are **not supported by firm evidence** and the sources contradict each other. Use them only for questions that ask **what the tradition says**.
+:::
+
+## Dynasties of Jammu: Rai, Dhar and Dev {#jammu-dynasties}
+
+### The three lines (Suryavanshi kings, as listed)
+
+| Dynasty | Period | Founder | Last ruler |
+|---|---|---|---|
+| **Rai** | **58 BCE to 342 CE** | **Adi Rai** | **Jog Rai** |
+| **Dhar** | **Up to about 825** | **Suraj Dhar (Suraj Hans)**, son of Jog Rai | **Bajar Dhar** |
+| **Dev** | **840 to 1808** | **Suraj Dev**, who ruled from **Babore** | **Jeet Dev** |
+
+### Notable Dev rulers
+
+**Suraj Dev (840 to 912)**: **founder** of the dynasty (840).
+
+**Brij Dev / Bijay Dev (1164 to 1215)**: became an **ally of Muhammad Ghori against Prithviraj**. He founded **Bijaypur (Vijaypur)**.
+
+**Jodh Dev**: a contemporary of **Firoz Shah Tughlaq** of Delhi. When **Suhadeva** of Kashmir fled to **Kishtwar**, Jodh Dev **sheltered him** and helped him return to the Valley (as the exam notes tell it).
+
+**Mal Dev (1361 to 1400)**
+- One of the **most powerful kings** of Jammu. His reign is a **golden period**.
+- He **moved the capital to Jammu** and built the **Purani Mandi**, also called **Mal Mandi**.
+- He attacked **Nurpur**, **dismantled its fort**, and brought the bricks to Jammu to build Purani Mandi.
+- **Timur invaded Jammu** in his time.
+
+**Dhruv Dev (1707 to 1733)**
+- When **Banda Bahadur** was defeated in the Punjab in **1712**, Dhruv Dev **gave him shelter** and helped him against the Mughals.
+- He **began the Mubarak Mandi complex** and shifted the capital **from Mal Mandi to Mubarak Mandi**.
+
+**Maharaja Ranjit Dev (1733 to 1782)**
+- A **great ruler** of Jammu. His period was called **Dar-ul-Aman / Dar-ul-Alam ("Abode of Peace")** in the sources. (Some books give his dates as **1735 to 1781**.)
+- He was **taken captive twice**, once by the **Mughals** and once by the **Afghans**.
+- A **social reformer**: he **banned Sati and female infanticide**.
+- A **religiously tolerant** ruler, he allowed Muslims to **build a mosque** in the city, around which the **Mohalla Mustgarh** grew.
+- The Dogri poet and scholar **Pandit Dev Dutt** stayed at his court.
+
+**Jeet Dev**: a **weak ruler**; in his time Jammu finally **passed to Maharaja Ranjit Singh**.
+
+:::mem Memory trick
+**R-D-D**: **R**ai (58 BCE), **D**har (to 825), **D**ev (840 to 1808). The **Devs** are the long line that ends with Ranjit Dev's weak heir.
+:::
+
+## Jammu under the Sikhs and the Rise of Gulab Singh {#jammu-sikh-period}
+
+### Sikh rule in Jammu (1808 to 1846)
+
+- In the **battle of Jammu (1808)** between the **Sikhs and the Dogras**, **Hukam Singh Chimni** together with **Hari Singh Nalwa** captured Jammu (the exam notes give these names). **Prince Kharak Singh** received Jammu as a **jagir**.
+
+### Gulab Singh in the Sikh service
+
+- **Gulab Singh**, a descendant of Ranjit Dev, was **the first of the Dogra family** to enter **Ranjit Singh's** service (the exam notes say **1811**).
+- **Mian Dido Jamwal** (1780 to 1821), a **Dogra Rajput warrior** of the **Jamwal clan**, **rebelled** against the Sikh overlords of Jammu. He was descended from **Raja Hari Dev** of Jammu and was born in **Jagti village**. **Gulab Singh put down the rebel and killed him in 1821**.
+- **Gulab Singh got the title Raja of Jammu**. On **16 January 1822**, **Ranjit Singh gave him the Raj Tilak at Akhnoor**.
+- Gulab Singh conquered **Poonch, Rajouri, Reasi, Chenani, Kishtwar, Kashmir (for the Sikh empire), Ladakh, Baltistan, Zanskar and Dardistan**. The **chief architect** of these victories was **Zorawar Singh**, an able general in Gulab Singh's army.
+- Meanwhile the Sikhs under **Duleep Singh** lost the **First Anglo-Sikh War** and signed the **Treaty of Lahore (9 March 1846)**. The **Treaty of Amritsar** followed (**16 March 1846**) and gave **Jammu and Kashmir to Gulab Singh for 75 lakh rupees**.
+
+:::key Key fact
+**Raj Tilak of Gulab Singh at Akhnoor: 16 January 1822.** Jammu came under Sikh control in **1808** (the end of the Dev line's independence), and Gulab Singh rose to be **Raja of Jammu** in **1822**.
+:::
+
 @unit Sikh and Dogra Rule
 
 ## Sikh Rule in Kashmir (1819 to 1846) {#sikh-rule}
@@ -1131,6 +1814,29 @@ For **27 years** Kashmir was part of **Maharaja Ranjit Singh's Sikh Empire**, ru
 :::mem Memory trick
 **19 in, 46 out.** The Sikhs won in **1819** and lost to the **Treaty of Amritsar (1846)**.
 :::
+
+### More on Sikh rule (exam notes)
+
+- **Maharaja Ranjit Singh** annexed Kashmir in his **third attempt, in 1819**. He divided his invading army into **three sections**, under **Misr Diwan Chand**, **Hari Singh Nalwa** and **Ranjit Singh himself**.
+- **Misr Diwan Chand**, the victor, got the titles **Fateh Jung** and **Nasrat Jung**.
+- By about **1834 to 1840**, **Ladakh (with Zanskar) and Baltistan** were captured by **General Zorawar Singh**.
+
+### Sikh rulers in order
+
+| Ruler | Period |
+|---|---|
+| **Ranjit Singh** | 1801 to 1839 |
+| **Kharak Singh** | 1839 |
+| **Nau Nihal Singh** | 1839 to 1840 |
+| **Sher Singh** | 1841 to 1843 |
+| **Duleep Singh** | 1843 to 1849 |
+
+### Administration
+
+- Kashmir was run through **governors**. **Almost ten governors** ruled between **1819 and 1846**.
+- **Diwan Moti Ram**, the **first Sikh governor**, followed an **intolerant religious policy**: he **closed the Jama Masjid**, imposed **exorbitant taxes** and the **begar** system.
+- **Governor Mian Singh**, popularly called **"Colonel Sahib"**, was **the best of the Sikh governors**. He **reorganised the revenue system**, introduced **proper weights and measures** and **punished fraudulent middlemen**.
+- **Sheikh Imam-ud-Din** was the **last Sikh governor** of Kashmir.
 
 ## The Rise of the Dogras and Gulab Singh before 1846 {#rise-of-dogras}
 
@@ -1186,6 +1892,13 @@ For **27 years** Kashmir was part of **Maharaja Ranjit Singh's Sikh Empire**, ru
 **Lahore first (9), Amritsar next (16)**: sold on the 16th, a week after Lahore. **75 lakh** to remember the price.
 :::
 
+### The First Anglo-Sikh War and the two treaties: more detail
+
+- The **First Anglo-Sikh War (1845 to 1846)** was fought between the British and the Sikh empire, which was **defeated**.
+- Under the **Treaty of Lahore (9 March 1846)**: **Rani Jindan** and the court **chose Gulab Singh as their minister** to negotiate with the Company. A **war indemnity of 1.5 crore rupees** was put on the Lahore Darbar, and the **territories between the Beas and the Sutlej** were ceded to the English.
+- The treaty angered **Lal Singh**, Gulab Singh's **rival** and the **Prime Minister of Lahore**. To **deprive Gulab of his state**, Lal Singh showed that the Durbar **could not pay the indemnity** and **ceded the hill territories of Jammu and Kashmir** to the English.
+- Under the **Treaty of Amritsar (16 March 1846)**, Gulab Singh was **recognised as Maharaja of Jammu and Kashmir** and the State was given to him for **75 lakh rupees**. It is called the **"Sale deed of Kashmir"**.
+
 ## Maharaja Gulab Singh (1846 to 1857) {#gulab-singh}
 
 **Maharaja Gulab Singh** founded the **State of Jammu and Kashmir** in its **modern shape**.
@@ -1208,6 +1921,36 @@ For **27 years** Kashmir was part of **Maharaja Ranjit Singh's Sikh Empire**, ru
 :::tip
 **"Founder of the Dogra dynasty in J&K"** = **Gulab Singh (1846)**. **"Founder of the Jammu State"** can also be **Ranjit Dev** or **Raja Jambu Lochan** by tradition. Read the wording.
 :::
+
+### Gulab Singh: more details
+
+- His nickname was **Gulaboo**. He was the **son of Kishore Singh** (born **1788** in the exam notes; other books give **1792**). He had **two brothers, Suchet Singh and Dhian Singh**.
+- He joined the Sikh army at Lahore in **1811**. Impressed by his service, Ranjit Singh gave him the **jagir of Jammu**, and in **1822** the **administration of Jammu** was transferred to him. He conquered **Ladakh and Baltistan**.
+- The **First Anglo-Sikh War** was fought from **December 1845 to March 1846**.
+
+### Reforms by Gulab Singh
+
+**Division of the State**
+- **Kashmir province** was divided into **two districts: Kamraz and Maraz**.
+- **Jammu province** was divided into **four districts: Jammu, Khuphal (Kathua), Kishtwar and Jasrota**.
+- **Ladakh and Gilgit** were the **two frontier districts**.
+
+**Begar**: rationalised, but **finally abolished only in 1920**.
+
+**Rice rationing for the city**: because of **food shortage** he set up a **state monopoly over rice** and arranged **regular supply**.
+
+**Dagshawl (shawl) department**
+- This department controlled the shawl trade and **regulated relations between karkhanadars (owners) and workers**. Owners used to shift the burden of government taxes on to workers.
+- Under Sikh rule weavers **paid tax whether they worked or not** and **could not change their employer**. Some were so unhappy that they **cut off their thumbs**.
+- Gulab Singh passed a law to **tax according to work done**, gave **freedom to change employer**, and **fixed minimum wages**.
+
+**Jagirs**: the jagir system was **rationalised**.
+
+**Towns and temples**
+- He founded the town **Purmandal ("Chota Kashi")**, near **Samba**.
+- He **began the Raghunath Temple, Jammu**, and **started the Dharmarth Trust**.
+- **Governor-General Hardinge** visited J&K in his time.
+- He had **three sons: Udham Singh, Sohan Singh and Ranbir Singh**. **Udhampur** is named after **Udham Singh**.
 
 ## Maharaja Ranbir Singh (1857 to 1885) {#ranbir-singh}
 
@@ -1238,6 +1981,42 @@ For **27 years** Kashmir was part of **Maharaja Ranjit Singh's Sikh Empire**, ru
 
 :::note Ranbir Penal Code
 It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisation Act, 2019** ended it. The **Indian Penal Code** (and now the **Bharatiya Nyaya Sanhita, 2023**) applies.
+:::
+
+### Ranbir Singh (1856/57 to 1885): reforms in detail
+
+**Administration**: he reorganised **three main departments: Civil, Revenue and Military**.
+
+**Judiciary**
+- The **Ranbir Penal Code** was prepared on the lines of **Macaulay's code**.
+- **Two Sadar Adalats (chief courts)** were set up, **one in Jammu and one in Kashmir**.
+
+**Economy**
+- The **taxation system was reorganised**. During the **Franco-Prussian War (1870 to 1871)**, **shawl exports fell**.
+- Ranbir Singh **abolished the shawl tax** altogether and kept **only a nominal export duty**, which his **successor also did away with in 1886**.
+
+**Transport and communication**
+- A **cart road between Rawalpindi and Srinagar** was built (the Jhelum Valley road). He also ordered a **cart road between the Valley and Jammu via Banihal**, the **Banihal Cart Road**.
+- **Telegraph links** were set up, **silkworm seed** was imported from **China** for **sericulture**, and **experimental tea gardens** were laid out.
+
+**Education**
+- He **donated to Sanskrit institutions at Benares** and gave **Rs 1 lakh** for the **Punjab University at Lahore**. He set up **schools, maktabs and pathshalas**.
+- The **Raghunath Temple** was completed and became a famous centre of learning. He also built the **Ranbireshwara Temple, Shalimar, Jammu**.
+- A **Sanskrit college, a library and a translation bureau** were set up in the temple, and many Sanskrit and Persian books were **translated into Dogri, Hindi and Urdu**.
+- **Ranbir Model Higher Secondary School** (earlier **Ranbir Pathshala**), the **Sri Ranbir Singh Library, Jammu**, and the town of **R.S. Pura** are linked to him.
+- He founded the **first printing press in the State, the Vidya Vilas Press**.
+
+**The famine of 1877 to 1879**
+- In **1877** excessive rain destroyed crops. **A third of the people** are said to have lost their lives and migration towards the Punjab began.
+- The **Maharaja gave up the Rahdari (transit duty) system**, imported grain from the Punjab, and the **British intervened** in the administration.
+
+**An estimate**
+- Though a **Hindu**, he was **religiously tolerant**. Once, in a **Shia-Sunni conflict** where Shias suffered heavy losses, he gave the **Shias 3 lakh rupees in compensation**.
+- He sat **twice a day in public darbar** to hear grievances.
+- **Sons**: **Pratap Singh, Ram Singh, Amar Singh and Lachman Singh**.
+
+:::note Dates
+Some books give his rule as **1856 to 1885**, others **1857 to 1885**. Gulab Singh died in **1857**.
 :::
 
 ## Maharaja Pratap Singh (1885 to 1925) {#pratap-singh}
@@ -1276,6 +2055,43 @@ It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisatio
 **85 Resident, 89 removed, 05 restored.** Three dates for Pratap Singh's three phases.
 :::
 
+### Pratap Singh: more from the exam notes
+
+- He was a **scholar and an administrator**. In his time **British interference grew to the maximum** and the Maharaja's power was **reduced to the minimum**. He was succeeded by his **nephew Hari Singh**.
+- **Begar** (forced labour) was **abolished in 1920**.
+
+**Transport and communication**
+- The **Jhelum Valley Cart Road**, connecting **Kohala to Baramulla**, and later extended to **Srinagar**.
+- The **Banihal Cart Road** was **opened to the public in 1922**.
+- The **Sialkot to Jammu railway line** was inaugurated in **1890**.
+- **Telegraph lines** were extended, and **Jammu and Srinagar** were linked by **telephone**.
+
+**Irrigation and power**
+- Several **canals**: **Pratap canal, Ranbir canal, Basantpur canal, Ujh canal and the Upper Jhelum canal**.
+- The **first hydro-power project was built at Mohra** (the exam notes give **1907**; other books give **1905**).
+
+**Agriculture and horticulture**
+- He set up the **Department of Agriculture** and a **model agriculture farm at Srinagar**. **Foreign experts** were employed to improve **horticulture**.
+
+**Tourism**
+- Tourist traffic started in earnest in his time. The famous **houseboats were first built** during his reign. Englishmen tried to get the **right to buy land** to build houses in Kashmir. The Maharaja **refused**, since it would have turned Kashmir into a **British colony**, and this led to the **construction of houseboats**.
+
+**Education**
+- **Shri Pratap College, Srinagar (1905)**: the **oldest college in J&K**, now **SP College**.
+- **Prince of Wales College (1907), Jammu**, now **Government Gandhi Memorial Science College**.
+- **Amar Singh Technical Institute, Srinagar**, now **Amar Singh College**; **Sri Pratap Singh Technical Institute, Jammu**.
+- **SPS (Sri Pratap Singh) Library, Srinagar, 1898**.
+
+**Health**
+- In **1892**, **cholera and smallpox** spread in J&K and, **for the first time, vaccination** was done in the State.
+
+**Executive Council**: an **executive council of 5 members, with Pratap Singh as president**, was set up in **1924**. Major decisions were taken on its advice.
+
+**Relations with the British**
+- The **British Residency** was set up in J&K. In **1885**, **St John** was appointed the **first British Resident**. In **1888** he was **replaced by C. Plowden**, who set about **planning to remove Pratap Singh and annex the State**. Pratap Singh was **deposed** (his powers taken away) in **1889**. Plowden wrote to the Viceroy that the Maharaja **lacked intelligence** and would be a **hindrance** to improvement.
+- **British Political Agency at Gilgit:** in **1891** (the exam notes) a **British agent** was appointed at Gilgit, with sole charge of **civil, political and military administration** of the district. (Other books say **1889**; the Agency was formally re-established then.)
+- The Maharaja **died in 1925**.
+
 ## Maharaja Hari Singh (1925 to 1949) {#hari-singh}
 
 ### Who was he?
@@ -1309,6 +2125,50 @@ It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisatio
 :::mem Memory trick
 **27, 31, 34, 35, 38.** State Subject, **13 July riot**, Praja Sabha, Gilgit lease, J&K Bank: Hari Singh's five landmark years.
 :::
+
+### Hari Singh (1925 to 1948/49): more detail
+
+- Before becoming king he was **commander-in-chief of the army from 1915**. (Some books give his rule as **1925 to 1948**, others **1925 to 1949**, when he left the State.)
+
+### Social reforms
+
+**Uplift of depressed classes**
+- In **October 1932** the Maharaja declared that **Harijans would be allowed to enter and worship in all temples**. The order went to the Minister of Religious Institutions and the heads of pujaris of temples in Jammu and Srinagar.
+- He gave **scholarships and preferential treatment** to depressed classes in **government jobs** and **reserved seats in local bodies**.
+
+**Child marriage**: the **Infant Marriage Prevention Regulation** banned marriage of **boys under 18 and girls under 14**. Penalty: **fine of Rs 1,000 or one year in prison**.
+
+**Widow remarriage**: a law **allowed widows to remarry**.
+
+**Immoral traffic**: he **suppressed immoral traffic in women**, declared **public prostitution a sin and an offence**, ordered **brothels closed**, and gave such women **training in handicrafts** to be self-reliant.
+
+**Female infanticide**: because of dowry, a girl was seen as a burden. He announced that for **every girl child** born, her parents would get **an acre of land** and financial help at her marriage, through the **Dhandevi Memorial Fund**.
+
+**Polyandry**: **mainly found in Ladakh**; he **declared it a crime**.
+
+**Health**: many hospitals and dispensaries, including **Shri Maharaja Hari Singh Hospital, Srinagar** and **Shri Maharaja Gulab Singh Hospital, Jammu**.
+
+### Educational reforms
+
+- **Compulsory Primary Education Act**, many primary schools, **scholarships**, a **Directorate of Education**.
+- Two colleges, one at **Poonch** and one at **Mirpur**; **postgraduate classes in English** at **Government College, Srinagar**.
+- **Maharani Tara Devi** set up the **Maharani Mahila College in 1944**, now the **Parade College for Women**.
+- Some students were **sent abroad** for training in **engineering and law**.
+
+### Economic reforms
+
+- **Land Alienation Act, 1928**: **forbade transfer of agricultural land to non-agriculturists**.
+- **Jammu and Kashmir Bank**, **established in 1938**.
+
+### Administrative reforms
+
+- **Praja Sabha (1934)**: a legislative assembly of **75 members, 33 of them elected** on a **very limited franchise**.
+- **State Subject status** was given to **"Mulkis"**, the residents of J&K.
+
+### Judicial reform
+
+- A **High Court** was set up in **1929** under the **J&K High Court Constitution Act, 1928**: **one Chief Justice and two other judges**.
+- **Lala Kanwar Sain** was the **first Chief Justice**. The other judges were **Rai Bahadur Lala Bodh Raj** and **Khan Sahib Aga Syed Hussain**.
 
 ## Dogra Administration, Revenue and Economy {#dogra-administration}
 
@@ -1397,6 +2257,26 @@ It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisatio
 **21 June speech, 13 July bullets**: speech first, firing three weeks later.
 :::
 
+### Why the movement began: causes (exam notes)
+
+- **Dissatisfaction with Maharaja Hari Singh's rule**: poverty, heavy taxes, and ministers seen as **corrupt, incompetent and dishonest**.
+- **Grievances of educated Muslims**, and **denial of political and civil liberties**.
+- The impact of the **Indian National Movement**: the **1920 Non-Cooperation Movement** and the **1930 Civil Disobedience Movement**.
+- **Students who went to India for higher studies**, and **newspapers and journals**, awakened the Kashmiris.
+
+### The Reading Room Party
+
+- Students from **Aligarh Muslim University**, together with Muslim leaders of the State, formed a group called the **Reading Room Party in 1929** (the exam notes name **Basheer-ud-Din and Naseer-ud-Din**; other books give about **1930**). It led the early movement.
+- **Sheikh Abdullah**, a young agitator, returned from Aligarh with a **Master's degree** but could get only a **teacher's post** in a government school. He **protested** against the Maharaja's policy of denying high jobs to Muslims and **resigned** in protest.
+
+### The disturbances of July 1931 in detail
+
+- On **21 June 1931** a meeting was held at **Khanqah-e-Moula**. **Abdul Qadir** made a speech that the government considered **highly seditious and communal**.
+- He was **arrested and tried**. A **huge crowd** gathered outside the court demanding **withdrawal of the case**. There was a **clash**, stone-pelting began, and the **Governor, Raizada Trilok Chand**, ordered the police to **fire**.
+- Books give the number killed as **21 or 22**. The next phase was **open demonstration** against despotic rule on **13 July 1931**.
+- The day was marked as **Kashmir Day or Kashmir Martyrs' Day**. It was a **State holiday** until it was **removed from the official holidays by the Government of India in December 2019**.
+- The event bred **resentment among Muslims**, who then turned their anger against **Hindu shops**. They were **looted and burnt** and **about three Hindus** lost their lives.
+
 ## From Muslim Conference to National Conference (1932 to 1939) {#muslim-conference-nc}
 
 ### Muslim Conference (1932)
@@ -1417,6 +2297,14 @@ It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisatio
 :::tip
 **Muslim Conference (1932) → National Conference (11 June 1939).** Founder-President of both: **Sheikh Abdullah**. **Ghulam Abbas** later **revived** the Muslim Conference (1941).
 :::
+
+### More details
+
+- In **October 1932** the **first political party in Kashmir**, the **All Jammu and Kashmir Muslim Conference**, was set up by **Sheikh Abdullah**.
+- With time the Conference changed its attitude and **opened its doors to all religions**. Some books say the name change to **National Conference** was decided in **1938**; the **formal change was on 11 June 1939**.
+- The National Conference was **joined by Hindus and Sikhs** and became a **more stable and powerful party**. Its **aim** was **responsible government**.
+- It held its **first session in October 1939** and passed a resolution embodying all the demands.
+- **Reforms** introduced by the Maharaja in **1939** did not satisfy the Conference.
 
 ## Naya Kashmir, Quit Kashmir and Other Movements {#naya-kashmir-quit-kashmir}
 
@@ -1443,6 +2331,13 @@ It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisatio
 :::key Key fact
 **Naya Kashmir (1944)** = the National Conference's **economic and social programme**. **Quit Kashmir (1946)** = **Sheikh Abdullah's campaign** against the **Treaty of Amritsar** and the **Dogra rule**.
 :::
+
+### More details
+
+- **Naya Kashmir**: in **February 1945** (some books say **1944**) the National Conference produced a **draft of a future constitution**, known as the **New Kashmir Plan**, and presented it before the Maharaja.
+- **Quit Kashmir**: Sheikh Abdullah announced it on **15 May 1946**. Its main aim was to **transfer power from the monarch to the people**. In the same year the **Cabinet Mission** came to India, and Sheikh Abdullah put his demand before it: that the **Maharaja end his autocratic rule** and give **self-government** to the people.
+- **Ram Chandra Kak**, the Maharaja's **Prime Minister**, **arrested thousands of National Conference workers**.
+- **Jawaharlal Nehru's arrest**: Nehru, always interested in Kashmir's struggle for a representative government, decided to come to Kashmir when he learned of the repression. The Maharaja **banned his entry**, but Nehru **refused** and was **arrested**.
 
 ## Kashmir in 1947: Partition and the Maharaja's Dilemma {#kashmir-1947}
 
@@ -1497,6 +2392,15 @@ It was **based on Macaulay's Indian Penal Code (1860)**. The **J&K Reorganisatio
 :::mem Memory trick
 **22 in, 26 sign, 27 accept.** Raiders **22**, signature **26**, acceptance **27** (October).
 :::
+
+### The big picture (summary)
+
+- On **15 August 1947** India was partitioned and Pakistan was created. About **565 princely states** were free to join **either India or Pakistan** or stay independent. The Maharaja wanted to **remain independent**.
+- J&K was **attacked on 22 to 24 October 1947** and **India helped on the condition that J&K join India**, so the **Instrument of Accession was signed on 26 October 1947**.
+- **5 March 1948**: Maharaja Hari Singh announced an **interim popular government** with **Sheikh Mohammad Abdullah as Prime Minister**.
+- **1951**: the **State Constituent Assembly was elected**; it met first in **Srinagar on 31 October 1951**.
+- The State's own **Constitution came into force on 26 January 1957**, under which **elections to the State Legislative Assembly** were first held.
+- Till **2019** J&K remained a State. On **5 August 2019** a bill was introduced in Parliament that **ended the special status**, and J&K later became a **Union Territory**.
 
 ## The First Kashmir War and the United Nations (1947 to 1949) {#first-kashmir-war}
 
@@ -1898,20 +2802,40 @@ The **Jhelum Valley Road** and the **Banihal Cart Road** are the two **colonial-
 | **2019** | **Article 370** ended |
 | **2023** | **SC verdict** |
 | **2024** | **Assembly elections**; Omar CM |
+| **326 BCE** | Alexander's invasion; **Abhisara** surrenders |
+| **58 BCE to 342 CE** | **Rai dynasty** of Jammu |
+| **840 to 1808** | **Dev dynasty** of Jammu |
+| **1399** | **Timur** plunders Jammu |
+| **1712** | **Dhruv Dev** shelters **Banda Bahadur** |
+| **1808** | **Jammu** falls to the Sikhs |
+| **16 Jan 1822** | **Gulab Singh's** Raj Tilak at **Akhnoor** |
+| **1865** | **Shawl weavers'** revolt |
+| **1877 to 1879** | **Great famine** |
+| **1920** | **Begar abolished** |
+| **1928** | **Land Alienation Act** |
+| **1929** | **High Court** |
+| **1934** | **Praja Sabha** |
+| **1938** | **J&K Bank** |
 
 ## Dynasties at a Glance {#dynasties}
 
 | Dynasty | Period | Founder | Greatest |
 |---|---|---|---|
 | **Gonanda** | Legendary | **Gonanda I** | (legend) |
+| **Second Gonanda** | Before 625 | **Meghavahana** | **Baladitya** (last) |
 | **Karkota** | **625 to 855** | **Durlabhavardhana** | **Lalitaditya** |
-| **Utpala** | **855 to 1003** | **Avantivarman** | Avantivarman |
+| **Utpala** | **855 to 939** (some books to 1003) | **Avantivarman** | Avantivarman |
+| **Brahmin interlude** | **939 to 948** | **Yashaskara** | Yashaskara |
+| **Gupta Kula (Parvagupta line)** | **948 to 1003** | **Parvagupta** | **Didda** |
 | **Lohara** | **1003 to c. 1171 (later kings to 1320)** | **Sangramaraja** | **Jayasimha** |
 | **Shah Mir** | **1339 to 1561** | **Shah Mir** | **Zain-ul-Abidin** |
 | **Chak** | **1561 to 1586** | **Ghazi Shah** | **Yusuf Shah** (as husband of Habba Khatun) |
 | **Mughal** | **1586 to 1752** | **Akbar** | Akbar |
 | **Afghan** | **1752 to 1819** | **Ahmad Shah Abdali** | (no ruler of note) |
 | **Sikh** | **1819 to 1846** | **Ranjit Singh** | **Ranjit Singh** |
+| **Rai (Jammu)** | **58 BCE to 342 CE** | **Adi Rai** | **Jog Rai** (last) |
+| **Dhar (Jammu)** | **to about 825** | **Suraj Dhar** | **Bajar Dhar** (last) |
+| **Dev (Jammu)** | **840 to 1808** | **Suraj Dev** | **Ranjit Dev** |
 | **Dogra** | **1846 to 1947** | **Gulab Singh** | **Gulab Singh** |
 
 ## Who's Who {#whos-who}
@@ -1931,6 +2855,15 @@ The **Jhelum Valley Road** and the **Banihal Cart Road** are the two **colonial-
 | **Sheikh Abdullah** | **Sher-e-Kashmir** |
 | **Mahjoor** | **Poet of Kashmir** |
 | **Hari Singh** | **Last Dogra Maharaja** |
+| **Shihab-ud-Din** | **Lalitaditya of medieval Kashmir** |
+| **Lalitaditya** | **Samudragupta of Kashmir** |
+| **Didda** | **Catherine of Kashmir** |
+| **Zain-ul-Abidin** | **Akbar of Kashmir** (also Budshah) |
+| **Unmattavanti** | **Mad Avanti** |
+| **Mian Singh** | **Colonel Sahib** (best Sikh governor) |
+| **Misr Diwan Chand** | **Fateh Jung, Nasrat Jung** |
+| **Ranjit Dev** | **Dar-ul-Aman** ruler of Jammu |
+| **Gulab Singh** | **Gulaboo**; founder of Purmandal |
 
 ### Chief Ministers and heads since 1947
 
@@ -1965,6 +2898,17 @@ The **Jhelum Valley Road** and the **Banihal Cart Road** are the two **colonial-
 | **Tantraloka** | **Abhinavagupta** |
 | **Kuttanimata** | **Damodaragupta** |
 | **Zakhirat-ul-Muluk** | **Hamadani** |
+| **Gulabnama** | **Diwan Kirpa Ram** |
+| **Rajdarshani** | **Ganesh Das Wadhera** |
+| **Waqiat-i-Kashmir** | **Khwaja Muhammad Azam Didamari** |
+| **Muktasar Tarikh-i-Kashmir** | **Pandit Birbal Kachru** |
+| **Zafarnama** | **Sharaf-ud-Din Yazdi** |
+| **Kapphanabhyudaya** | **Sivaswamin** |
+| **Zain Charita** | **Nothosoma** |
+| **Zain Prakasha** | **Yodhabhatta** |
+| **Travels in the Himalayan Provinces** | **William Moorcroft** |
+| **The Jammu and Kashmir Territories** | **Frederic Drew** |
+| **The Land of the Lamas** | **William Rockhill** |
 
 ## Records and Firsts {#firsts}
 
@@ -1982,6 +2926,68 @@ The **Jhelum Valley Road** and the **Banihal Cart Road** are the two **colonial-
 
 :::tip
 **Revision plan:** one **timeline** read, one **dynasty table**, one **who's who**, and then the **questions below**.
+:::
+
+### Bridges, forts and towns: who built what
+
+| Item | Builder |
+|---|---|
+| **Zaina Kadal** | **Zain-ul-Abidin** |
+| **Habba (Habak) Kadal** | **Habib Shah** |
+| **Saif Kadal** | **Saif Khan** (Aurangzeb's governor) |
+| **Amira Kadal** | **Amir Khan Jawansher** |
+| **Sher Garhi Fort** | **Amir Khan Jawansher** |
+| **Hari Parbat bastion wall** | **Mirza Yusuf Khan Rizvi** (under Akbar) |
+| **Hari Parbat fort** | **Atta Mohammad Khan** |
+| **Red (Muzaffarabad) Fort** | **Chaks** |
+| **Pratapapura (Tapar)** | **Durlabhaka** |
+| **Parihaspura** | **Lalitaditya** |
+| **Padmapura (Pampore)** | **Padma** |
+| **Utpalapura (Kakapur)** | **Utpala** |
+| **Avantipura** | **Avantivarman** |
+| **Suyyapura (Sopore)** | **Suyya** |
+| **Surapura (Harpor)** | **Sura** |
+| **Shankarapura (Pattan)** | **Shankaravarman** |
+| **Diddapura, Kankanapura** | **Didda** |
+| **Richanapura** | **Rinchana** |
+| **Alauddinpura** | **Ala-ud-Din** |
+| **Shahabuddinpura (Shadipura)** | **Shihab-ud-Din** |
+| **Jamnagar** | **Jamshid** |
+| **Naushahar, Zainpur, Zainkote, Zaingiri** | **Zain-ul-Abidin** |
+| **Bahu Fort, Dharanagri** | **Bahu Lochan** |
+| **Purani Mandi (Mal Mandi)** | **Mal Dev** |
+| **Mubarak Mandi** | **Dhruv Dev** (begun) |
+| **Purmandal** | **Gulab Singh** |
+| **R.S. Pura** | **Ranbir Singh** |
+| **Udhampur** | named after **Udham Singh**, son of Gulab Singh |
+
+## Dates That Differ Between Books {#dates-differ}
+
+Coaching notes and textbooks do not always agree. This table shows the **common variants** so you are not surprised in the exam.
+
+| Item | Version A | Version B |
+|---|---|---|
+| **Start of the Karkota dynasty** | **625 CE** | **627 CE** |
+| **Rajatarangini written** | **1148 to 1149** | **1149 to 1150** |
+| **Utpala dynasty** | **855 to 1003** | **855 to 939**, then **Gupta Kula 948 to 1003** |
+| **Lohara dynasty ends** | **1171** (Vanitadeva) | Later kings to **1320** |
+| **Zain-ul-Abidin** | **1420 to 1470** | **1420 to 1460** |
+| **Chak rule ends** | **1586** (Mughals enter) | **1589** (Yaqub surrenders) |
+| **Mughal rule** | **1586 to 1752** | **1586 to 1753** |
+| **Afghan rule** | **1752 to 1819** | **1753 to 1819** |
+| **Gulab Singh born** | **1792** | **1788** |
+| **Ranbir Singh begins rule** | **1857** | **1856** |
+| **Mohra hydro power station** | **1905** | **1907** |
+| **Gilgit Agency (British)** | **1889** (re-established) | **1891** |
+| **Reading Room Party** | **about 1930** | **1929** |
+| **Muslim to National Conference** | **11 June 1939** | **1938** (decision) |
+| **Naya Kashmir** | **1944** | **February 1945** |
+| **13 July 1931 deaths** | **22** | **21** |
+| **Hari Singh's rule ends** | **1949** (left the State) | **1948** |
+| **Treaty of Amritsar** | **16 March 1846** (correct) | A few books misprint **19 March** |
+
+:::tip
+When two versions appear **in the same question**, the question is usually asking you to **pick the version from the book it follows**. When only one appears, **choose it**.
 :::
 
 ## Practice Questions {#practice-questions}
@@ -2006,6 +3012,36 @@ The **Jhelum Valley Road** and the **Banihal Cart Road** are the two **colonial-
 18. When was the **Reorganisation Act** effective?
 19. Who became CM in **October 2024**?
 20. Which Chinese pilgrim visited Kashmir about **631 CE**?
+21. Who is called the **Samudragupta of Kashmir**?
+22. Which place was **Lalitaditya's capital**?
+23. Who was **Avantivarman's engineer**?
+24. Who founded the **Gupta Kula** in Kashmir (948)?
+25. Who is called the **Catherine of Kashmir**?
+26. Which **two foreign adventurers** came in **Suhadeva's** reign?
+27. What was the **first mosque** built in Kashmir by **Rinchana**?
+28. Who is called the **Lalitaditya of medieval Kashmir**?
+29. What was **Zain-ul-Abidin's pen name**?
+30. What share of the crop was **land revenue under Shams-ud-Din**? And under **Zain-ul-Abidin**?
+31. Who built the **Amira Kadal**?
+32. Who was the **first Afghan governor** of Kashmir?
+33. Which Sikh governor was called **"Colonel Sahib"**?
+34. Who wrote the **Gulabnama**?
+35. When and where was **Gulab Singh's Raj Tilak** done?
+36. Who introduced the **Dogri script** (by tradition)?
+37. Which town did **Gulab Singh** found, called **"Chota Kashi"**?
+38. Which press, the first in the State, did **Ranbir Singh** found?
+39. During whose reign were **houseboats** first built?
+40. Who was the **first Chief Justice** of the J&K High Court?
+41. How many members did the **Praja Sabha (1934)** have, and how many were elected?
+42. Which governor ordered **firing on 13 July 1931**?
+43. When was the **Quit Kashmir** movement announced?
+44. Who was the **first Mughal governor** of Kashmir?
+45. Who was the **worst governor** under Jahangir?
+46. Who built the **Saif Kadal**?
+47. Which governor abolished the **jizya** and built the **Hari Parbat wall**?
+48. Which Chak ruler **died in Bihar in 1592**?
+49. Which Kushana king founded **Kanispora**?
+50. Which Neolithic site shows **menhirs** along with Burzahom?
 
 ### Answers
 
@@ -2029,6 +3065,36 @@ The **Jhelum Valley Road** and the **Banihal Cart Road** are the two **colonial-
 18. **31 October 2019**.
 19. **Omar Abdullah** (sworn in 16 October 2024).
 20. **Hiuen Tsang**.
+21. **Lalitaditya Muktapida**.
+22. **Parihaspur** (Baramulla district).
+23. **Suyya**.
+24. **Parvagupta**.
+25. **Didda**.
+26. **Shah Mir** (from Swat) and **Rinchana** (from Tibet/Ladakh).
+27. **Bud Masjid**.
+28. **Shihab-ud-Din**.
+29. **Qutb**.
+30. **One-sixth** (Shams-ud-Din); **one-third** (Zain-ul-Abidin).
+31. **Amir Khan Jawansher**.
+32. **Abdullah Khan Ishaq Aqasi**.
+33. **Mian Singh**.
+34. **Diwan Kirpa Ram**.
+35. **16 January 1822, Akhnoor**.
+36. **Shakti Karan (Raja Shastri)**.
+37. **Purmandal**.
+38. **Vidya Vilas Press**.
+39. **Maharaja Pratap Singh**.
+40. **Lala Kanwar Sain**.
+41. **75 members, 33 elected**.
+42. **Raizada Trilok Chand**.
+43. **15 May 1946**.
+44. **Qasim Khan (Mir Bahr)**.
+45. **Itqad Khan**.
+46. **Saif Khan**, governor under Aurangzeb.
+47. **Mirza Yusuf Khan Rizvi**.
+48. **Yusuf Shah Chak**.
+49. **Kanishka**.
+50. **Gufkral**.
 
 :::mem Memory trick
 For the whole subject, use the **ten-step story**: **Burzahom → Ashoka → Kanishka → Karkota → Utpala → Lohara → Sultans → Mughals → Sikhs → Dogras → 1947 → 2019**. Each step is one rule-change for Kashmir.
