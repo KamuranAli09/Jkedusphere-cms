@@ -101,27 +101,38 @@ export function authorBox(a: Author) {
 }
 
 // ---------- Public pages ----------
-const CSS = `.ct{max-width:760px;margin:0 auto}
-.ct label{display:block;font-weight:700;font-size:14.5px;margin:18px 0 6px;color:var(--navy)}
-.ct label small{font-weight:500;color:var(--mut)}
-.ct input[type=text],.ct input[type=number],.ct input[type=email],.ct input[type=search],.ct select,.ct textarea{width:100%;padding:12px 14px;border:1px solid var(--line2);border-radius:12px;font:inherit;font-size:16px;color:var(--ink);background:#fff}
-.ct textarea{min-height:110px;resize:vertical}
-.ct .art-body{min-height:340px}
-.ct .two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
-.ct .hint{font-size:13.5px;color:var(--mut);margin:6px 0 0}
-.ct .chk{display:flex;gap:10px;align-items:flex-start;font-weight:500;margin:12px 0 0;color:var(--ink)}
-.ct .chk input{margin-top:4px;flex:none;width:auto}
-.ct .box{border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff;margin-top:22px}
-.ct .box h2{font-size:18px;margin:0 0 2px}
-.ct .err{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;padding:12px 16px;border-radius:12px;margin:16px 0}
-.ct .pv{display:none;width:96px;height:96px;border-radius:50%;object-fit:cover;margin-top:10px;border:1px solid var(--line)}
-.ct .go{margin-top:24px}
-.ct .code{font-size:clamp(26px,6vw,38px);font-weight:900;letter-spacing:.08em;color:var(--navy);background:var(--soft);border:1px dashed var(--line2);border-radius:16px;padding:16px 20px;text-align:center;margin:18px 0;user-select:all}
-.ct .st{display:inline-block;padding:5px 14px;border-radius:99px;font-weight:800;font-size:14px;background:var(--soft);color:var(--navy)}
-.ct .st.published{background:#dcfce7;color:#166534}.ct .st.rejected{background:#fee2e2;color:#991b1b}.ct .st.changes{background:#fef3c7;color:#92400e}
-.ct .note{background:var(--soft);border-left:4px solid var(--navy);border-radius:10px;padding:14px 16px;margin:16px 0;white-space:pre-wrap}
-.hp{position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden}
-@media(max-width:620px){.ct .two{grid-template-columns:1fr}}`;
+const CSS = `.jc{max-width:720px;margin:0 auto;text-align:left}
+.jc .s2{margin:10px 0 0;max-width:none}
+.jc label{display:block;font-weight:600;font-size:14.5px;margin:18px 0 6px;color:var(--ink)}
+.jc label small{font-weight:500;color:var(--mut)}
+.jc input[type=text],.jc input[type=number],.jc input[type=email],.jc select,.jc textarea{display:block;width:100%;padding:12px 14px;border:1px solid var(--line2);border-radius:10px;font:inherit;font-size:16px;line-height:1.5;color:var(--ink);background:#fff;box-shadow:none;outline:0}
+.jc input:focus,.jc select:focus,.jc textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(43,76,196,.14)}
+.jc textarea{min-height:100px;resize:vertical;line-height:1.65}
+.jc input[type=file]{font:inherit;font-size:14.5px;max-width:100%}
+.jc .jc-body{min-height:360px}
+.jc-two{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.jc-hint{font-size:13.5px;line-height:1.5;color:var(--mut);margin:6px 0 0}
+.jc label.jc-chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:14.5px;line-height:1.5;margin:12px 0 0;color:var(--ink)}
+.jc-chk input{flex:none;width:18px;height:18px;margin:2px 0 0;accent-color:var(--navy)}
+.jc-box{border:1px solid var(--line);border-radius:16px;padding:26px;background:#fff;margin-top:20px}
+.jc-box h2{font-size:20px;margin:0 0 4px}
+.jc-err{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;padding:12px 16px;border-radius:10px;margin:18px 0 0;font-size:15px}
+.jc-pv{display:none;width:96px;height:96px;border-radius:50%;object-fit:cover;margin-top:12px;border:1px solid var(--line)}
+.jc-go{margin-top:26px;padding:13px 28px;cursor:pointer;font-size:15px}
+.jc-code{font-size:clamp(26px,6vw,38px);font-weight:900;letter-spacing:.08em;color:var(--navy);background:var(--soft);border:1px dashed var(--line2);border-radius:14px;padding:16px 20px;text-align:center;margin:18px 0;user-select:all}
+.jc-st{display:inline-block;padding:5px 14px;border-radius:99px;font-weight:800;font-size:14px;background:var(--soft);color:var(--navy)}
+.jc-st.published{background:#dcfce7;color:#166534}.jc-st.rejected{background:#fee2e2;color:#991b1b}.jc-st.changes{background:#fef3c7;color:#92400e}
+.jc-note{background:var(--soft);border-left:4px solid var(--navy);border-radius:8px;padding:14px 16px;margin:16px 0;white-space:pre-wrap}
+.jc-hp{position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden}
+.jc .search{margin:18px 0 8px}
+.jc-kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 6px}
+.jc-kinds>div{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--soft)}
+.jc-kinds h3{font-size:16px;margin:0 0 6px;color:var(--navy)}
+.jc-kinds p{margin:0;font-size:14px;line-height:1.55;color:var(--mut)}
+.jc-how{margin:18px 0 0;font-size:15px;line-height:1.65;color:var(--mut)}
+.jc-links{margin-top:22px}
+@media(max-width:760px){.jc-kinds{grid-template-columns:1fr}}
+@media(max-width:620px){.jc-two{grid-template-columns:1fr}.jc-box{padding:18px}}`;
 
 const PHOTO_JS = `(function(){
 var f=document.getElementById('pf'),h=document.getElementById('photo'),pv=document.getElementById('pv'),rm=document.getElementById('pr');
@@ -149,61 +160,67 @@ function formPage(cats: string[], v: V, err = '') {
   const val = (k: string) => esc(v[k] ?? '');
   const chk = (k: string) => (v[k] ? ' checked' : '');
   return `<style>${CSS}</style>${crumbs([['Home', '/'], ['Contribute', '/contribute']])}
-<div class="w lp"><div class="ct"><h1>Contribute an article</h1>
-<p class="s2">Have something useful for J&amp;K exam aspirants? Write it here. No account needed. Our team reads every article and checks it before it goes live. After you submit you get an ID to track its progress.</p>
-${err ? `<div class="err" role="alert">${esc(err)}</div>` : ''}
+<div class="w lp"><div class="jc"><h1>Write for JKEdusphere</h1>
+<p class="s2">Every useful exam note, every sharp analysis and every honest "this is what actually worked for me" began with someone who sat down and wrote it. If you have cleared an exam, cracked a tough topic, followed a recruitment closely, or have a view on how things work in J&amp;K, this page is for you.</p>
+<div class="jc-kinds">
+<div><h3>Notes and explainers</h3><p>A topic you understand well enough to teach, in simple words.</p></div>
+<div><h3>Experience and strategy</h3><p>How you prepared, what worked, and what you would do differently.</p></div>
+<div><h3>Opinion and analysis</h3><p>Your view on a policy, a recruitment process or an education issue. Opinions are welcome. Back them with facts and argue the point, not the person.</p></div>
+</div>
+<p class="jc-how">Here is how it works. You submit, and we read and check every article by hand. You get a tracking ID to follow its progress. If it passes, it goes live under your name. Opinion pieces are published as the author's own view.</p>
+${err ? `<div class="jc-err" role="alert">${esc(err)}</div>` : ''}
 <form method="post" action="/contribute">
-<div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="jc-hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
 
-<div class="box"><h2>About you</h2><p class="hint">Shown with your article once it is published.</p>
+<div class="jc-box"><h2>About you</h2><p class="jc-hint">Shown with your article once it is published.</p>
 <label for="name">Full name</label><input id="name" type="text" name="name" value="${val('name')}" required maxlength="60" autocomplete="name">
-<div class="two"><div><label for="age">Age</label><input id="age" type="number" name="age" value="${val('age')}" required min="10" max="99" inputmode="numeric"></div>
+<div class="jc-two"><div><label for="age">Age</label><input id="age" type="number" name="age" value="${val('age')}" required min="10" max="99" inputmode="numeric"></div>
 <div><label for="qual">Qualification</label><input id="qual" type="text" name="qualification" value="${val('qualification')}" required maxlength="100" placeholder="e.g. B.Sc, JKSSB aspirant"></div></div>
 <label for="email">Email <small>(optional)</small></label><input id="email" type="email" name="email" value="${val('email')}" maxlength="120" autocomplete="email">
-<p class="hint">Only used if we need to contact you.</p>
+<p class="jc-hint">Only used if we need to contact you.</p>
 <label for="pf">Your photo <small>(optional)</small></label>
 <input id="pf" type="file" accept="image/*"><input type="hidden" id="photo" name="photo" value="${val('photo')}">
-<img id="pv" class="pv" alt="Your photo preview"><button type="button" id="pr" class="btn o" style="display:none;margin-top:10px;padding:7px 16px">Remove photo</button>
-<label class="chk"><input type="checkbox" name="show_age" value="1"${chk('show_age')}> Show my age on my article</label>
-<label class="chk"><input type="checkbox" name="show_email" value="1"${chk('show_email')}> Show my email on my article</label>
-<p class="hint">Your name, qualification and photo are shown. Age and email are shown only if you tick the boxes above.</p></div>
+<img id="pv" class="jc-pv" alt="Your photo preview"><button type="button" id="pr" class="btn o" style="display:none;margin-top:10px;padding:7px 16px">Remove photo</button>
+<label class="jc-chk"><input type="checkbox" name="show_age" value="1"${chk('show_age')}> Show my age on my article</label>
+<label class="jc-chk"><input type="checkbox" name="show_email" value="1"${chk('show_email')}> Show my email on my article</label>
+<p class="jc-hint">Your name, qualification and photo are shown. Age and email are shown only if you tick the boxes above.</p></div>
 
-<div class="box"><h2>Your article</h2>
+<div class="jc-box"><h2>Your article</h2>
 <label for="title">Title</label><input id="title" type="text" name="title" value="${val('title')}" required minlength="8" maxlength="150">
 <label for="cat">Category</label><select id="cat" name="category" required><option value="">Choose a category</option>${cats.map((c) => `<option value="${esc(c)}"${v.category === c ? ' selected' : ''}>${esc(c)}</option>`).join('')}</select>
 <label for="sum">Short summary <small>(optional, 1 or 2 lines)</small></label><textarea id="sum" name="excerpt" maxlength="300">${val('excerpt')}</textarea>
-<label for="body">Article</label><textarea id="body" class="art-body" name="body" required minlength="400" maxlength="20000" rows="16">${val('body')}</textarea>
-<p class="hint">Plain text. Leave a blank line between paragraphs. Start a line with ## to make a heading. Minimum 400 characters.</p>
-<label class="chk"><input type="checkbox" name="consent" value="1" required${chk('consent')}> I wrote this article myself and it is not copied from anywhere. I agree that JKEdusphere may edit it and publish it with my name and details as chosen above. If I am under 18, my parent or guardian knows about this.</label>
-<button class="btn go" type="submit">Submit article</button></div>
+<label for="body">Article</label><textarea id="body" class="jc-body" name="body" required minlength="400" maxlength="20000" rows="16">${val('body')}</textarea>
+<p class="jc-hint">Plain text. Leave a blank line between paragraphs. Start a line with ## to make a heading. Minimum 400 characters.</p>
+<label class="jc-chk"><input type="checkbox" name="consent" value="1" required${chk('consent')}> I wrote this article myself and it is not copied from anywhere. I agree that JKEdusphere may edit it and publish it with my name and details as chosen above. If I am under 18, my parent or guardian knows about this.</label>
+<button class="btn jc-go" type="submit">Submit article</button></div>
 </form>
-<p style="margin-top:22px">Already submitted? <a href="/contribute/status">Check your article's progress</a></p>
+<p class="jc-links">Already submitted? <a href="/contribute/status">Check your article's progress</a></p>
 </div></div><script>${PHOTO_JS}</script>`;
 }
 
 function donePage(code: string) {
   return `<style>${CSS}</style>${crumbs([['Home', '/'], ['Contribute', '/contribute']])}
-<div class="w lp"><div class="ct"><h1>Thank you, article received</h1>
-<p class="s2">Your tracking ID is:</p><div class="code" id="code">${esc(code)}</div>
+<div class="w lp"><div class="jc"><h1>Thank you, article received</h1>
+<p class="s2">Your tracking ID is:</p><div class="jc-code" id="code">${esc(code)}</div>
 <p><b>Save this ID now.</b> There is no login, so this ID is the only way to check your article's progress, and we cannot look it up for you later. Take a screenshot or copy it.</p>
 <p style="margin-top:18px"><a class="btn" href="/contribute/status?id=${encodeURIComponent(code)}">Check progress</a> <a class="btn o" href="/">Back to home</a></p></div></div>`;
 }
 
 function statusPage(q: string, r: Row | null, msg = '') {
-  const form = `<form method="get" action="/contribute/status" class="search" style="margin:18px 0 8px"><input type="search" name="id" value="${esc(q)}" placeholder="Enter your ID, e.g. JK-7F3K9Q2M" aria-label="Tracking ID" autocomplete="off" required><button type="submit">Check</button></form>`;
+  const form = `<form method="get" action="/contribute/status" class="search"><input type="search" name="id" value="${esc(q)}" placeholder="Enter your ID, e.g. JK-7F3K9Q2M" aria-label="Tracking ID" autocomplete="off" required><button type="submit">Check</button></form>`;
   let main = '';
-  if (msg) main = `<div class="err" role="alert">${esc(msg)}</div>`;
+  if (msg) main = `<div class="jc-err" role="alert">${esc(msg)}</div>`;
   else if (r) {
     const s = effStatus(r), [label, text] = STATUS[s] ?? STATUS.pending;
-    main = `<div class="box"><p class="hint" style="margin:0">Article</p><h2 style="margin-bottom:10px">${esc(r.title)}</h2>
-<p><span class="st ${esc(s)}">${esc(label)}</span></p><p>${esc(text)}</p>
-${r.admin_note ? `<div class="note"><b>Note from the team</b>\n${esc(r.admin_note)}</div>` : ''}
+    main = `<div class="jc-box"><p class="jc-hint" style="margin:0">Article</p><h2 style="margin-bottom:10px">${esc(r.title)}</h2>
+<p><span class="jc-st ${esc(s)}">${esc(label)}</span></p><p>${esc(text)}</p>
+${r.admin_note ? `<div class="jc-note"><b>Note from the team</b>\n${esc(r.admin_note)}</div>` : ''}
 ${s === 'published' && r.slug ? `<p style="margin-top:14px"><a class="btn" href="/${esc(r.slug)}">Read your article</a></p>` : ''}
-<p class="hint" style="margin-top:14px">ID ${esc(r.code)} &middot; Submitted ${day(r.created_at)} &middot; Last update ${day(r.updated_at)}</p></div>`;
-  } else if (q) main = `<div class="err" role="alert">No article found for that ID. Check it and try again.</div>`;
+<p class="jc-hint" style="margin-top:14px">ID ${esc(r.code)} &middot; Submitted ${day(r.created_at)} &middot; Last update ${day(r.updated_at)}</p></div>`;
+  } else if (q) main = `<div class="jc-err" role="alert">No article found for that ID. Check it and try again.</div>`;
   return `<style>${CSS}</style>${crumbs([['Home', '/'], ['Contribute', '/contribute'], ['Track article', '/contribute/status']])}
-<div class="w lp"><div class="ct"><h1>Track your article</h1><p class="s2">Enter the ID you received when you submitted.</p>${form}${main}
-<p style="margin-top:22px"><a href="/contribute">Write another article</a></p></div></div>`;
+<div class="w lp"><div class="jc"><h1>Track your article</h1><p class="s2">Enter the ID you received when you submitted.</p>${form}${main}
+<p class="jc-links"><a href="/contribute">Write another article</a></p></div></div>`;
 }
 
 // ---------- Routes ----------
