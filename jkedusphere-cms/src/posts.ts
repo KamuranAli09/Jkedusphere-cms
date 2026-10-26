@@ -5,6 +5,7 @@ import { slugify } from './content';
 import { DEFAULT_OG, esc, href, load, orgNode, resolve, shell, siteRef, stripMicrodata } from './homepage';
 import { notesPaths, notesIndex, plainText } from './notes';
 import { getCats } from './categories';
+import { authorFor, authorBox, AUTHOR_CSS } from './contribute';
 
 const IST = 5.5 * 3600 * 1000;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -258,21 +259,22 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
         ? ((await db.prepare(`SELECT title, slug, category, published_at FROM posts WHERE status='published' AND published_at <= ? AND id <> ?${p.category ? ' AND category = ?' : ''} ORDER BY published_at DESC LIMIT 5`).bind(...(p.category ? [now(), p.id, p.category] : [now(), p.id])).all()).results as Row[]) : [];
       const share = T.showShare === 'yes' ? `<div class="share"><b>Share</b><a href="https://wa.me/?text=${encodeURIComponent(p.title + ' ' + url)}" rel="noopener" target="_blank">WhatsApp</a><a href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(p.title)}" rel="noopener" target="_blank">Telegram</a></div>` : '';
       const cta = T.ctaBtn ? `<div class="cta"><div><h3>${esc(T.ctaTitle)}</h3><p>${esc(T.ctaText)}</p></div><a class="btn w2" href="${href(T.ctaUrl)}">${esc(T.ctaBtn)}</a></div>` : '';
+      const au = await authorFor(db, p.id);
       const seg = ((p.image ?? '').split('/').filter(Boolean).pop() ?? '').split('?')[0];
       const showHero = !!p.image && !(seg.length > 6 && String(p.body).includes(seg)); // skip if the article already contains this image
       const body = `${crumbs(items)}<div class="w pg"><article class="art">
 <span class="tag">${esc(p.category ?? 'Post')}</span><h1>${esc(p.title)}</h1>
-<p class="meta">${esc(T.authorLine)}. Published ${day(p.published_at)}${p.updated_at - p.published_at > 86400 ? `, updated ${day(p.updated_at)}` : ''}</p>
+<p class="meta">${au ? 'By ' + esc(au.name) : esc(T.authorLine)}. Published ${day(p.published_at)}${p.updated_at - p.published_at > 86400 ? `, updated ${day(p.updated_at)}` : ''}</p>
 ${showHero ? `<img class="hero-img" src="${esc(p.image)}" alt="${esc(p.image_alt || p.title)}" width="1200" height="630">` : ''}
 ${T.showDates === 'yes' && dates.length ? `<div class="glance"><h2>Important dates</h2><table>${dates.map((d) => `<tr><th>${esc(d.event)}</th><td>${esc(d.date)}</td></tr>`).join('')}</table></div>` : ''}
-<div class="prose">${stripMicrodata(p.body)}</div>${cta}${share}
+<div class="prose">${stripMicrodata(p.body)}</div>${cta}${share}${au ? AUTHOR_CSS + authorBox(au) : ''}
 ${T.disclaimer ? `<p class="dnote">${esc(T.disclaimer)}</p>` : ''}</article>
 <aside class="side">${related.length ? `<div class="box2"><h2>${esc(T.relatedTitle)}</h2>${related.map((r) => `<a href="/${esc(r.slug)}">${esc(r.title)}<small>${day(r.published_at)}</small></a>`).join('')}</div>` : ''}</aside></div>`;
       const ld = { '@context': 'https://schema.org', '@graph': [
         orgNode(o, site),
         { '@type': 'Article', '@id': url + '#article', headline: String(p.title).slice(0, 110), description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, url, datePublished: iso(p.published_at), dateModified: iso(Math.max(p.updated_at, p.published_at)), mainEntityOfPage: { '@type': 'WebPage', '@id': url },
           image: [p.image ? abs(o, p.image) : o + DEFAULT_OG], inLanguage: 'en-IN', ...(p.category ? { articleSection: p.category } : {}), isPartOf: siteRef(o),
-          author: { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] };
+          author: au ? { '@type': 'Person', name: au.name } : { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] };
       return c.html(await shell(db, o, { title: p.seo_title || `${p.title} | ${site}`, description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, canonical: url, type: 'article', image: p.image ? abs(o, p.image) : undefined, ld, body }), 200, { 'Cache-Control': 'public, max-age=60' });
     }
 

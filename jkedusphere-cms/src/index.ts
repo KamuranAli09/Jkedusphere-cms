@@ -10,6 +10,7 @@ import { registerHomepage } from './homepage';
 import { registerPublic } from './posts';
 import { registerImporter } from './importer';
 import { registerNotes } from './notes';
+import { registerContribute } from './contribute';
 import { registerAnalytics } from './analytics';
 import { trackMiddleware } from './track';
 
@@ -131,6 +132,7 @@ registerAnalytics(app); // dashboard, analytics and notes manager
 
 app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + siteOrigin(c.req.url) + '/sitemap.xml\n'));
 registerNotes(app);
+registerContribute(app); // reader contributions + admin review queue (must come before registerPublic)
 registerPublic(app);
 
 

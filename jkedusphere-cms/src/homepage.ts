@@ -328,7 +328,7 @@ ${side}</div></section>`;
   footer: (d) => {
     const col = (title: string, label: string, list: any[]) => (list.length ? `<nav aria-label="${esc(label)}">${title ? `<h3>${esc(title)}</h3>` : ''}${list.map((l) => `<a href="${href(l.url)}">${esc(l.label)}</a>`).join('')}</nav>` : '');
     return `<footer class="fd"><div class="w">${d.tagline || d.ctaText ? `<div class="ft">${d.tagline ? `<h2>${hl(d.tagline)}</h2>` : '<span></span>'}${d.ctaText ? `<a class="btn" href="${href(d.ctaUrl)}">${esc(d.ctaText)}</a>` : ''}</div>` : ''}
-<div class="fg"><div class="fb">${logo(true)}<p>${esc(d.text)}</p></div>${col(d.exploreTitle, 'Explore', d.links2 ?? [])}${col(d.linksTitle, 'About', d.links ?? [])}</div>
+<div class="fg"><div class="fb">${logo(true)}<p>${esc(d.text)}</p></div>${col(d.exploreTitle, 'Explore', d.links2 ?? [])}${col(d.linksTitle, 'About', (d.links ?? []).some((l: any) => /^\/contribute\/?$/.test(l.url)) ? d.links : [...(d.links ?? []), { label: 'Contribute an article', url: '/contribute' }])}</div>
 <div class="fz"><span>&copy; ${new Date().getFullYear()} JKEdusphere. All rights reserved.</span><a href="#">Back to top &uarr;</a></div></div></footer>`;
   },
 };
