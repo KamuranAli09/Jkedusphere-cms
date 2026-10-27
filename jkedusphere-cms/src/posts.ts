@@ -136,6 +136,7 @@ function searchBody(q: string, type: string, hits: Hit[], ts: string[], page: nu
   return crumbs([['Home', '/'], ['Search', '/search']]) + `<div class="w lp"><h1>${q ? 'Search results' : 'Search'}</h1>${form}${main}${shown.length ? pager : ''}</div>`;
 }
 
+const STATIC_HEAD = '<style>header{position:static}html{scroll-padding-top:16px}.side{top:24px}</style>'; // post and page views: the site header scrolls away instead of covering the text
 // Small progressive enhancements for post pages: reading progress, "In this article" list, copy link
 const POST_JS = `<script>(function(){var p=document.querySelector('.prose'),t=document.getElementById('toc');
 if(p&&t){var h=[].slice.call(p.querySelectorAll('h2')).filter(function(x){return x.textContent.trim()});
@@ -281,7 +282,7 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
       const byline = au ? 'By ' + au.name : String(T.authorLine ?? '');
       const initial = (au ? au.name : 'JK').trim().slice(0, au ? 1 : 2).toUpperCase();
       const v = variant(p.category);
-      const body = `<div class="rp" id="rp" aria-hidden="true"></div>${crumbs(items)}<div class="w pg"><article class="art">
+      const body = `${STATIC_HEAD}<div class="rp" id="rp" aria-hidden="true"></div>${crumbs(items)}<div class="w pg"><article class="art">
 <header class="ah"><div class="chs">${p.category ? `<a class="ctag v${v}" href="${catUrl(p.category)}">${esc(p.category)}</a>` : ''}${isNew(p.published_at) ? '<span class="nw">New</span>' : ''}</div><h1>${esc(p.title)}</h1>
 <p class="meta"><span class="mav" aria-hidden="true">${esc(initial)}</span><span><b>${esc(byline)}</b><span>${day(p.published_at)}${p.updated_at - p.published_at > 86400 ? ` &middot; Updated ${day(p.updated_at)}` : ''} &middot; ${readMins(p.body)} min read</span></span></p></header>
 ${showHero ? `<img class="hero-img" src="${esc(p.image)}" alt="${esc(p.image_alt || p.title)}" width="1200" height="630">` : ''}
@@ -301,7 +302,7 @@ ${T.disclaimer ? `<p class="dnote">${esc(T.disclaimer)}</p>` : ''}</article>
     const g = await db.prepare('SELECT * FROM pages WHERE slug = ?').bind(slug).first<Row>();
     if (g) {
       const url = `${o}/${g.slug}`, items: [string, string][] = [['Home', '/'], [g.title, `/${g.slug}`]];
-      const body = `${crumbs(items)}<div class="w lp"><article class="art" style="max-width:820px"><h1>${esc(g.title)}</h1><div class="prose">${wrapTables(stripMicrodata(g.body))}</div></article></div>`;
+      const body = `${STATIC_HEAD}${crumbs(items)}<div class="w lp"><article class="art" style="max-width:820px"><h1>${esc(g.title)}</h1><div class="prose">${wrapTables(stripMicrodata(g.body))}</div></article></div>`;
       return c.html(await shell(db, o, { title: `${g.title} | ${site}`, description: g.seo_description || `${g.title} - ${site}`, canonical: url, ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, site), { '@type': g.slug === 'about-us' ? 'AboutPage' : g.slug === 'contact-us' ? 'ContactPage' : 'WebPage', '@id': url + '#webpage', name: g.title, url, description: g.seo_description || `${g.title} - ${site}`, inLanguage: 'en-IN', isPartOf: siteRef(o), publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] }, body }), 200, { 'Cache-Control': 'public, max-age=60' });
     }
     return notFound(c);
