@@ -20,11 +20,17 @@ type Row = Record<string, any>;
 const crumbs = (items: [string, string][]) => `<nav class="crumb w" aria-label="Breadcrumb">${items.map(([n, u], i) => (i < items.length - 1 ? `<a href="${esc(u)}">${esc(n)}</a><span>/</span>` : `<span>${esc(n)}</span>`)).join('')}</nav>`;
 const crumbLd = (origin: string, items: [string, string][]) => ({ '@type': 'BreadcrumbList', itemListElement: items.map(([name, u], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(origin, u) })) });
 
-const card = (p: Row) => `<article class="vc"><div class="vt"><span>${esc(p.category ?? 'Post')}</span>${day(p.published_at)}</div><h3><a href="/${esc(p.slug)}" style="text-decoration:none">${esc(p.title)}</a></h3><p>${esc(p.excerpt ?? '')}</p><a href="/${esc(p.slug)}">Read more</a></article>`;
+const variant = (c: string) => [...String(c ?? '')].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 5;
+const isNew = (ts: number) => now() - ts < 3 * 86400;
+const readMins = (html: string) => Math.max(1, Math.round(plainText(String(html ?? '')).split(/\s+/).filter(Boolean).length / 210));
+// Wrap every table so wide ones scroll sideways instead of squeezing their columns
+const wrapTables = (h: string) => String(h ?? '').replace(/<table(?=[\s>])/gi, '<div class="tbw"><table').replace(/<\/table>/gi, '</table></div>');
+
+const card = (p: Row) => `<article class="vc pc v${variant(p.category)}"><div class="vt"><div class="vl"><span>${esc(p.category ?? 'Post')}</span>${isNew(p.published_at) ? '<span class="nw">New</span>' : ''}</div><time datetime="${iso(p.published_at)}">${day(p.published_at)}</time></div><h3><a href="/${esc(p.slug)}" style="text-decoration:none">${esc(p.title)}</a></h3>${p.excerpt ? `<p>${esc(p.excerpt)}</p>` : ''}<a class="rd" href="/${esc(p.slug)}">Read update <b aria-hidden="true">&rarr;</b></a></article>`;
 
 const listing = (title: string, intro: string, posts: Row[], q: string, page: number, more: boolean, base: string) => `
-<div class="w lp"><h1>${esc(title)}</h1>${intro ? `<p class="s2">${esc(intro)}</p>` : ''}
-<form class="search" action="/search" role="search" style="margin:18px 0 26px"><input type="search" name="q" value="${esc(q)}" placeholder="Search posts" aria-label="Search"><button type="submit">Search</button></form>
+<div class="w lp"><header class="lhd"><span class="eyebrow">Category</span><h1>${esc(title)}</h1>${intro ? `<p class="s2">${esc(intro)}</p>` : ''}
+<form class="search" action="/search" role="search"><input type="search" name="q" value="${esc(q)}" placeholder="Search posts" aria-label="Search"><button type="submit">Search</button></form></header>
 ${posts.length ? `<div class="vg">${posts.map(card).join('')}</div>` : '<p class="s2">No posts found yet. Please check back soon.</p>'}
 <div class="pager">${page > 1 ? `<a class="btn o" href="${base}${base.includes('?') ? '&' : '?'}page=${page - 1}">Newer</a>` : ''}${more ? `<a class="btn" href="${base}${base.includes('?') ? '&' : '?'}page=${page + 1}">Older posts</a>` : ''}</div></div>`;
 
@@ -129,6 +135,16 @@ function searchBody(q: string, type: string, hits: Hit[], ts: string[], page: nu
   const pager = `<div class="pager">${page > 1 ? `<a class="btn o" href="${base}&page=${page - 1}">Previous</a>` : ''}${more ? `<a class="btn" href="${base}&page=${page + 1}">More results</a>` : ''}</div>`;
   return crumbs([['Home', '/'], ['Search', '/search']]) + `<div class="w lp"><h1>${q ? 'Search results' : 'Search'}</h1>${form}${main}${shown.length ? pager : ''}</div>`;
 }
+
+// Small progressive enhancements for post pages: reading progress, "In this article" list, copy link
+const POST_JS = `<script>(function(){var p=document.querySelector('.prose'),t=document.getElementById('toc');
+if(p&&t){var h=[].slice.call(p.querySelectorAll('h2')).filter(function(x){return x.textContent.trim()});
+if(h.length>=3){var o=t.querySelector('ol');h.forEach(function(x,i){if(!x.id)x.id='s'+(i+1);var li=document.createElement('li'),a=document.createElement('a');a.href='#'+x.id;a.textContent=x.textContent.trim();li.appendChild(a);o.appendChild(li)});t.hidden=false;if(innerWidth>700)t.open=true}}
+var b=document.getElementById('rp'),ar=document.querySelector('.art');
+if(b&&ar){var f=function(){var r=ar.getBoundingClientRect(),d=r.height-innerHeight;b.style.transform='scaleX('+(d>0?Math.min(1,Math.max(0,-r.top/d)):0)+')'};addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f()}
+var c=document.getElementById('cp');
+if(c)c.addEventListener('click',function(){var u=location.href.split('#')[0];if(navigator.share){navigator.share({url:u,title:document.title}).catch(function(){})}else if(navigator.clipboard){navigator.clipboard.writeText(u).then(function(){c.textContent='Link copied'},function(){})}});
+})();</script>`;
 
 export function registerPublic(app: Hono<Env>) {
   // Old Blogger addresses: /2026/10/slug.html and /p/page.html redirect permanently (301) to the new address.
@@ -257,19 +273,23 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
       try { dates = JSON.parse(p.important_dates || '[]'); } catch { /* ignore */ }
       const related = T.showRelated === 'yes'
         ? ((await db.prepare(`SELECT title, slug, category, published_at FROM posts WHERE status='published' AND published_at <= ? AND id <> ?${p.category ? ' AND category = ?' : ''} ORDER BY published_at DESC LIMIT 5`).bind(...(p.category ? [now(), p.id, p.category] : [now(), p.id])).all()).results as Row[]) : [];
-      const share = T.showShare === 'yes' ? `<div class="share"><b>Share</b><a href="https://wa.me/?text=${encodeURIComponent(p.title + ' ' + url)}" rel="noopener" target="_blank">WhatsApp</a><a href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(p.title)}" rel="noopener" target="_blank">Telegram</a></div>` : '';
+      const share = T.showShare === 'yes' ? `<div class="share"><b>Share this update</b><a class="wa" href="https://wa.me/?text=${encodeURIComponent(p.title + ' ' + url)}" rel="noopener" target="_blank">WhatsApp</a><a class="tl2" href="https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(p.title)}" rel="noopener" target="_blank">Telegram</a><button type="button" id="cp">Copy link</button></div>` : '';
       const cta = T.ctaBtn ? `<div class="cta"><div><h3>${esc(T.ctaTitle)}</h3><p>${esc(T.ctaText)}</p></div><a class="btn w2" href="${href(T.ctaUrl)}">${esc(T.ctaBtn)}</a></div>` : '';
       const au = await authorFor(db, p.id);
       const seg = ((p.image ?? '').split('/').filter(Boolean).pop() ?? '').split('?')[0];
       const showHero = !!p.image && !(seg.length > 6 && String(p.body).includes(seg)); // skip if the article already contains this image
-      const body = `${crumbs(items)}<div class="w pg"><article class="art">
-<span class="tag">${esc(p.category ?? 'Post')}</span><h1>${esc(p.title)}</h1>
-<p class="meta">${au ? 'By ' + esc(au.name) : esc(T.authorLine)}. Published ${day(p.published_at)}${p.updated_at - p.published_at > 86400 ? `, updated ${day(p.updated_at)}` : ''}</p>
+      const byline = au ? 'By ' + au.name : String(T.authorLine ?? '');
+      const initial = (au ? au.name : 'JK').trim().slice(0, au ? 1 : 2).toUpperCase();
+      const v = variant(p.category);
+      const body = `<div class="rp" id="rp" aria-hidden="true"></div>${crumbs(items)}<div class="w pg"><article class="art">
+<header class="ah"><div class="chs">${p.category ? `<a class="ctag v${v}" href="${catUrl(p.category)}">${esc(p.category)}</a>` : ''}${isNew(p.published_at) ? '<span class="nw">New</span>' : ''}</div><h1>${esc(p.title)}</h1>
+<p class="meta"><span class="mav" aria-hidden="true">${esc(initial)}</span><span><b>${esc(byline)}</b><span>${day(p.published_at)}${p.updated_at - p.published_at > 86400 ? ` &middot; Updated ${day(p.updated_at)}` : ''} &middot; ${readMins(p.body)} min read</span></span></p></header>
 ${showHero ? `<img class="hero-img" src="${esc(p.image)}" alt="${esc(p.image_alt || p.title)}" width="1200" height="630">` : ''}
-${T.showDates === 'yes' && dates.length ? `<div class="glance"><h2>Important dates</h2><table>${dates.map((d) => `<tr><th>${esc(d.event)}</th><td>${esc(d.date)}</td></tr>`).join('')}</table></div>` : ''}
-<div class="prose">${stripMicrodata(p.body)}</div>${cta}${share}${au ? AUTHOR_CSS + authorBox(au) : ''}
+${T.showDates === 'yes' && dates.length ? `<div class="glance"><h2>Important dates</h2><dl>${dates.map((d) => `<div><dt>${esc(d.event)}</dt><dd>${esc(d.date)}</dd></div>`).join('')}</dl></div>` : ''}
+<details class="toc" id="toc" hidden><summary>In this article</summary><ol></ol></details>
+<div class="prose">${wrapTables(stripMicrodata(p.body))}</div>${cta}${share}${au ? AUTHOR_CSS + authorBox(au) : ''}
 ${T.disclaimer ? `<p class="dnote">${esc(T.disclaimer)}</p>` : ''}</article>
-<aside class="side">${related.length ? `<div class="box2"><h2>${esc(T.relatedTitle)}</h2>${related.map((r) => `<a href="/${esc(r.slug)}">${esc(r.title)}<small>${day(r.published_at)}</small></a>`).join('')}</div>` : ''}</aside></div>`;
+<aside class="side">${related.length ? `<div class="box2"><h2>${esc(T.relatedTitle)}</h2>${related.map((r) => `<a href="/${esc(r.slug)}"><span>${esc(r.title)}<small>${day(r.published_at)}</small></span></a>`).join('')}</div>` : ''}</aside></div>${POST_JS}`;
       const ld = { '@context': 'https://schema.org', '@graph': [
         orgNode(o, site),
         { '@type': 'Article', '@id': url + '#article', headline: String(p.title).slice(0, 110), description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, url, datePublished: iso(p.published_at), dateModified: iso(Math.max(p.updated_at, p.published_at)), mainEntityOfPage: { '@type': 'WebPage', '@id': url },
@@ -281,7 +301,7 @@ ${T.disclaimer ? `<p class="dnote">${esc(T.disclaimer)}</p>` : ''}</article>
     const g = await db.prepare('SELECT * FROM pages WHERE slug = ?').bind(slug).first<Row>();
     if (g) {
       const url = `${o}/${g.slug}`, items: [string, string][] = [['Home', '/'], [g.title, `/${g.slug}`]];
-      const body = `${crumbs(items)}<div class="w lp"><article class="art" style="max-width:820px"><h1>${esc(g.title)}</h1><div class="prose">${stripMicrodata(g.body)}</div></article></div>`;
+      const body = `${crumbs(items)}<div class="w lp"><article class="art" style="max-width:820px"><h1>${esc(g.title)}</h1><div class="prose">${wrapTables(stripMicrodata(g.body))}</div></article></div>`;
       return c.html(await shell(db, o, { title: `${g.title} | ${site}`, description: g.seo_description || `${g.title} - ${site}`, canonical: url, ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, site), { '@type': g.slug === 'about-us' ? 'AboutPage' : g.slug === 'contact-us' ? 'ContactPage' : 'WebPage', '@id': url + '#webpage', name: g.title, url, description: g.seo_description || `${g.title} - ${site}`, inLanguage: 'en-IN', isPartOf: siteRef(o), publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] }, body }), 200, { 'Cache-Control': 'public, max-age=60' });
     }
     return notFound(c);
