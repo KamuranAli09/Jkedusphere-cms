@@ -6,6 +6,7 @@ import { DEFAULT_OG, esc, href, load, orgNode, resolve, shell, siteRef, stripMic
 import { notesPaths, notesIndex, plainText } from './notes';
 import { getCats } from './categories';
 import { authorFor, authorBox, AUTHOR_CSS } from './contribute';
+import { caSitemap } from './currentaffairs';
 
 const IST = 5.5 * 3600 * 1000;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -160,7 +161,7 @@ export function registerPublic(app: Hono<Env>) {
         if (slug && await db.prepare('SELECT 1 AS x FROM posts WHERE slug = ? UNION SELECT 1 FROM pages WHERE slug = ?').bind(slug, slug).first()) return c.redirect(`/${slug}`, 301);
       }
     }
-    const legacy: [RegExp, string][] = [[/^\/p\/premium-notes-store/, 'https://jkedusphere.com'], [/^\/p\/vacanc/, '/category/vacancies'], [/^\/vacancies$/, '/category/vacancies'], [/^\/p\/current-affairs/, '/category/current-affairs']];
+    const legacy: [RegExp, string][] = [[/^\/p\/premium-notes-store/, 'https://jkedusphere.com'], [/^\/p\/vacanc/, '/category/vacancies'], [/^\/vacancies$/, '/category/vacancies'], [/^\/p\/current-affairs/, '/current-affairs']];
     const hit = legacy.find(([re]) => re.test(path));
     if (hit) return c.redirect(hit[1], 301);
     const r = await db.prepare('SELECT to_path, status FROM redirects WHERE from_path = ?').bind(path).first<{ to_path: string; status: number }>();
@@ -256,7 +257,7 @@ ${fresh.length ? `<h2 class="nf-h">Latest updates</h2><div class="vg">${fresh.ma
     const pages = (await c.env.DB.prepare('SELECT slug, updated_at FROM pages').all()).results as Row[];
     const notes = notesPaths(), notesSet = new Set(notes.map((n) => n.path));
     const u = (loc: string, ts?: number) => `<url><loc>${esc(o + loc)}</loc>${ts ? `<lastmod>${iso(ts).slice(0, 10)}</lastmod>` : ''}</url>`;
-    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${u('/')}${CATS.map((x) => u(catUrl(x))).join('')}${posts.filter((p) => !notesSet.has('/' + p.slug)).map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${pages.filter((p) => !notesSet.has('/' + p.slug)).map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${notes.map((n) => `<url><loc>${esc(o + n.path)}</loc><lastmod>${n.lastmod}</lastmod></url>`).join('')}</urlset>`;
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${u('/')}${await caSitemap(c.env.DB, o)}${CATS.map((x) => u(catUrl(x))).join('')}${posts.filter((p) => !notesSet.has('/' + p.slug)).map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${pages.filter((p) => !notesSet.has('/' + p.slug)).map((p) => u(`/${p.slug}`, p.updated_at)).join('')}${notes.map((n) => `<url><loc>${esc(o + n.path)}</loc><lastmod>${n.lastmod}</lastmod></url>`).join('')}</urlset>`;
     return c.body(xml, 200, { 'Content-Type': 'application/xml; charset=utf-8', 'Cache-Control': 'public, max-age=300' });
   });
 
