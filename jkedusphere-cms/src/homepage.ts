@@ -120,8 +120,8 @@ const TEMPLATES = ['post'];
 const rows = (cols: string[], data: string[][]) => data.map((a) => Object.fromEntries(cols.map((k, i) => [k, a[i] ?? ''])));
 const DEFAULTS: Record<string, any> = {
   seo: { title: 'JKEdusphere | Study Material, Current Affairs & Exam Prep for J&K Exams', description: 'Subject-wise notes, research, reports and current affairs for JKSSB, JKPSC, JKPSI, banking and UPSC aspirants in Jammu & Kashmir, with vacancy updates alongside.', ogImage: '', siteName: 'JKEdusphere' },
-  header: { ctaText: 'Free mock test', ctaUrl: 'https://jkedusphere.com', nav: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/#study'], ['Current affairs', '/#affairs'], ['Reports', '/#reports'], ['Vacancies', '/#vacancies']]),
-    strip: rows(LINK, ['Polity', 'History', 'Geography', 'Economy', 'Science and Tech', 'J&K GK', 'Reasoning', 'English', 'Current Affairs'].map((x) => [x, '/search?q=' + encodeURIComponent(x)])) },
+  header: { ctaText: 'Free mock test', ctaUrl: 'https://jkedusphere.com', nav: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/#study'], ['Current affairs', '/current-affairs'], ['Reports', '/#reports'], ['Vacancies', '/#vacancies']]),
+    strip: rows(LINK, ['Polity', 'History', 'Geography', 'Economy', 'Science and Tech', 'J&K GK', 'Reasoning', 'English', 'Current Affairs'].map((x) => [x, x === 'Current Affairs' ? '/current-affairs' : '/search?q=' + encodeURIComponent(x)])) },
   hero: { badge: '', title: 'Learn the syllabus. Clear the exam.',
     tagline: 'Free notes, research and current affairs. No sign-up needed, just start reading.',
     text: 'For JKSSB, JKPSC, JKPSI, banking and UPSC aspirants in Jammu & Kashmir.',
@@ -132,7 +132,7 @@ const DEFAULTS: Record<string, any> = {
     memberText: 'Want to practise?', memberLinkText: 'Take a free mock test', memberLinkUrl: 'https://jkedusphere.com',
     cards: rows(['title', 'text', 'button', 'url', 'tag', 'image'], [
       ['Free mock tests', 'Timed tests with solutions and a live leaderboard.', 'Start free', 'https://jkedusphere.com', 'FREE', ''],
-      ['Monthly current affairs', 'A free PDF magazine for JKSSB, JKPSC and UPSC.', 'Read current affairs', '/category/current-affairs', 'PDF', ''],
+      ['Daily current affairs', 'J&K, national and international updates, plus subject-wise notes.', 'Read current affairs', '/current-affairs', 'DAILY', ''],
       ['Subject-wise notes', 'Polity, history, geography and more, in plain language.', 'Start reading', '/category/study-material', 'NOTES', ''],
       ['Telegram alerts', 'Vacancy and result alerts, the moment they are out.', 'Join Telegram', 'https://t.me/jkedusphere', 'ALERTS', '']]),
     panelMode: 'off', panelTitle: 'Latest notifications', panelItems: [] },
@@ -151,9 +151,9 @@ const DEFAULTS: Record<string, any> = {
       ['UPSC', 'Civil Services', '/search?q=UPSC', 'Concept-first notes on polity, history, geography, economy and current affairs.', 'Prelims, Mains, Notes'],
       ['NEET', 'Medical entrance', '/search?q=NEET', 'Biology, chemistry and physics notes with practice questions.', 'Biology, Chemistry, Physics']]) },
   vacancies: { title: 'Latest vacancies', subtitle: 'Each post lists last date, eligibility and how to apply.', linkText: 'View all', linkUrl: '/search?q=vacancy', source: 'auto', category: 'Vacancies', limit: 6, items: [] },
-  affairs: { title: 'Current affairs', subtitle: 'Daily notes, a weekly digest and a free monthly magazine.', linkText: 'Open hub', linkUrl: '/search?q=current+affairs',
+  affairs: { title: 'Current affairs', subtitle: 'Daily notes, a weekly digest and a free monthly magazine.', linkText: 'Open hub', linkUrl: '/current-affairs',
     magTag: 'Free PDF', magTitle: 'Monthly Current Affairs Magazine', magText: 'Curated for JKSSB, JKPSC, UPSC and SSC aspirants.', magBtn: "Get this month's edition", magUrl: '',
-    links: rows(['title', 'note', 'url'], [["Today's current affairs", 'Daily', '/search?q=current+affairs'], ['Weekly one-page digest', 'Weekly', '/search?q=weekly+digest'], ['J&K in the news', 'Daily', '/search?q=J%26K+news']]) },
+    links: rows(['title', 'note', 'url'], [["Today's current affairs", 'Daily', '/current-affairs'], ['Monthly archive', 'Monthly', '/current-affairs/archive'], ['J&K in the news', 'Daily', '/current-affairs/jk']]) },
   schemes: { title: 'Schemes and reports', subtitle: 'Plain-language guides and data-led analysis.',
     items: rows(['badge', 'title', 'text', 'url'], [['HS', 'Housing schemes', 'Eligibility and how to apply.', '/search?q=housing+scheme'], ['AG', 'Agriculture schemes', 'Benefits and documents.', '/search?q=agriculture+scheme'], ['RT', 'Recruitment trends', 'Cut-offs and analysis.', '/search?q=recruitment+trends'], ['VT', 'Vacancy tracker', 'By department.', '/search?q=vacancy+tracker']]) },
   prep: { title: 'Ready to prepare? Head to jkedusphere.com', subtitle: 'This site keeps you informed. Our sister site helps you score.', linkText: 'Visit jkedusphere.com', linkUrl: 'https://jkedusphere.com',
@@ -172,7 +172,7 @@ const DEFAULTS: Record<string, any> = {
     ['Can I suggest a topic or report a mistake?', 'Yes. Use the Contact page to tell us which post needs fixing, or what you would like us to cover next.']]) },
   footer: { tagline: 'Prepare smarter. Clear your exam.', ctaText: 'Join us on Telegram', ctaUrl: 'https://t.me/jkedusphere',
     text: 'JKEdusphere is an independent educational platform and is not affiliated with JKSSB, JKPSC, JKBOSE, NTA or any government body. Verify exam dates and notifications from official websites.',
-    exploreTitle: 'Explore', links2: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/category/study-material'], ['Current affairs', '/category/current-affairs'], ['Reports', '/category/reports'], ['Vacancies', '/category/vacancies']]),
+    exploreTitle: 'Explore', links2: rows(LINK, [['Subjects', '/#subjects'], ['Study material', '/category/study-material'], ['Current affairs', '/current-affairs'], ['Reports', '/category/reports'], ['Vacancies', '/category/vacancies']]),
     linksTitle: 'About',
     links: rows(LINK, [['About', '/about-us'], ['Contact', '/contact-us'], ['Privacy policy', '/privacy-policy'], ['Disclaimer', '/disclaimer'], ['jkedusphere.com', 'https://jkedusphere.com']]) },
 };
@@ -184,7 +184,7 @@ DEFAULTS.post = { authorLine: 'By JKEdusphere Team', showDates: 'yes', showShare
   ctaTitle: 'Practice before the exam', ctaText: 'Take a free mock test with solutions and a live leaderboard.', ctaBtn: 'Start a free test', ctaUrl: 'https://jkedusphere.com',
   disclaimer: 'We summarise official notifications for your convenience. Always confirm dates and eligibility on the official website before applying.' };
 DEFAULTS.vacancies.linkUrl = '/category/vacancies';
-DEFAULTS.affairs.linkUrl = '/category/current-affairs';
+DEFAULTS.affairs.linkUrl = '/current-affairs';
 
 type Stored = { order?: string[]; hidden?: string[]; data?: Record<string, any> };
 const KEY = 'home_layout';
@@ -363,7 +363,7 @@ ${REVEAL_JS}${SUGGEST_JS}</body></html>`;
 }
 
 
-export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean }) {
+export async function shell(db: D1Database, origin: string, o: { title: string; description: string; canonical: string; type?: string; image?: string; ld?: unknown; body: string; noindex?: boolean; head?: string }) {
   const L = resolve(await load(db));
   const ctx: Ctx = { latest: [], feeds: {}, counts: {} };
   const og = socialTags({ origin, title: o.title, description: o.description, url: o.canonical, type: o.type ?? 'website', siteName: L.data('seo').siteName, image: o.image });
@@ -372,7 +372,7 @@ export async function shell(db: D1Database, origin: string, o: { title: string; 
 ${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
-${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}</head><body>
+${o.ld ? `<script type="application/ld+json">${JSON.stringify(o.ld).replace(/</g, '\\u003c')}</script>` : ''}${o.head ?? ''}</head><body>
 ${R.header(L.data('header'), ctx)}
 <main>${o.body}</main>
 ${R.footer(L.data('footer'), ctx)}
