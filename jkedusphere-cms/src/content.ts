@@ -6,7 +6,7 @@ import { APP_JS } from './editor';
 import { getCats, addCat, removeCat, cleanCat } from './categories';
 
 const IST_MS = 5.5 * 3600 * 1000; // admin times are entered/shown in Indian Standard Time
-export const RESERVED = new Set(['contribute', 'admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'llms.txt', 'favicon.svg', 'vacancies']);
+export const RESERVED = new Set(['contribute', 'admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'llms.txt', 'favicon.svg', 'vacancies', 'current-affairs']);
 const now = () => Math.floor(Date.now() / 1000);
 
 export const slugify = (s: string) =>
