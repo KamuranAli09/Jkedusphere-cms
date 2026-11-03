@@ -13,6 +13,7 @@ import { MODERNHISTORY } from './notes-modernhistory';
 import { ECONOMY } from './notes-economy';
 import { ECON_CHARTS } from './notes-econ-charts';
 import { JKREORG } from './notes-jkreorg';
+import { SCIENCE } from './notes-science';
 
 
 export type Subject = {
@@ -27,7 +28,7 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY, JKREORG];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY, JKREORG, SCIENCE];
 
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
@@ -40,6 +41,7 @@ const NOTE: Record<string, string> = {
   polity: 'Prepared for exam revision from the Constitution of India and standard sources. Office-holders and recent developments change, so check official sources before relying on them.',
   'computer-knowledge': 'Prepared for exam revision from standard computer textbooks, Microsoft documentation and official sources. Features differ between Excel and Word versions (2016, 2019, 2021, 365) so check which version your exam follows.'
   ,'economy-of-jandk': NOTE_ECON
+  ,'general-science': 'Prepared for exam revision from the NCERT Science textbooks for Classes 6 to 10 and standard sources. Space missions, awards and records change, so check official sources for recent facts.'
   ,'modern-indian-history': 'Prepared for exam revision from standard sources such as NCERT, Bipan Chandra, Spectrum and official records. Historians differ on some dates, figures and interpretations, so check your exam syllabus and a standard textbook.',
 };
 const NOTE_DEFAULT = 'Prepared for exam revision from standard sources, official publications and the Census. Figures and recent developments change, so check official sources before relying on them.';
