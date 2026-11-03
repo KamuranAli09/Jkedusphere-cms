@@ -9,7 +9,7 @@
 // No migration needed: all settings live in the existing `settings` table (key: ca_config).
 // =============================================================================================
 import type { Hono } from 'hono';
-import { html } from 'hono/html';
+import { html, raw } from 'hono/html';
 import type { Env } from './types';
 import { adminPage } from './layout';
 import { getCats } from './categories';
@@ -59,6 +59,45 @@ const PALETTE: Record<string, { n: string; a: string; b: string; t: string; d: s
 const cv = (c: string) => { const p = PALETTE[c] ?? PALETTE.blue; return `--ca:${p.a};--cb:${p.b};--ct:${p.t};--cd:${p.d}`; };
 
 // ---------------------------------------------------------------------------------------------
+// Icons (inline SVG, no emoji). A section stores the icon KEY; unknown/old values fall back to "newspaper".
+// ---------------------------------------------------------------------------------------------
+const ICONS: Record<string, { n: string; p: string }> = {
+  globe: { n: 'Globe (world)', p: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>' },
+  flag: { n: 'Flag (national)', p: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/>' },
+  mountain: { n: 'Mountain (J&K)', p: '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>' },
+  scale: { n: 'Scales (polity, law)', p: '<path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>' },
+  trending: { n: 'Trending up (economy)', p: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>' },
+  leaf: { n: 'Leaf (environment)', p: '<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>' },
+  flask: { n: 'Flask (science)', p: '<path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/>' },
+  landmark: { n: 'Landmark (history, bank)', p: '<line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/>' },
+  map: { n: 'Map (geography)', p: '<polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/>' },
+  shield: { n: 'Shield (defence)', p: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>' },
+  clipboard: { n: 'Clipboard (schemes)', p: '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>' },
+  trophy: { n: 'Trophy (sports)', p: '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>' },
+  award: { n: 'Award (awards, reports)', p: '<circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>' },
+  newspaper: { n: 'Newspaper', p: '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/>' },
+  book: { n: 'Open book', p: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>' },
+  cap: { n: 'Graduation cap (education)', p: '<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>' },
+  briefcase: { n: 'Briefcase (jobs)', p: '<rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>' },
+  cpu: { n: 'Chip (technology)', p: '<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>' },
+  heart: { n: 'Heart (health)', p: '<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>' },
+  users: { n: 'People (society)', p: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+  zap: { n: 'Lightning (energy)', p: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+  plane: { n: 'Plane (transport)', p: '<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>' },
+  star: { n: 'Star', p: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
+  // interface icons
+  flame: { n: 'Flame', p: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>' },
+  calendar: { n: 'Calendar', p: '<rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/>' },
+  target: { n: 'Target', p: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>' },
+  clock: { n: 'Clock', p: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' },
+  check: { n: 'Check', p: '<path d="M20 6 9 17l-5-5"/>' },
+  bookmark: { n: 'Bookmark', p: '<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>' },
+  arrow: { n: 'Arrow', p: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>' },
+};
+const ICON_OPTS: [string, string][] = Object.entries(ICONS).filter(([k]) => !['flame', 'calendar', 'target', 'clock', 'check', 'bookmark', 'arrow'].includes(k)).map(([k, v]) => [k, v.n]);
+const ico = (k: string, cls = '') => `<svg class="ca-i${cls ? ' ' + cls : ''}" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${(ICONS[k] ?? ICONS.newspaper).p}</svg>`;
+
+// ---------------------------------------------------------------------------------------------
 // Settings (defaults + what the admin saved)
 // ---------------------------------------------------------------------------------------------
 export type Sec = { key: string; label: string; emoji: string; color: string; group: 'main' | 'subject'; category: string; tags: string; desc: string; seoTitle: string; seoDesc: string; show: boolean };
@@ -75,19 +114,19 @@ const S = (key: string, label: string, emoji: string, color: string, group: 'mai
   ({ key, label, emoji, color, group, category: '', tags, desc, seoTitle: '', seoDesc: '', show: true });
 
 const DEFAULT_SECTIONS: Sec[] = [
-  S('international', 'International', '🌍', 'coral', 'main', 'international, world, global', 'World affairs, treaties, summits and global organisations that matter for your exam.'),
-  S('national', 'National', '🇮🇳', 'orange', 'main', 'national, india', 'Important national news: government decisions, laws, schemes and appointments.'),
-  S('jk', 'J&K Specific', '🏔️', 'teal', 'main', 'jk, j-k, jammu-kashmir, jammu-and-kashmir', 'Jammu & Kashmir and Ladakh news, policies, schemes and recruitment updates for JKSSB, JKPSC and JKPSI.'),
-  S('polity', 'Polity & Governance', '⚖️', 'indigo', 'subject', 'polity, governance, constitution', 'Constitution, Parliament, judiciary, federalism and governance updates.'),
-  S('economy', 'Economy', '📈', 'green', 'subject', 'economy, banking, finance, business', 'Budget, RBI, banking, trade, GDP, inflation and economic indicators.'),
-  S('environment', 'Environment & Ecology', '🌿', 'teal', 'subject', 'environment, ecology, climate', 'Climate, biodiversity, protected areas, reports and conventions.'),
-  S('science-tech', 'Science & Tech', '🔬', 'violet', 'subject', 'science, technology, science-tech, space', 'Space missions, defence tech, AI, health and new discoveries.'),
-  S('history-culture', 'History & Culture', '🏛️', 'amber', 'subject', 'history, culture, art', 'Heritage, festivals, monuments, personalities and art forms in the news.'),
-  S('geography', 'Geography', '🗺️', 'sky', 'subject', 'geography, maps, places-in-news', 'Places in the news: rivers, mountains, straits, national parks and maps.'),
-  S('defence-security', 'Defence & Security', '🛡️', 'coral', 'subject', 'defence, security, internal-security', 'Defence exercises, weapon systems, border and internal security.'),
-  S('schemes', 'Govt Schemes', '📋', 'pink', 'subject', 'schemes, scheme, yojana', 'New and revised schemes of the Centre and J&K: benefits, eligibility and nodal agencies.'),
-  S('sports', 'Sports', '🏆', 'orange', 'subject', 'sports, games', 'Tournaments, medals, awards and sporting records.'),
-  S('awards-reports', 'Awards, Reports & Indices', '🏅', 'blue', 'subject', 'awards, reports, index, indices, rankings', 'Awards, rankings, global indices and report releases.'),
+  S('international', 'International', 'globe', 'coral', 'main', 'international, world, global', 'World affairs, treaties, summits and global organisations that matter for your exam.'),
+  S('national', 'National', 'flag', 'orange', 'main', 'national, india', 'Important national news: government decisions, laws, schemes and appointments.'),
+  S('jk', 'J&K Specific', 'mountain', 'teal', 'main', 'jk, j-k, jammu-kashmir, jammu-and-kashmir', 'Jammu & Kashmir and Ladakh news, policies, schemes and recruitment updates for JKSSB, JKPSC and JKPSI.'),
+  S('polity', 'Polity & Governance', 'scale', 'indigo', 'subject', 'polity, governance, constitution', 'Constitution, Parliament, judiciary, federalism and governance updates.'),
+  S('economy', 'Economy', 'trending', 'green', 'subject', 'economy, banking, finance, business', 'Budget, RBI, banking, trade, GDP, inflation and economic indicators.'),
+  S('environment', 'Environment & Ecology', 'leaf', 'teal', 'subject', 'environment, ecology, climate', 'Climate, biodiversity, protected areas, reports and conventions.'),
+  S('science-tech', 'Science & Tech', 'flask', 'violet', 'subject', 'science, technology, science-tech, space', 'Space missions, defence tech, AI, health and new discoveries.'),
+  S('history-culture', 'History & Culture', 'landmark', 'amber', 'subject', 'history, culture, art', 'Heritage, festivals, monuments, personalities and art forms in the news.'),
+  S('geography', 'Geography', 'map', 'sky', 'subject', 'geography, maps, places-in-news', 'Places in the news: rivers, mountains, straits, national parks and maps.'),
+  S('defence-security', 'Defence & Security', 'shield', 'coral', 'subject', 'defence, security, internal-security', 'Defence exercises, weapon systems, border and internal security.'),
+  S('schemes', 'Govt Schemes', 'clipboard', 'pink', 'subject', 'schemes, scheme, yojana', 'New and revised schemes of the Centre and J&K: benefits, eligibility and nodal agencies.'),
+  S('sports', 'Sports', 'trophy', 'orange', 'subject', 'sports, games', 'Tournaments, medals, awards and sporting records.'),
+  S('awards-reports', 'Awards, Reports & Indices', 'award', 'blue', 'subject', 'awards, reports, index, indices, rankings', 'Awards, rankings, global indices and report releases.'),
 ];
 
 const DEFAULT_CFG: Cfg = {
@@ -114,7 +153,7 @@ const DEFAULT_CFG: Cfg = {
 };
 
 const KEY = 'ca_config';
-const RESERVED_KEYS = new Set(['archive', 'feed', 'feed-xml', 'feed.xml', 'date', 'search', 'rss']);
+const RESERVED_KEYS = new Set(['saved', 'archive', 'feed', 'feed-xml', 'feed.xml', 'date', 'search', 'rss']);
 
 type Stored = Partial<{ hero: Cfg['hero']; seo: Cfg['seo']; ticker: Cfg['ticker']; sections: Sec[]; faq: Cfg['faq'] }>;
 async function readStored(db: D1Database): Promise<Stored> {
@@ -215,39 +254,41 @@ const CSS = `<style>
 .ca-sec{margin-top:40px}
 .ca-sh{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
 .ca-sh h2{font-size:clamp(22px,2.8vw,30px);display:flex;align-items:center;gap:10px}
-.ca-sh h2 .ca-ic{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:13px;font-size:22px;background:linear-gradient(135deg,var(--ca),var(--cb))}
 .ca-sh p{margin:4px 0 0;color:var(--mut);font-size:14.5px}
 .ca-sh>a{font-weight:700;font-size:14.5px;color:var(--ca);text-decoration:none;white-space:nowrap}
 .ca-sh>a:hover{text-decoration:underline;text-underline-offset:4px}
+.ca-i{width:1.1em;height:1.1em;flex:none;vertical-align:-.17em}
+.ca-sh h2 .ca-ic{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:13px;color:#fff;background:linear-gradient(135deg,var(--ca),var(--cb));flex:none}
+.ca-sh h2 .ca-ic .ca-i{width:22px;height:22px;vertical-align:0}
+.ca-ban h1 .ca-ic{display:inline-grid;place-items:center;width:1.3em;height:1.3em;border-radius:.34em;background:rgba(255,255,255,.2);flex:none}
+.ca-ban h1 .ca-ic .ca-i{width:.82em;height:.82em;vertical-align:0}
+.ca-se{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.22)}
+.ca-se .ca-i{width:26px;height:26px;vertical-align:0}
+.ca-pills span,.ca-chips a{display:inline-flex;align-items:center;gap:7px}
+.ca-cnt{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--ca);color:#fff;font-size:11.5px;font-weight:800}
+.ca-tin a.on .ca-cnt{background:#fff;color:var(--ca)}
+.ca-c h3{font-size:17.5px;font-weight:650;line-height:1.38;margin:0;letter-spacing:-.012em;text-wrap:pretty;min-height:3.8em}
+.ca-act{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.ca-more,.ca-save{position:relative;z-index:2;display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;transition:background .15s,color .15s,transform .15s,border-color .15s}
+.ca-more{background:var(--ct);color:var(--cd);text-decoration:none}
+.ca-c:hover .ca-more,.ca-more:hover{background:linear-gradient(135deg,var(--ca),var(--cb));color:#fff}
+.ca-more .ca-i,.ca-save .ca-i{width:18px;height:18px;vertical-align:0}
+.ca-save{border:1px solid var(--line2);background:#fff;color:var(--mut);padding:0}
+.ca-save:hover{border-color:var(--ca);color:var(--ca);transform:scale(1.06)}
+.ca-save[aria-pressed=true]{background:var(--ca);border-color:var(--ca);color:#fff}
+.ca-save[aria-pressed=true] .ca-i{fill:currentColor}
+.ca-save:focus-visible,.ca-more:focus-visible{outline:3px solid var(--cb);outline-offset:2px}
 .ca-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .ca-g.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ca-c{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-top:4px solid var(--ca);border-radius:18px;padding:18px 18px 16px;transition:transform .15s,box-shadow .15s,border-color .15s}
 .ca-c:hover{transform:translateY(-2px);box-shadow:0 18px 38px -22px var(--ca);border-color:var(--cb)}
-.ca-m{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--mut)}
-.ca-chip{display:inline-flex;align-items:center;gap:5px;font-weight:700;font-size:12px;padding:3px 10px;border-radius:99px;background:var(--ct);color:var(--cd)}
-.ca-c h3{font-size:17.5px;font-weight:650;line-height:1.35;margin:12px 0 8px;letter-spacing:-.012em;text-wrap:pretty}
 .ca-c h3 a{text-decoration:none}
 .ca-c h3 a::after{content:"";position:absolute;inset:0;border-radius:inherit}
 .ca-c:hover h3 a{color:var(--ca)}
-.ca-c p{margin:0 0 12px;font-size:14.5px;color:var(--mut);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.ca-tg{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px}
-.ca-tg span{font-size:12px;color:var(--cd);background:var(--ct);padding:2px 9px;border-radius:6px;font-weight:600}
-.ca-img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:12px 0 0;background:var(--soft2)}
-.ca-feat{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:stretch}
-.ca-feat .ca-c.big{padding:24px;background:linear-gradient(160deg,var(--ct),#fff 70%)}
-.ca-feat .ca-c.big h3{font-size:clamp(21px,2.6vw,28px);line-height:1.25}
-.ca-feat .ca-c.big p{-webkit-line-clamp:4;font-size:15.5px}
-.ca-list{display:flex;flex-direction:column;gap:10px}
-.ca-li{position:relative;display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-left:4px solid var(--ca);border-radius:14px;padding:12px 14px;transition:box-shadow .15s}
-.ca-li:hover{box-shadow:0 12px 26px -18px var(--ca)}
-.ca-li a{font-weight:650;font-size:15px;line-height:1.35;text-decoration:none}
-.ca-li a::after{content:"";position:absolute;inset:0}
-.ca-li small{display:block;color:var(--mut);font-size:12.5px;margin-top:3px}
 .ca-subj{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
 .ca-st{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;padding:18px;border-radius:20px;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--ca),var(--cb));min-height:128px;transition:transform .15s,box-shadow .15s}
 .ca-st:hover{transform:translateY(-3px);box-shadow:0 18px 34px -16px var(--ca)}
 .ca-st::after{content:"";position:absolute;right:-26px;bottom:-34px;width:110px;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.22)}
-.ca-se{font-size:30px;line-height:1}
 .ca-st b{font-size:16.5px;margin-top:8px;text-shadow:0 1px 2px rgba(0,0,0,.18)}
 .ca-st small{font-size:13px;font-weight:600;opacity:.95;text-shadow:0 1px 2px rgba(0,0,0,.18)}
 .ca-chips{display:flex;flex-wrap:wrap;gap:9px}
@@ -257,7 +298,6 @@ const CSS = `<style>
 .ca-ban{position:relative;overflow:hidden;isolation:isolate;color:#fff;border-radius:28px;margin-top:18px;padding:36px 38px;background:linear-gradient(125deg,var(--cd),var(--ca) 62%,var(--cb))}
 .ca-ban::after{content:"";position:absolute;z-index:-1;right:-60px;top:-90px;width:320px;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.35),rgba(255,255,255,0))}
 .ca-ban h1{color:#fff;font-size:clamp(28px,4.4vw,46px);font-weight:800;letter-spacing:-.03em;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.ca-ban h1 .ca-ic{font-size:.85em}
 .ca-ban p{margin:10px 0 0;max-width:46em;font-size:16.5px;color:rgba(255,255,255,.92)}
 .ca-ban .ca-pills{margin-top:16px}
 .ca-pager{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
@@ -274,11 +314,12 @@ const CSS = `<style>
 .ca-seo{margin-top:44px;padding:26px 28px;background:var(--soft);border:1px solid var(--line);border-radius:22px}
 .ca-seo h2{font-size:21px;margin:18px 0 6px}.ca-seo h2:first-child{margin-top:0}
 .ca-seo p{margin:0 0 8px;color:#36415e}
-@media (max-width:900px){.ca-g{grid-template-columns:repeat(2,minmax(0,1fr))}.ca-feat{grid-template-columns:1fr}}
+@media (max-width:900px){.ca-g{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.ca-g,.ca-g.two{grid-template-columns:1fr}.ca-hero{padding:30px 22px 28px;border-radius:24px}.ca-ban{padding:26px 22px;border-radius:22px}.ca-tkl{padding:0 12px;font-size:11.5px}.ca-tkm{display:none}.ca-cta{padding:22px}.ca-seo{padding:20px}}
 </style>`;
 
-const JS = `<script>(function(){var h=document.querySelector('header');if(h){var s=function(){document.documentElement.style.setProperty('--hh',(h.offsetHeight-1)+'px')};s();addEventListener('resize',s)}var a=document.querySelector('.ca-tin a.on');if(a&&a.scrollIntoView&&a.parentNode.scrollWidth>a.parentNode.clientWidth){var p=a.parentNode;p.scrollLeft=a.offsetLeft-(p.clientWidth-a.offsetWidth)/2}})();</script>`;
+const SAVE_JS = `<script>(function(){var K='jke_ca_saved';function rd(){try{var a=JSON.parse(localStorage.getItem(K)||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}function wr(a){try{localStorage.setItem(K,JSON.stringify(a))}catch(e){}}function ix(a,s){for(var i=0;i<a.length;i++)if(a[i]&&a[i].s===s)return i;return -1}function chk(){var L=document.getElementById('ca-saved-list'),E=document.getElementById('ca-saved-empty');if(L&&E)E.hidden=!!L.children.length}function sync(){var a=rd();[].forEach.call(document.querySelectorAll('.ca-save'),function(b){var on=ix(a,b.getAttribute('data-slug'))>-1;b.setAttribute('aria-pressed',on?'true':'false');b.title=on?'Remove from saved':'Save'});[].forEach.call(document.querySelectorAll('[data-ca-count]'),function(n){n.textContent=a.length;n.hidden=!a.length})}document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.ca-save');if(!b)return;e.preventDefault();var s=b.getAttribute('data-slug'),a=rd(),i=ix(a,s);if(i>-1)a.splice(i,1);else a.unshift({s:s,t:b.getAttribute('data-title'),d:Date.now()});wr(a);var L=document.getElementById('ca-saved-list');if(L&&i>-1&&L.contains(b)){var c=b.closest('.ca-c');if(c)c.parentNode.removeChild(c)}sync();chk()});var L=document.getElementById('ca-saved-list'),T=document.getElementById('ca-tpl');if(L&&T){rd().forEach(function(x){if(!x||!/^[a-z0-9-]+$/i.test(x.s||''))return;var n=T.content.firstElementChild.cloneNode(true),a=n.querySelector('h3 a');a.href='/'+x.s;a.textContent=x.t||x.s;n.querySelector('.ca-more').href='/'+x.s;var b=n.querySelector('.ca-save');b.setAttribute('data-slug',x.s);b.setAttribute('data-title',x.t||x.s);b.setAttribute('aria-label','Remove from saved: '+(x.t||x.s));L.appendChild(n)});chk()}sync();addEventListener('pageshow',sync)})();</script>`;
+const JS = SAVE_JS + `<script>(function(){var h=document.querySelector('header');if(h){var s=function(){document.documentElement.style.setProperty('--hh',(h.offsetHeight-1)+'px')};s();addEventListener('resize',s)}var a=document.querySelector('.ca-tin a.on');if(a&&a.scrollIntoView&&a.parentNode.scrollWidth>a.parentNode.clientWidth){var p=a.parentNode;p.scrollLeft=a.offsetLeft-(p.clientWidth-a.offsetWidth)/2}})();</script>`;
 
 // ---------------------------------------------------------------------------------------------
 // Building blocks
@@ -306,18 +347,14 @@ function ticker(cfg: Cfg, P: Post[]): string {
 
 function tabs(cfg: Cfg, active: string): string {
   const vis = cfg.sections.filter((s) => s.show);
-  const link = (s: Sec) => `<a style="${cv(s.color)}" href="/current-affairs/${esc(s.key)}"${s.key === active ? ' class="on" aria-current="page"' : ''}>${s.emoji ? `<span aria-hidden="true">${esc(s.emoji)}</span>` : ''}${esc(s.label)}</a>`;
+  const link = (s: Sec) => `<a style="${cv(s.color)}" href="/current-affairs/${esc(s.key)}"${s.key === active ? ' class="on" aria-current="page"' : ''}>${ico(s.emoji)}${esc(s.label)}</a>`;
   const main = vis.filter((s) => s.group === 'main'), subj = vis.filter((s) => s.group === 'subject');
-  return `<nav class="ca-tabs" aria-label="Current affairs sections"><div class="w ca-tin"><a style="${cv('blue')}" href="/current-affairs"${active === '' ? ' class="on" aria-current="page"' : ''}><span aria-hidden="true">🔥</span>All</a>${main.map(link).join('')}${main.length && subj.length ? '<span class="ca-sep" aria-hidden="true"></span>' : ''}${subj.map(link).join('')}<span class="ca-sep" aria-hidden="true"></span><a style="${cv('indigo')}" href="/current-affairs/archive"${active === '#archive' ? ' class="on"' : ''}><span aria-hidden="true">🗓️</span>Archive</a></div></nav>`;
+  return `<nav class="ca-tabs" aria-label="Current affairs sections"><div class="w ca-tin"><a style="${cv('blue')}" href="/current-affairs"${active === '' ? ' class="on" aria-current="page"' : ''}>${ico('flame')}All</a>${main.map(link).join('')}${main.length && subj.length ? '<span class="ca-sep" aria-hidden="true"></span>' : ''}${subj.map(link).join('')}<span class="ca-sep" aria-hidden="true"></span><a style="${cv('indigo')}" href="/current-affairs/archive"${active === '#archive' ? ' class="on"' : ''}>${ico('calendar')}Archive</a><a style="${cv('violet')}" href="/current-affairs/saved"${active === '#saved' ? ' class="on"' : ''}>${ico('bookmark')}Saved<span class="ca-cnt" data-ca-count hidden></span></a></div></nav>`;
 }
 
-function card(p: Post, cfg: Cfg, o: { img?: boolean; big?: boolean } = {}): string {
-  const s = primary(p, cfg), tg = [...String(p.tags ?? '').split(',').map((x) => x.trim()).filter(Boolean)].slice(0, 3);
-  return `<article class="ca-c${o.big ? ' big' : ''}" style="${cv(s?.color ?? 'blue')}"><div class="ca-m"><span class="ca-chip">${s?.emoji ? esc(s.emoji) + ' ' : ''}${esc(s?.label ?? p.category ?? 'Update')}</span><time datetime="${iso(p.published_at)}">${fmtDay(p.published_at)}</time></div>`
-    + `${o.img && p.image ? `<img class="ca-img" src="${href(p.image)}" alt="${esc(p.image_alt || p.title)}" width="640" height="360" loading="${o.big ? 'eager' : 'lazy'}" decoding="async">` : ''}`
-    + `<h3><a href="/${esc(p.slug)}">${esc(p.title)}</a></h3>${p.excerpt ? `<p>${esc(p.excerpt)}</p>` : ''}${tg.length ? `<div class="ca-tg">${tg.map((x) => `<span>#${esc(x)}</span>`).join('')}</div>` : ''}</article>`;
-}
-const li = (p: Post, cfg: Cfg) => { const s = primary(p, cfg); return `<div class="ca-li" style="${cv(s?.color ?? 'blue')}"><div><a href="/${esc(p.slug)}">${esc(p.title)}</a><small>${esc(s?.label ?? 'Update')} &middot; ${fmtDay(p.published_at)}</small></div></div>`; };
+const cardHtml = (slug: string, title: string, color: string) => `<article class="ca-c" style="${cv(color)}"><h3><a href="/${esc(slug)}">${esc(title)}</a></h3><div class="ca-act"><a class="ca-more" href="/${esc(slug)}" tabindex="-1" aria-hidden="true" title="Read more">${ico('arrow')}</a><button type="button" class="ca-save" data-slug="${esc(slug)}" data-title="${esc(title)}" aria-pressed="false" aria-label="Save: ${esc(title)}" title="Save">${ico('bookmark')}</button></div></article>`;
+// A post card shows only the title, a read-more arrow and a save (bookmark) button
+const card = (p: Post, cfg: Cfg, _o?: unknown) => cardHtml(p.slug, p.title, primary(p, cfg)?.color ?? 'blue');
 
 const faqHtml = (faq: Cfg['faq']) => (faq.length ? `<section class="ca-sec ca-faq" aria-labelledby="ca-faq-h"><div class="ca-sh"><h2 id="ca-faq-h">Frequently asked questions</h2></div>${faq.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</section>` : '');
 const faqLd = (faq: Cfg['faq']) => (faq.length ? { '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) } : null);
@@ -354,9 +391,10 @@ export function registerCurrentAffairs(app: Hono<Env>) {
     const vis = cfg.sections.filter((s) => s.show);
 
     body.push(ticker(cfg, P));
+    body.push(crumbs([['Home', '/'], ['Current Affairs', '/current-affairs']]));
     body.push(`<div class="w"><header class="ca-hero"><span class="ca-bd"><i></i>${esc(cfg.hero.badge || 'Updated daily')}</span><h1>${hl(cfg.hero.title)}</h1><p class="ca-sub">${esc(cfg.hero.subtitle)}</p>`
       + `<form class="search" action="/current-affairs" role="search"><input type="search" name="q" value="${esc(q)}" placeholder="${esc(cfg.hero.searchHint)}" aria-label="Search current affairs"><button type="submit">Search</button></form>`
-      + `<div class="ca-pills"><span>📰 ${plural(hub.length, 'update')}</span>${hub[0] ? `<span>🕒 Last updated ${fmtDay(hub[0].published_at)}</span>` : ''}<span>🆓 Free to read</span></div></header></div>`);
+      + `<div class="ca-pills"><span>${ico('newspaper')}${plural(hub.length, 'update')}</span>${hub[0] ? `<span>${ico('clock')}Last updated ${fmtDay(hub[0].published_at)}</span>` : ''}<span>${ico('check')}Free to read</span></div></header></div>`);
     body.push(tabs(cfg, ''));
 
     let ld: any, title = cfg.seo.title, desc = cfg.seo.description, noindex = false;
@@ -370,24 +408,23 @@ export function registerCurrentAffairs(app: Hono<Env>) {
     } else if (!hub.length) {
       body.push('<section class="ca-sec"><div class="ca-empty"><h2 style="margin-bottom:8px">Current affairs are coming soon</h2>We are preparing the first updates. Please check back shortly.</div></section>');
     } else {
-      // Latest headlines: one big story + a compact list
-      const [first, ...rest] = hub;
-      body.push(`<section class="ca-sec" aria-labelledby="ca-latest"><div class="ca-sh" style="${cv('coral')}"><div><h2 id="ca-latest"><span class="ca-ic" aria-hidden="true">🔥</span>Latest headlines</h2><p>The newest updates, freshest first.</p></div><a href="/current-affairs/archive/${istToday()}">Today &rarr;</a></div><div class="ca-feat">${card(first, cfg, { img: true, big: true })}<div class="ca-list">${rest.slice(0, 5).map((p) => li(p, cfg)).join('')}</div></div></section>`);
+      // Latest headlines: compact cards (title + read-more + save)
+      body.push(`<section class="ca-sec" aria-labelledby="ca-latest"><div class="ca-sh" style="${cv('coral')}"><div><h2 id="ca-latest"><span class="ca-ic" aria-hidden="true">${ico('flame')}</span>Latest headlines</h2><p>The newest updates, freshest first.</p></div><a href="/current-affairs/archive/${ist(hub[0].published_at).toISOString().slice(0, 10)}">Latest day &rarr;</a></div><div class="ca-g">${hub.slice(0, 6).map((p) => card(p, cfg)).join('')}</div></section>`);
 
       // Region blocks (International, National, J&K ...)
       for (const s of vis.filter((x) => x.group === 'main')) {
         const list = forSection(P, s, cfg);
         if (!list.length) continue;
-        body.push(`<section class="ca-sec" aria-labelledby="ca-b-${esc(s.key)}"><div class="ca-sh" style="${cv(s.color)}"><div><h2 id="ca-b-${esc(s.key)}"><span class="ca-ic" aria-hidden="true">${esc(s.emoji || '📰')}</span>${esc(s.label)}</h2>${s.desc ? `<p>${esc(s.desc)}</p>` : ''}</div><a href="/current-affairs/${esc(s.key)}">View all ${list.length} &rarr;</a></div><div class="ca-g two">${list.slice(0, cfg.seo.blockSize).map((p) => card(p, cfg)).join('')}</div></section>`);
+        body.push(`<section class="ca-sec" aria-labelledby="ca-b-${esc(s.key)}"><div class="ca-sh" style="${cv(s.color)}"><div><h2 id="ca-b-${esc(s.key)}"><span class="ca-ic" aria-hidden="true">${ico(s.emoji)}</span>${esc(s.label)}</h2>${s.desc ? `<p>${esc(s.desc)}</p>` : ''}</div><a href="/current-affairs/${esc(s.key)}">View all ${list.length} &rarr;</a></div><div class="ca-g two">${list.slice(0, cfg.seo.blockSize).map((p) => card(p, cfg)).join('')}</div></section>`);
       }
 
       // Subject-wise tiles
       const subj = vis.filter((x) => x.group === 'subject');
-      if (subj.length) body.push(`<section class="ca-sec" aria-labelledby="ca-subj"><div class="ca-sh" style="${cv('indigo')}"><div><h2 id="ca-subj"><span class="ca-ic" aria-hidden="true">🎯</span>Subject-wise current affairs</h2><p>Revise the way the exam asks. Pick a subject.</p></div></div><div class="ca-subj">${subj.map((s) => { const n = forSection(P, s, cfg).length; return `<a class="ca-st" style="${cv(s.color)}" href="/current-affairs/${esc(s.key)}"><span class="ca-se" aria-hidden="true">${esc(s.emoji || '📘')}</span><b>${esc(s.label)}</b><small>${plural(n, 'update')}</small></a>`; }).join('')}</div></section>`);
+      if (subj.length) body.push(`<section class="ca-sec" aria-labelledby="ca-subj"><div class="ca-sh" style="${cv('indigo')}"><div><h2 id="ca-subj"><span class="ca-ic" aria-hidden="true">${ico('target')}</span>Subject-wise current affairs</h2><p>Revise the way the exam asks. Pick a subject.</p></div></div><div class="ca-subj">${subj.map((s) => { const n = forSection(P, s, cfg).length; return `<a class="ca-st" style="${cv(s.color)}" href="/current-affairs/${esc(s.key)}"><span class="ca-se" aria-hidden="true">${ico(s.emoji)}</span><b>${esc(s.label)}</b><small>${plural(n, 'update')}</small></a>`; }).join('')}</div></section>`);
 
       // Daily + monthly archive
       const [days, months] = await Promise.all([dayCounts(db, cfg.seo.baseCategory, 10), monthCounts(db, cfg.seo.baseCategory, 12)]);
-      if (days.length) body.push(`<section class="ca-sec" aria-labelledby="ca-days"><div class="ca-sh" style="${cv('green')}"><div><h2 id="ca-days"><span class="ca-ic" aria-hidden="true">📅</span>Daily current affairs</h2><p>Open any day to read all its updates in one place.</p></div><a href="/current-affairs/archive">Full archive &rarr;</a></div><div class="ca-chips">${days.map((d) => `<a href="/current-affairs/archive/${d.d}">${longDay(d.d)}<small>${d.n}</small></a>`).join('')}</div>${months.length ? `<div class="ca-chips" style="margin-top:14px">${months.map((m) => `<a href="/current-affairs/archive/${m.m}">🗓️ ${longMonth(m.m)}<small>${m.n}</small></a>`).join('')}</div>` : ''}</section>`);
+      if (days.length) body.push(`<section class="ca-sec" aria-labelledby="ca-days"><div class="ca-sh" style="${cv('green')}"><div><h2 id="ca-days"><span class="ca-ic" aria-hidden="true">${ico('calendar')}</span>Daily current affairs</h2><p>Open any day to read all its updates in one place.</p></div><a href="/current-affairs/archive">Full archive &rarr;</a></div><div class="ca-chips">${days.map((d) => `<a href="/current-affairs/archive/${d.d}">${longDay(d.d)}<small>${d.n}</small></a>`).join('')}</div>${months.length ? `<div class="ca-chips" style="margin-top:14px">${months.map((m) => `<a href="/current-affairs/archive/${m.m}">${ico('calendar')}${longMonth(m.m)}<small>${m.n}</small></a>`).join('')}</div>` : ''}</section>`);
 
       body.push(await ctaBlock(db));
       body.push(faqHtml(cfg.faq));
@@ -400,7 +437,7 @@ export function registerCurrentAffairs(app: Hono<Env>) {
         crumbLd(o, items), ...(faqLd(cfg.faq) ? [faqLd(cfg.faq)] : [])] };
     }
     body.push('</div>');
-    return c.html(await shell(db, o, { title, description: desc, canonical: o + '/current-affairs', noindex, ld, head: feedLink(o), body: CSS + crumbs([['Home', '/'], ['Current Affairs', '/current-affairs']]) + body.join('') + JS }), 200, cache);
+    return c.html(await shell(db, o, { title, description: desc, canonical: o + '/current-affairs', noindex, ld, head: feedLink(o), body: CSS + body.join('') + JS }), 200, cache);
   });
 
   // ----- RSS feed -----
@@ -418,8 +455,8 @@ export function registerCurrentAffairs(app: Hono<Env>) {
     const years = [...new Set(months.map((m) => m.m.slice(0, 4)))];
     const items: [string, string][] = [['Home', '/'], ['Current Affairs', '/current-affairs'], ['Archive', '/current-affairs/archive']];
     const title = 'Current Affairs Archive: Daily and Monthly | JKEdusphere', desc = 'Browse the JKEdusphere current affairs archive by day and by month. Revise a whole month of J&K, national and international updates for JKSSB, JKPSC and UPSC.';
-    const bodyHtml = `<div class="w cax"><header class="ca-ban" style="${cv('indigo')}"><h1><span class="ca-ic" aria-hidden="true">🗓️</span>Current Affairs Archive</h1><p>Pick a month to revise everything from that month, or open a single day.</p></header></div>${tabs(cfg, '#archive')}<div class="w cax">`
-      + (months.length ? years.map((y) => `<section class="ca-sec"><div class="ca-sh" style="${cv('indigo')}"><div><h2>${y}</h2></div></div><div class="ca-chips">${months.filter((m) => m.m.startsWith(y)).map((m) => `<a href="/current-affairs/archive/${m.m}">🗓️ ${MONTH[Number(m.m.slice(5)) - 1]}<small>${plural(m.n, 'update')}</small></a>`).join('')}</div></section>`).join('') : '<div class="ca-empty" style="margin-top:30px">No archive yet.</div>')
+    const bodyHtml = `<div class="w cax"><header class="ca-ban" style="${cv('indigo')}"><h1><span class="ca-ic" aria-hidden="true">${ico('calendar')}</span>Current Affairs Archive</h1><p>Pick a month to revise everything from that month, or open a single day.</p></header></div>${tabs(cfg, '#archive')}<div class="w cax">`
+      + (months.length ? years.map((y) => `<section class="ca-sec"><div class="ca-sh" style="${cv('indigo')}"><div><h2>${y}</h2></div></div><div class="ca-chips">${months.filter((m) => m.m.startsWith(y)).map((m) => `<a href="/current-affairs/archive/${m.m}">${ico('calendar')}${MONTH[Number(m.m.slice(5)) - 1]}<small>${plural(m.n, 'update')}</small></a>`).join('')}</div></section>`).join('') : '<div class="ca-empty" style="margin-top:30px">No archive yet.</div>')
       + (days.length ? `<section class="ca-sec"><div class="ca-sh" style="${cv('green')}"><div><h2>Recent days</h2></div></div><div class="ca-chips">${days.map((d) => `<a href="/current-affairs/archive/${d.d}">${longDay(d.d)}<small>${d.n}</small></a>`).join('')}</div></section>` : '') + '</div>';
     return c.html(await shell(db, o, { title, description: desc, canonical: o + '/current-affairs/archive', head: feedLink(o), ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, 'JKEdusphere'), { '@type': 'CollectionPage', '@id': o + '/current-affairs/archive#webpage', url: o + '/current-affairs/archive', name: title, description: desc, inLanguage: 'en-IN', isPartOf: siteRef(o) }, crumbLd(o, items)] }, body: CSS + ticker(cfg, P) + crumbs(items) + bodyHtml + JS }), 200, cache);
   });
@@ -441,7 +478,17 @@ export function registerCurrentAffairs(app: Hono<Env>) {
     const siblings = isDay ? '' : '';
     return c.html(await shell(db, o, { title, description: desc, canonical: o + withPage(url, page), head: pageHead(o, url, page, more),
       ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, 'JKEdusphere'), { '@type': 'CollectionPage', '@id': o + url + '#webpage', url: o + url, name: title, description: desc, inLanguage: 'en-IN', isPartOf: siteRef(o), mainEntity: itemListLd(o, rows) }, crumbLd(o, items)] },
-      body: CSS + ticker(cfg, P) + crumbs(items) + `<div class="w cax"><header class="ca-ban" style="${cv('indigo')}"><h1><span class="ca-ic" aria-hidden="true">${isDay ? '📅' : '🗓️'}</span>Current Affairs ${esc(label)}</h1><p>${plural(all.length, 'update')} published${isDay ? ' on this day' : ' this month'}.</p></header></div>${tabs(cfg, '#archive')}<div class="w cax"><section class="ca-sec"><div class="ca-g">${rows.map((x) => card(x, cfg)).join('')}</div>${pager(url, page, more)}${siblings}<p style="margin-top:26px"><a class="btn o" href="/current-affairs/archive">&larr; Back to archive</a></p></section></div>` + JS }), 200, cache);
+      body: CSS + ticker(cfg, P) + crumbs(items) + `<div class="w cax"><header class="ca-ban" style="${cv('indigo')}"><h1><span class="ca-ic" aria-hidden="true">${ico('calendar')}</span>Current Affairs ${esc(label)}</h1><p>${plural(all.length, 'update')} published${isDay ? ' on this day' : ' this month'}.</p></header></div>${tabs(cfg, '#archive')}<div class="w cax"><section class="ca-sec"><div class="ca-g">${rows.map((x) => card(x, cfg)).join('')}</div>${pager(url, page, more)}${siblings}<p style="margin-top:26px"><a class="btn o" href="/current-affairs/archive">&larr; Back to archive</a></p></section></div>` + JS }), 200, cache);
+  });
+
+  // ----- Saved posts (kept in the visitor's own browser, nothing is sent to the server) -----
+  app.get('/current-affairs/saved', async (c) => {
+    const db = c.env.DB, o = origin(c), cfg = await loadCfg(db), P = await pool(db, cfg);
+    const items: [string, string][] = [['Home', '/'], ['Current Affairs', '/current-affairs'], ['Saved', '/current-affairs/saved']];
+    const body = CSS + ticker(cfg, P) + crumbs(items)
+      + `<div class="w cax"><header class="ca-ban" style="${cv('violet')}"><h1><span class="ca-ic" aria-hidden="true">${ico('bookmark')}</span>Saved current affairs</h1><p>Updates you saved with the bookmark button. They stay on this device and browser only.</p></header></div>${tabs(cfg, '#saved')}`
+      + `<div class="w cax"><section class="ca-sec" style="margin-top:28px"><div class="ca-g" id="ca-saved-list"></div><div class="ca-empty" id="ca-saved-empty" hidden><b>Nothing saved yet.</b><br>Tap the bookmark on any update to keep it here for later.<p style="margin:16px 0 0"><a class="btn" href="/current-affairs">Browse current affairs</a></p></div></section></div><template id="ca-tpl">${cardHtml('', '', 'blue')}</template>` + JS;
+    return c.html(await shell(db, o, { title: 'Saved Current Affairs | JKEdusphere', description: 'Your saved current affairs updates on JKEdusphere.', canonical: o + '/current-affairs/saved', noindex: true, body }), 200, { 'Cache-Control': 'public, max-age=60' });
   });
 
   // ----- Section / subject page (must come after the fixed routes above) -----
@@ -458,9 +505,9 @@ export function registerCurrentAffairs(app: Hono<Env>) {
     const desc = s.seoDesc || `${s.desc ? s.desc + ' ' : ''}Latest ${s.label.toLowerCase()} current affairs for JKSSB, JKPSC, JKPSI and UPSC aspirants.`.slice(0, 300);
     const others = cfg.sections.filter((x) => x.show && x.key !== s.key);
     const body = CSS + ticker(cfg, P) + crumbs(items)
-      + `<div class="w cax"><header class="ca-ban" style="${cv(s.color)}"><h1><span class="ca-ic" aria-hidden="true">${esc(s.emoji || '📰')}</span>${esc(s.label)} Current Affairs</h1>${s.desc ? `<p>${esc(s.desc)}</p>` : ''}<div class="ca-pills"><span>📰 ${plural(all.length, 'update')}</span>${all[0] ? `<span>🕒 Latest ${fmtDay(all[0].published_at)}</span>` : ''}</div></header></div>${tabs(cfg, s.key)}`
+      + `<div class="w cax"><header class="ca-ban" style="${cv(s.color)}"><h1><span class="ca-ic" aria-hidden="true">${ico(s.emoji)}</span>${esc(s.label)} Current Affairs</h1>${s.desc ? `<p>${esc(s.desc)}</p>` : ''}<div class="ca-pills"><span>${ico('newspaper')}${plural(all.length, 'update')}</span>${all[0] ? `<span>${ico('clock')}Latest ${fmtDay(all[0].published_at)}</span>` : ''}</div></header></div>${tabs(cfg, s.key)}`
       + `<div class="w cax"><section class="ca-sec" style="margin-top:28px">${rows.length ? `<div class="ca-g">${rows.map((p, i) => card(p, cfg, { img: page === 1 && i < 3 })).join('')}</div>${pager(url, page, more)}` : '<div class="ca-empty">No updates here yet. Please check back soon.</div>'}</section>`
-      + (others.length ? `<section class="ca-sec"><div class="ca-sh" style="${cv('blue')}"><div><h2>More sections</h2></div></div><div class="ca-chips">${others.map((x) => `<a href="/current-affairs/${esc(x.key)}">${esc(x.emoji)} ${esc(x.label)}</a>`).join('')}</div></section>` : '')
+      + (others.length ? `<section class="ca-sec"><div class="ca-sh" style="${cv('blue')}"><div><h2>More sections</h2></div></div><div class="ca-chips">${others.map((x) => `<a href="/current-affairs/${esc(x.key)}">${ico(x.emoji)}${esc(x.label)}</a>`).join('')}</div></section>` : '')
       + (page === 1 ? await ctaBlock(db) : '') + '</div>' + JS;
     return c.html(await shell(db, o, { title, description: desc, canonical: o + withPage(url, page), head: pageHead(o, url, page, more),
       ld: { '@context': 'https://schema.org', '@graph': [orgNode(o, 'JKEdusphere'), { '@type': 'CollectionPage', '@id': o + url + '#webpage', url: o + url, name: title, description: desc, inLanguage: 'en-IN', isPartOf: siteRef(o), publisher: { '@id': o + '/#organization' }, ...(rows.length ? { mainEntity: itemListLd(o, rows) } : {}) }, crumbLd(o, items)] }, body }), 200, cache);
@@ -491,10 +538,10 @@ export function registerCurrentAffairs(app: Hono<Env>) {
     const rowsData: (Sec | null)[] = [...cfg.sections, null, null, null];
     const secCard = (s: Sec | null, i: number) => { const v = s ?? blank; const n = s ? forSection(P, s, cfg).length : 0; return html`
       <div class="card ca-ad" style="border-left:6px solid ${PALETTE[v.color]?.a ?? '#2c5ba0'}">
-        <div class="bar" style="margin-bottom:0"><b>${s ? html`${v.emoji} ${v.label}` : 'Add a new section'}</b>${s ? html`<span class="badge ${n ? 'pub' : 'sch'}">${n} matching post${n === 1 ? '' : 's'}</span>` : ''}${s && !v.show ? html`<span class="badge">Hidden</span>` : ''}</div>
+        <div class="bar" style="margin-bottom:0"><b>${s ? html`${raw(ico(v.emoji))} ${v.label}` : 'Add a new section'}</b>${s ? html`<span class="badge ${n ? 'pub' : 'sch'}">${n} matching post${n === 1 ? '' : 's'}</span>` : ''}${s && !v.show ? html`<span class="badge">Hidden</span>` : ''}</div>
         <div class="row">
           <div><label>Name (tab text)${s ? '' : ' - fill this to add'}</label><input name="s_label" value="${v.label}" maxlength="40" placeholder="e.g. Banking"></div>
-          <div><label>Emoji</label><input name="s_emoji" value="${v.emoji}" maxlength="8" placeholder="🏦"></div>
+          <div><label>Icon</label><select name="s_emoji">${selOpts(ICON_OPTS, ICONS[v.emoji] ? v.emoji : 'newspaper')}</select></div>
           <div><label>Colour</label><select name="s_color">${selOpts(colorOpts, v.color)}</select></div>
           <div><label>Where it shows</label><select name="s_group">${selOpts([['main', 'Top tabs (region: International, National, J&K)'], ['subject', 'Subject-wise']], v.group)}</select></div>
         </div>
@@ -613,7 +660,7 @@ export function registerCurrentAffairs(app: Hono<Env>) {
       let n = 2; const base = key; while (used.has(key)) key = `${base}-${n++}`;
       used.add(key);
       const cat = CA[i] === '' || CA[i] === '*' || cats.includes(CA[i]) ? CA[i] : '';
-      out.push({ i, o: Number(O[i]) || (i + 1) * 10, s: { key, label, emoji: clip(E[i], 8), color: PALETTE[C[i]] ? C[i] : 'blue', group: G[i] === 'main' ? 'main' : 'subject', category: cat, tags: cleanTags(T[i]), desc: clip(D[i], 220), seoTitle: clip(ST[i], 120), seoDesc: clip(SD[i], 320), show: SH[i] !== '0' } });
+      out.push({ i, o: Number(O[i]) || (i + 1) * 10, s: { key, label, emoji: ICONS[E[i]] ? E[i] : 'newspaper', color: PALETTE[C[i]] ? C[i] : 'blue', group: G[i] === 'main' ? 'main' : 'subject', category: cat, tags: cleanTags(T[i]), desc: clip(D[i], 220), seoTitle: clip(ST[i], 120), seoDesc: clip(SD[i], 320), show: SH[i] !== '0' } });
     }
     if (!out.length) return fail(c, 'Keep at least one section.');
     if (out.length > 30) return fail(c, 'You can have at most 30 sections.');
