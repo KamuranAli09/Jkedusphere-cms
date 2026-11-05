@@ -147,7 +147,7 @@ J&K is not one landscape but **three very different regions**, each with its own
 - Sub-regions: **Leh valley, Nubra, Changthang, Zanskar, Suru (Kargil), Dras** and **Sham (Lower Ladakh)**.
 - Known as **"Little Tibet"** because of its culture and religion.
 
-@map jk-physical | Schematic map of J&K and Ladakh: ranges (dashed), main rivers, glaciers and major towns. Rivers and glaciers from Natural Earth; other features from approximate coordinates.
+@map jk-physical | Physical map of J&K and Ladakh with the official boundary: ranges (dotted), main rivers, glaciers, peaks and towns. The dashed line is the approximate J&K UT / Ladakh UT division (Ladakh includes Gilgit-Baltistan and Aksai Chin as per the 2019 Act).
 
 :::tip
 Common trap: **Kargil is Shia-Muslim majority and Leh is Buddhist majority.** Ladakh has two administrative districts, but five more districts have been announced (see the Districts topic).
@@ -408,7 +408,7 @@ A **pass** is a gap in a mountain range. In Ladakh the word **La** means pass.
 - **Mughal Road** (about **84 km**) joins **Bufliaz (Poonch)** and **Shopian** through **Pir Ki Gali**.
 - **Leh-Manali Highway** passes through **Baralacha La, Lachulung La and Taglang La**.
 
-@map jk-passes | Schematic map of the main passes of J&K and Ladakh (triangles). Heights are in the table above. Positions are approximate.
+@map jk-passes | Main passes of J&K and Ladakh (triangles) with the ranges they cross and the official boundary. Heights are in the table above. Positions are approximate.
 
 ## Glaciers {#glaciers}
 
@@ -463,7 +463,7 @@ Almost all rivers of J&K belong to the **Indus river system**. They flow either 
 - **Dendritic pattern** in the Shiwaliks and the Kashmir Valley.
 - **Inland drainage** in Changthang: **Pangong, Tso Moriri and Tso Kar** have **no outlet to the sea**.
 
-@map jk-rivers | Schematic river map: Indus, Jhelum, Chenab and Ravi (Natural Earth lines), with other rivers and key towns drawn from approximate coordinates.
+@map jk-rivers | River map with the official boundary: Indus, Jhelum, Chenab, Ravi and Sutlej (Natural Earth lines) with tributaries and key towns drawn from approximate coordinates.
 
 ### Rivers at a glance
 
@@ -671,7 +671,7 @@ In **April 2025**, after the attack in **Pahalgam**, India announced that the tr
 | **Tso Kar** | A **salt lake** at about **4,530 m**; the **Tso Kar wetland complex** is a **Ramsar site (2020)**. |
 | **Chushul and Hanle wetlands** | Part of **Changthang**. |
 
-@map jk-lakes | Schematic map of the main lakes of J&K and Ladakh. Pangong Tso comes from Natural Earth; other lakes are marked as points from approximate coordinates.
+@map jk-lakes | Main lakes of J&K and Ladakh with the official boundary: freshwater (blue), alpine (purple) and brackish (orange). Positions approximate; areas are not to scale.
 
 :::mem Memory trick
 **Dal, Nigeen, Anchar** are in **Srinagar**; **Wular** is **Bandipora**; **Manasbal** is **Ganderbal**; **Mansar, Surinsar** are in **Jammu**; **Pangong** is **Leh (Ladakh)**.
@@ -835,7 +835,7 @@ Vegetation changes with **altitude**, so it forms **belts**.
 
 J&K's protected areas form a **network** of national parks, wildlife sanctuaries, conservation reserves and wetland reserves.
 
-@map jk-parks | Schematic map of the main national parks and wildlife sanctuaries (approximate positions; areas are not to scale).
+@map jk-parks | National parks (green) and wildlife sanctuaries (orange) with the official boundary. Circle sizes only suggest relative size; positions are approximate.
 
 ### National Parks
 
@@ -997,7 +997,7 @@ J&K has **huge hydropower potential** (about **20,000 MW or more**). Only a frac
 | **Ratle** | Chenab | 850 | Doda (under construction) |
 | **Sawalkot** | Chenab | about 1,856 | Ramban (planned) |
 
-@map jk-power | Schematic map of major hydropower projects (circles) and key transport links (towns, tunnels, rail). Approximate positions.
+@map jk-power | Hydropower projects, highways, the rail link and tunnels, with the official boundary. Approximate positions.
 
 :::note Project status
 Status changes as projects are completed. **Pakal Dul, Kiru, Kwar, Ratle** were under construction at the time of writing. Check the latest news for commissioning dates.
@@ -1109,7 +1109,7 @@ Tourism is an **important source of income** and rests on the **landscape**, **r
 - **J&K has 20 districts** and **Ladakh 2**. In **December 2024**, the government announced **five new districts in Ladakh**: **Zanskar, Drass, Sham, Nubra and Changthang**. Check whether they have been formally set up.
 - **Ladakh** has **Hill Councils** (LAHDC Leh and Kargil).
 
-@map jk-districts | Schematic map of district headquarters (dots) coloured by division. Positions approximate.
+@map jk-districts | District headquarters coloured by division, with the official boundary. District boundaries are not drawn; positions approximate.
 
 ### Notable district facts
 
