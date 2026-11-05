@@ -8,6 +8,7 @@ import { POLITY } from './notes-polity';
 import { JKGEO } from './notes-jkgeo';
 import { MAPS } from './notes-maps';
 import { MAPS_INDIA } from './notes-maps-india';
+import { MAPS_JK } from './notes-maps-jk';
 import { COMPUTER } from './notes-computer';
 import { JKHISTORY } from './notes-jkhistory';
 import { MODERNHISTORY } from './notes-modernhistory';
@@ -127,7 +128,7 @@ function render(lines: string[], tid: string): string {
       continue;
     }
     const mp = ln.match(/^@map\s+([\w-]+)\s*(?:\|\s*(.*))?$/);
-    if (mp) { const svg = MAPS[mp[1]] || MAPS_INDIA[mp[1]] || ECON_CHARTS[mp[1]]; if (!svg) throw new Error('Unknown map: ' + mp[1]); out.push(`<figure class="nm">${svg}<figcaption>${inline(mp[2] || '')}</figcaption></figure>`); i++; continue; }
+    if (mp) { const svg = MAPS_JK[mp[1]] || MAPS[mp[1]] || MAPS_INDIA[mp[1]] || ECON_CHARTS[mp[1]]; if (!svg) throw new Error('Unknown map: ' + mp[1]); out.push(`<figure class="nm">${svg}<figcaption>${inline(mp[2] || '')}</figcaption></figure>`); i++; continue; }
     const h = ln.match(/^(#{3,4})\s+(.+)$/);
     if (h) { out.push(`<h${h[1].length} id="${tid}-${slugify(h[2])}">${inline(h[2])}</h${h[1].length}>`); i++; continue; }
 
