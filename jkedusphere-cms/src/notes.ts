@@ -354,6 +354,31 @@ export function notesIndex(): NoteHit[] {
   return NOTE_INDEX;
 }
 
+
+// ---- Share cards for subjects without a bundled card: made in the admin (Share images page), stored in the media table,
+// ---- and mapped slug -> media id in settings (key notes_cards).
+const CARD_KEY = 'notes_cards';
+async function cardMap(db: D1Database): Promise<Record<string, number>> {
+  try {
+    const r = await db.prepare('SELECT value FROM settings WHERE key = ?').bind(CARD_KEY).first<{ value: string }>();
+    return r ? JSON.parse(r.value) : {};
+  } catch { return {}; }
+}
+async function dbCard(db: D1Database, slug: string): Promise<string | undefined> {
+  const id = (await cardMap(db))[slug];
+  return id ? '/img/' + id : undefined;
+}
+export async function notesCardsMissing(db: D1Database) {
+  const m = await cardMap(db);
+  return SUBJECTS.filter((s) => !OG_NOTES[s.slug] && !m[s.slug]).map((s) => ({ slug: s.slug, title: s.h1 }));
+}
+export async function setNotesCard(db: D1Database, slug: string, id: number) {
+  if (!SUBJECTS.some((s) => s.slug === slug) || OG_NOTES[slug]) return false;
+  const m = await cardMap(db); m[slug] = id;
+  await db.prepare('INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').bind(CARD_KEY, JSON.stringify(m)).run();
+  return true;
+}
+
 export function registerNotes(app: Hono<Env>) {
   app.get('/og-notes/:file', (c) => {
     const b64 = OG_NOTES[c.req.param('file').replace(/\.png$/, '')];
@@ -396,7 +421,7 @@ ${main}
         { '@type': 'Article', '@id': url + '#article', headline: String(first ? sub.h1 : t.title).slice(0, 110), description, url, inLanguage: 'en-IN', datePublished: sub.published, dateModified: sub.updated, mainEntityOfPage: { '@type': 'WebPage', '@id': url },
           image: [o + DEFAULT_OG], isPartOf: siteRef(o), author: { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } },
         { '@type': 'BreadcrumbList', itemListElement: crumbLd }] };
-      return c.html(await shell(c.env.DB, o, { title, description, canonical: url, type: 'article', image: OG_NOTES[sub.slug] ? '/og-notes/' + sub.slug + '.png' : undefined, ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
+      return c.html(await shell(c.env.DB, o, { title, description, canonical: url, type: 'article', image: OG_NOTES[sub.slug] ? '/og-notes/' + sub.slug + '.png' : await dbCard(c.env.DB, sub.slug), ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
     };
     app.get(base, (c) => render(c, null));
     app.get(base + '/', (c) => c.redirect(base, 301));

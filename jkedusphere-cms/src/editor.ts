@@ -93,19 +93,24 @@ if(gen){
 var bulk=document.getElementById('bulkGen');
 if(bulk){
   var out=document.getElementById('bulkOut'),list=[];
-  fetch('/admin/share-images/list').then(function(r){return r.json();}).then(function(j){list=j;out.textContent=list.length?list.length+' post(s) have no image.':'Every post already has an image.';bulk.disabled=!list.length;});
+  Promise.all([fetch('/admin/share-images/list').then(function(r){return r.json();}),fetch('/admin/share-images/notes-list').then(function(r){return r.json();})]).then(function(a){
+    a[0].forEach(function(p){list.push({kind:'post',id:p.id,title:p.title,kicker:p.category});});
+    a[1].forEach(function(s){list.push({kind:'notes',id:s.slug,title:s.title,kicker:'Free notes'});});
+    out.textContent=list.length?list.length+' item(s) have no image ('+a[0].length+' post(s), '+a[1].length+' notes subject(s)).':'Everything already has an image.';bulk.disabled=!list.length;
+  });
   bulk.onclick=function(){
     bulk.disabled=true;var i=0;
     (function next(){
       if(i>=list.length){out.textContent='Done. '+list.length+' image(s) created.';return;}
       var p=list[i];out.textContent='Creating '+(i+1)+' of '+list.length+': '+p.title;
-      cardUpload(p.title,p.category,function(u){
-        fetch('/admin/share-images/set',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:p.id,url:u})}).then(function(){i++;next();});
+      cardUpload(p.title,p.kicker,function(u){
+        var url=p.kind==='post'?'/admin/share-images/set':'/admin/share-images/notes-set';
+        var body=p.kind==='post'?{id:p.id,url:u}:{slug:p.id,url:u};
+        fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(){i++;next();});
       });
     })();
   };
 }
-
 var cs=document.getElementById('category'),nc=document.getElementById('newCategory');
 if(cs&&nc){var tog=function(){var on=cs.value==='__new__';nc.style.display=on?'block':'none';if(on)nc.focus();};cs.addEventListener('change',tog);tog();}
 

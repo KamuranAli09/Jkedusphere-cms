@@ -1,3 +1,4 @@
+import { notesCardsMissing, setNotesCard } from './notes';
 import type { Hono } from 'hono';
 import { html } from 'hono/html';
 import type { Env } from './types';
@@ -119,11 +120,18 @@ export function registerContent(app: Hono<Env>) {
   // ---------- Share images (made in the browser, stored like any uploaded image) ----------
   app.get('/admin/share-images', (c) => c.html(adminPage('Share images', html`
     <h2>Share images</h2>
-    <div class="card"><p>Link previews (Telegram, WhatsApp, Facebook) use a post's featured image. This creates a branded card with the title for every post that has none.</p>
+    <div class="card"><p>Link previews (Telegram, WhatsApp, Facebook) use a post's featured image. This creates a branded card with the title for every post, and every notes subject, that has none.</p>
     <p id="bulkOut">Checking...</p><button id="bulkGen" type="button" disabled>Create images for all posts without one</button></div>`, true)));
   app.get('/admin/share-images/list', async (c) => {
     const r = await c.env.DB.prepare("SELECT id, title, category FROM posts WHERE image IS NULL OR image = '' ORDER BY id DESC LIMIT 500").all();
     return c.json(r.results);
+  });
+  app.get('/admin/share-images/notes-list', async (c) => c.json(await notesCardsMissing(c.env.DB)));
+  app.post('/admin/share-images/notes-set', async (c) => {
+    const b = await c.req.json<{ slug: string; url: string }>().catch(() => null);
+    const m = b && /^\/img\/(\d+)$/.exec(String(b.url));
+    if (!b || !m || !(await setNotesCard(c.env.DB, String(b.slug), Number(m[1])))) return c.json({ error: 'bad request' }, 400);
+    return c.json({ ok: true });
   });
   app.post('/admin/share-images/set', async (c) => {
     const b = await c.req.json<{ id: number; url: string }>().catch(() => null);
