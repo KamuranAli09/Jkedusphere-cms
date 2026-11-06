@@ -16,6 +16,7 @@ import { ECONOMY } from './notes-economy';
 import { ECON_CHARTS } from './notes-econ-charts';
 import { JKREORG } from './notes-jkreorg';
 import { GEOGRAPHY } from './notes-geography';
+import { OG_NOTES } from './og-notes';
 
 
 export type Subject = {
@@ -354,6 +355,12 @@ export function notesIndex(): NoteHit[] {
 }
 
 export function registerNotes(app: Hono<Env>) {
+  app.get('/og-notes/:file', (c) => {
+    const b64 = OG_NOTES[c.req.param('file').replace(/\.png$/, '')];
+    if (!b64) return c.redirect('/og-default.png', 302);
+    return new Response(Uint8Array.from(atob(b64), (ch) => ch.charCodeAt(0)), { headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=604800' } });
+  });
+
   for (const sub of SUBJECTS) {
     const base = '/' + sub.slug;
     const render = async (c: any, id: string | null) => {
@@ -389,7 +396,7 @@ ${main}
         { '@type': 'Article', '@id': url + '#article', headline: String(first ? sub.h1 : t.title).slice(0, 110), description, url, inLanguage: 'en-IN', datePublished: sub.published, dateModified: sub.updated, mainEntityOfPage: { '@type': 'WebPage', '@id': url },
           image: [o + DEFAULT_OG], isPartOf: siteRef(o), author: { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } },
         { '@type': 'BreadcrumbList', itemListElement: crumbLd }] };
-      return c.html(await shell(c.env.DB, o, { title, description, canonical: url, type: 'article', ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
+      return c.html(await shell(c.env.DB, o, { title, description, canonical: url, type: 'article', image: OG_NOTES[sub.slug] ? '/og-notes/' + sub.slug + '.png' : undefined, ld, body }), 200, { 'Cache-Control': 'public, max-age=300' });
     };
     app.get(base, (c) => render(c, null));
     app.get(base + '/', (c) => c.redirect(base, 301));

@@ -6,7 +6,7 @@ import { APP_JS } from './editor';
 import { getCats, addCat, removeCat, cleanCat } from './categories';
 
 const IST_MS = 5.5 * 3600 * 1000; // admin times are entered/shown in Indian Standard Time
-export const RESERVED = new Set(['contribute', 'admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'llms.txt', 'favicon.svg', 'vacancies', 'current-affairs']);
+export const RESERVED = new Set(['contribute', 'admin', 'img', 'api', 'assets', 'static', 'robots.txt', 'sitemap.xml', 'favicon.ico', 'rss.xml', 'search', 'logo.png', 'og-default.png', 'og-notes', 'llms.txt', 'favicon.svg', 'vacancies']);
 const now = () => Math.floor(Date.now() / 1000);
 
 export const slugify = (s: string) =>
@@ -62,7 +62,8 @@ const postForm = (p: P, action: string, cats: string[], msg = '', ok = false) =>
     <label>Short summary (excerpt)</label><textarea name="excerpt" maxlength="400">${p.excerpt ?? ''}</textarea>
     ${bodyEditor(p.body ?? '')}
     <label>Featured image</label>
-    <div class="row"><div><input id="image" name="image" value="${p.image ?? ''}" placeholder="/img/12 or a link"></div><div><button type="button" id="pickFeatured" class="light">Upload image</button></div></div>
+    <div class="row"><div><input id="image" name="image" value="${p.image ?? ''}" placeholder="/img/12 or a link"></div><div><button type="button" id="pickFeatured" class="light">Upload image</button> <button type="button" id="genFeatured" class="light">Make card from title</button></div></div>
+    <div class="muted" style="font-size:13px">Leave empty and a branded card with the title is made automatically when you save.</div>
     <img id="thumb" class="thumb" src="${p.image ?? ''}" style="${p.image ? '' : 'display:none'}" alt="">
     <label>Image alt text</label><input name="image_alt" value="${p.image_alt ?? ''}">
     <div class="row">
@@ -114,6 +115,23 @@ export function registerContent(app: Hono<Env>) {
     return new Response(bytes, { headers: { 'Content-Type': row.mime === 'image/jpeg' ? 'image/jpeg' : 'image/webp', 'Cache-Control': 'public, max-age=31536000, immutable' } });
   });
 
+
+  // ---------- Share images (made in the browser, stored like any uploaded image) ----------
+  app.get('/admin/share-images', (c) => c.html(adminPage('Share images', html`
+    <h2>Share images</h2>
+    <div class="card"><p>Link previews (Telegram, WhatsApp, Facebook) use a post's featured image. This creates a branded card with the title for every post that has none.</p>
+    <p id="bulkOut">Checking...</p><button id="bulkGen" type="button" disabled>Create images for all posts without one</button></div>`, true)));
+  app.get('/admin/share-images/list', async (c) => {
+    const r = await c.env.DB.prepare("SELECT id, title, category FROM posts WHERE image IS NULL OR image = '' ORDER BY id DESC LIMIT 500").all();
+    return c.json(r.results);
+  });
+  app.post('/admin/share-images/set', async (c) => {
+    const b = await c.req.json<{ id: number; url: string }>().catch(() => null);
+    if (!b || !Number.isInteger(b.id) || !/^\/img\/\d+$/.test(String(b.url))) return c.json({ error: 'bad request' }, 400);
+    await c.env.DB.prepare("UPDATE posts SET image = ? WHERE id = ? AND (image IS NULL OR image = '')").bind(b.url, b.id).run();
+    return c.json({ ok: true });
+  });
+
   // ---------- Posts ----------
   app.get('/admin/posts', async (c) => {
     const q = (c.req.query('q') ?? '').trim(), st = c.req.query('status') ?? '', t = now();
@@ -127,7 +145,7 @@ export function registerContent(app: Hono<Env>) {
     const badge = (r: P) => r.status === 'draft' ? html`<span class="badge">Draft</span>`
       : r.published_at > t ? html`<span class="badge sch">Scheduled</span>` : html`<span class="badge pub">Published</span>`;
     return c.html(adminPage('Posts', html`
-      <div class="bar"><h2 style="margin:0;flex:1">Posts</h2><a class="btn" href="/admin/posts/new" style="margin:0">+ New post</a></div>
+      <div class="bar"><h2 style="margin:0;flex:1">Posts</h2><a class="btn light" href="/admin/share-images" style="margin:0 8px 0 0">Share images</a><a class="btn" href="/admin/posts/new" style="margin:0">+ New post</a></div>
       <form class="bar" method="get"><input name="q" value="${q}" placeholder="Search title">
         <select name="status"><option value="">All</option>${opt('published', st, 'Published')}${opt('scheduled', st, 'Scheduled')}${opt('draft', st, 'Drafts')}</select>
         <button class="light" style="margin:0">Filter</button></form>

@@ -37,6 +37,75 @@ function pick(cb){
 var fb=document.getElementById('pickFeatured');
 if(fb){fb.onclick=function(){pick(function(u){var f=document.getElementById('image');f.value=u;var t=document.getElementById('thumb');if(t){t.src=u;t.style.display='block';}});};}
 
+function jkCard(title,kicker){
+  var W=1200,H=630,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');
+  var F='Inter, "Segoe UI", Helvetica, Arial, sans-serif';
+  title=String(title||'').replace(/ *[|] *JKEdusphere *$/i,'').split(/[ ]+/).join(' ').trim();
+  kicker=String(kicker||'').toUpperCase().trim();
+  x.fillStyle='#0d2b52';x.fillRect(0,0,W,H);
+  x.fillStyle='#eab308';x.fillRect(80,70,14,14);
+  x.textBaseline='alphabetic';x.fillStyle='#ffffff';x.font='700 30px '+F;x.fillText('JKEdusphere',108,87);
+  var n=title.length,size=n<=38?80:n<=65?68:n<=100?56:46,lh=Math.round(size*1.14);
+  x.font='700 '+size+'px '+F;
+  var words=title.split(' '),lines=[],cur='';
+  words.forEach(function(w){var t=cur?cur+' '+w:w;if(x.measureText(t).width>1040&&cur){lines.push(cur);cur=w;}else cur=t;});
+  if(cur)lines.push(cur);
+  if(lines.length>4){lines=lines.slice(0,4);var l=lines[3];while(l.length>1&&x.measureText(l+String.fromCharCode(8230)).width>1040)l=l.slice(0,-1);lines[3]=l.trim()+String.fromCharCode(8230);}
+  var blockH=lines.length*lh,top=Math.round(315-blockH/2)+20;
+  if(kicker){x.font='500 24px '+F;x.fillStyle='#2fc9a0';if('letterSpacing' in x)x.letterSpacing='4px';x.fillText(kicker,80,top-62);if('letterSpacing' in x)x.letterSpacing='0px';}
+  x.fillStyle='#eab308';x.fillRect(80,top-40,72,6);
+  x.fillStyle='#ffffff';x.font='700 '+size+'px '+F;
+  lines.forEach(function(t,i){x.fillText(t,80,top+size*0.82+i*lh);});
+  x.fillStyle='rgba(255,255,255,0.18)';x.fillRect(80,510,1040,1);
+  x.fillStyle='#ffffff';x.font='500 24px '+F;x.fillText('jkedusphere.online',80,566);
+  x.fillStyle='#8fa6c4';x.font='500 22px '+F;x.textAlign='right';x.fillText(['JKSSB','JKPSC','JKPSI','SSC'].join('  '+String.fromCharCode(183)+'  '),1120,566);x.textAlign='left';
+  return c;
+}
+function cardUpload(title,kicker,cb){
+  var c=jkCard(title,kicker),q=0.9;
+  (function go(){c.toBlob(function(b){
+    if(!b||b.type!=='image/webp'){alert('Your browser could not create the image.');return;}
+    if(b.size>440000&&q>0.5){q-=0.2;go();return;}
+    fetch('/admin/upload',{method:'POST',headers:{'Content-Type':'image/webp'},body:b})
+      .then(function(r){return r.json();})
+      .then(function(j){if(j.url)cb(j.url);else alert(j.error||'Upload failed');})
+      .catch(function(){alert('Upload failed');});
+  },'image/webp',q);})();
+}
+var gen=document.getElementById('genFeatured');
+function formCard(f){
+  var cat=f.elements.category?f.elements.category.value:'';
+  if(cat==='__new__'&&f.elements.new_category)cat=f.elements.new_category.value;
+  return [f.elements.title.value,cat];
+}
+function setImg(u){var f=document.getElementById('image');f.value=u;var t=document.getElementById('thumb');if(t){t.src=u;t.style.display='block';}}
+if(gen){
+  gen.onclick=function(){var f=gen.closest('form'),a=formCard(f);if(!a[0].trim()){alert('Type the title first.');return;}gen.disabled=true;cardUpload(a[0],a[1],function(u){setImg(u);gen.disabled=false;});};
+  gen.closest('form').addEventListener('submit',function(e){
+    var f=e.target;if(f.__gen)return;
+    var img=document.getElementById('image');var a=formCard(f);
+    if(img&&!img.value.trim()&&a[0].trim()){
+      e.preventDefault();
+      cardUpload(a[0],a[1],function(u){setImg(u);f.__gen=true;f.submit();});
+    }
+  });
+}
+var bulk=document.getElementById('bulkGen');
+if(bulk){
+  var out=document.getElementById('bulkOut'),list=[];
+  fetch('/admin/share-images/list').then(function(r){return r.json();}).then(function(j){list=j;out.textContent=list.length?list.length+' post(s) have no image.':'Every post already has an image.';bulk.disabled=!list.length;});
+  bulk.onclick=function(){
+    bulk.disabled=true;var i=0;
+    (function next(){
+      if(i>=list.length){out.textContent='Done. '+list.length+' image(s) created.';return;}
+      var p=list[i];out.textContent='Creating '+(i+1)+' of '+list.length+': '+p.title;
+      cardUpload(p.title,p.category,function(u){
+        fetch('/admin/share-images/set',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:p.id,url:u})}).then(function(){i++;next();});
+      });
+    })();
+  };
+}
+
 var cs=document.getElementById('category'),nc=document.getElementById('newCategory');
 if(cs&&nc){var tog=function(){var on=cs.value==='__new__';nc.style.display=on?'block':'none';if(on)nc.focus();};cs.addEventListener('change',tog);tog();}
 
