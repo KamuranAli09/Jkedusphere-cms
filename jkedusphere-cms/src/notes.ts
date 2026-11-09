@@ -16,12 +16,13 @@ import { ECONOMY } from './notes-economy';
 import { ECON_CHARTS } from './notes-econ-charts';
 import { JKREORG } from './notes-jkreorg';
 import { GEOGRAPHY } from './notes-geography';
+import { MAPS } from './notes-science';
 import { OG_NOTES } from './og-notes';
 
 
 export type Subject = {
   slug: string;        // address, e.g. 'polity' -> /polity
-  short: string;       // breadcrumb name, e.g. 'Polity'
+  short: string;       // breadcrmb name, e.g. 'Polity'
   h1: string;          // page heading
   title: string;       // browser / Google title
   description: string; // Google description (about 150 characters)
@@ -31,7 +32,7 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY, JKREORG, GEOGRAPHY];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY, JKREORG, GEOGRAPHY, SCIENCE];
 
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
