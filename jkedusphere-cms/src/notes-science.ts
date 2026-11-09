@@ -67,10 +67,10 @@ To **measure** is to compare a quantity with a standard unit. The world uses the
 | **Amount of substance** | mole | mol |
 | **Luminous intensity** | candela | cd |
 
-These are the **seven base units**. Others are **derived**: area (m^2), volume (m^3), speed (m/s), density (kg/m^3), force (newton), pressure (pascal), energy (joule), power (watt).
+These are the **seven base units**. Others are **derived**: area (m²), volume (m³), speed (m/s), density (kg/m³), force (newton), pressure (pascal), energy (joule), power (watt).
 
-- **Prefixes:** kilo = 10^3, hecto = 10^2, deca = 10, deci = 10^-1, centi = 10^-2, milli = 10^-3, micro = 10^-6, nano = 10^-9.
-- **Length:** 1 km = 1000 m; 1 m = 100 cm; 1 cm = 10 mm. **Larger units:** 1 light year is about 9.46 x 10^15 m; 1 astronomical unit (AU) is about 1.5 x 10^11 m (Sun to Earth); 1 parsec is about 3.26 light years.
+- **Prefixes:** kilo = 10³, hecto = 10², deca = 10, deci = 10⁻¹, centi = 10⁻², milli = 10⁻³, micro = 10⁻⁶, nano = 10⁻⁹.
+- **Length:** 1 km = 1000 m; 1 m = 100 cm; 1 cm = 10 mm. **Larger units:** 1 light year is about 9.46 × 10¹⁵ m; 1 astronomical unit (AU) is about 1.5 × 10¹¹ m (Sun to Earth); 1 parsec is about 3.26 light years.
 - **Time:** 1 hour = 3600 s. A **simple pendulum** or a **quartz clock** keeps time; an **atomic clock** is the most accurate.
 - **Measuring length:** a **metre scale** (least count 1 mm), **vernier callipers** (0.1 mm or less) and **screw gauge** (0.01 mm).
 - **Measuring a curved line:** use a thread, then measure the thread against the scale.
@@ -96,7 +96,7 @@ An object is in **motion** if its position changes with time with respect to a *
 | **Displacement** | Shortest straight line from start to end, with direction | **Vector** | m |
 | **Speed** | Distance covered per unit time | Scalar | m/s |
 | **Velocity** | Displacement per unit time | Vector | m/s |
-| **Acceleration** | Rate of change of velocity | Vector | m/s^2 |
+| **Acceleration** | Rate of change of velocity | Vector | m/s² |
 
 {{Speed = distance / time}}  {{Velocity = displacement / time}}  {{Acceleration a = (v - u) / t}}
 
@@ -113,14 +113,14 @@ An object is in **motion** if its position changes with time with respect to a *
 | Equation | Connects |
 |---|---|
 | {{v = u + at}} | final velocity, initial velocity, time |
-| {{s = ut + (1/2) a t^2}} | displacement, time |
-| {{v^2 = u^2 + 2as}} | velocity and displacement (no time) |
+| {{s = ut + (1/2) a t²}} | displacement, time |
+| {{v² = u² + 2as}} | velocity and displacement (no time) |
 
 Here **u** = initial velocity, **v** = final velocity, **a** = acceleration, **t** = time, **s** = displacement.
 
-**Worked example.** A car starts from rest and reaches 20 m/s in 5 s. Then a = (20 - 0) / 5 = **4 m/s^2**, and s = 0 + (1/2) x 4 x 25 = **50 m**.
+**Worked example.** A car starts from rest and reaches 20 m/s in 5 s. Then a = (20 - 0) / 5 = **4 m/s²**, and s = 0 + (1/2) × 4 × 25 = **50 m**.
 
-**Free fall:** an object falling only under gravity has **a = g = 9.8 m/s^2** (about 10 m/s^2 for quick work). Thrown **upward**, it slows by g until velocity is zero at the top. A stone dropped from rest falls {{s = (1/2) g t^2}}.
+**Free fall:** an object falling only under gravity has **a = g = 9.8 m/s²** (about 10 m/s² for quick work). Thrown **upward**, it slows by g until velocity is zero at the top. A stone dropped from rest falls {{s = (1/2) g t²}}.
 
 ### Graphs of motion
 
@@ -136,7 +136,7 @@ A **horizontal** line on a distance-time graph means the body is **at rest**. A 
 A body moving in a circle at **constant speed** still **accelerates**, because its **direction keeps changing**. The force that keeps it in the circle is the **centripetal force**, directed **towards the centre**. The tangent to the circle shows the direction of velocity at any point.
 
 :::tip Exam tip
-**Distance can exceed displacement, never the reverse.** **Area under a v-t graph = displacement.** **Slope of a v-t graph = acceleration.** **Circular motion is accelerated even at constant speed.** **g = 9.8 m/s^2.**
+**Distance can exceed displacement, never the reverse.** **Area under a v-t graph = displacement.** **Slope of a v-t graph = acceleration.** **Circular motion is accelerated even at constant speed.** **g = 9.8 m/s².**
 :::
 
 :::mem Memory trick
@@ -147,7 +147,7 @@ A body moving in a circle at **constant speed** still **accelerates**, because i
 
 ### Force
 
-A **force** is a push or a pull. It can change an object's **speed, direction, shape or state of rest**. Unit: **newton (N)**; 1 N = 1 kg m/s^2.
+A **force** is a push or a pull. It can change an object's **speed, direction, shape or state of rest**. Unit: **newton (N)**; 1 N = 1 kg m/s².
 
 | Force | Description |
 |---|---|
@@ -193,10 +193,10 @@ Friction opposes motion between two surfaces in contact. It depends on the **rou
 
 - **Universal law (Newton):** every object attracts every other with a force **directly proportional to the product of masses** and **inversely proportional to the square of the distance**.
 
-{{F = G m1 m2 / r^2}}   with   {{G = 6.67 x 10^-11 N m^2 / kg^2}}
+{{F = G m₁ m₂ / r²}}   with   {{G = 6.67 × 10⁻¹¹ N m² / kg²}}
 
 - **G** is the universal gravitational constant (found by **Cavendish**). **g** is the acceleration due to gravity.
-- **Free-fall acceleration:** {{g = GM / R^2}}; on Earth **g = 9.8 m/s^2**.
+- **Free-fall acceleration:** {{g = GM / R²}}; on Earth **g = 9.8 m/s²**.
 - **Weight** {{W = mg}}. Mass is **constant everywhere**; weight **changes** with g.
 - **g varies:** highest at the **poles**, lowest at the **equator**; **decreases** with height and depth; **zero at the centre** of the Earth.
 - **On the Moon**, g is about **1/6** of Earth's, so weight is one-sixth. The mass remains the same.
@@ -208,8 +208,8 @@ Friction opposes motion between two surfaces in contact. It depends on the **rou
 
 | Quantity | Formula | Unit |
 |---|---|---|
-| **Pressure** | {{P = F / A}} (force per unit area) | pascal (Pa) = N/m^2 |
-| **Density** | {{d = mass / volume}} | kg/m^3 |
+| **Pressure** | {{P = F / A}} (force per unit area) | pascal (Pa) = N/m² |
+| **Density** | {{d = mass / volume}} | kg/m³ |
 | **Relative density** | density of substance / density of water | no unit |
 
 - Pressure is **more** when the area is **small** (sharp knife, nails, pointed needle); **less** when area is large (wide tyres, camel feet, snow shoes).
@@ -219,7 +219,7 @@ Friction opposes motion between two surfaces in contact. It depends on the **rou
 - **Buoyancy (upthrust):** the upward force on an object in a fluid.
 - **Archimedes' principle:** the upthrust equals the **weight of fluid displaced**.
 - **Floating:** an object floats if its **density is less than the liquid's**; it sinks if more. **Ships** float because the displaced water weighs as much as the ship. **Plimsoll line** marks safe loading.
-- **Density of water = 1000 kg/m^3** (1 g/cm^3) at 4 degrees C. **Hydrometer** measures the density of liquids; **lactometer** checks milk purity.
+- **Density of water = 1000 kg/m³** (1 g/cm³) at 4 degrees C. **Hydrometer** measures the density of liquids; **lactometer** checks milk purity.
 - **Pressure units:** 1 atm = 760 mm of mercury.
 
 :::tip Exam tip
@@ -234,7 +234,7 @@ Friction opposes motion between two surfaces in contact. It depends on the **rou
 
 {{W = F x d x cos(theta)}}  or simply  {{W = F x s}}
 
-- **Unit:** joule (J). 1 J = work done when 1 N moves an object 1 m. **CGS unit:** erg; 1 J = 10^7 erg.
+- **Unit:** joule (J). 1 J = work done when 1 N moves an object 1 m. **CGS unit:** erg; 1 J = 10⁷ erg.
 - **No work** is done if **displacement is zero** (pushing a wall) or the force is **perpendicular** to displacement (carrying a bag horizontally).
 - Work is **positive** when force and displacement are in the same direction; **negative** when opposite (friction).
 
@@ -244,12 +244,12 @@ Friction opposes motion between two surfaces in contact. It depends on the **rou
 
 | Type | Formula | Meaning |
 |---|---|---|
-| **Kinetic energy (KE)** | {{KE = (1/2) m v^2}} | Energy due to **motion** |
+| **Kinetic energy (KE)** | {{KE = (1/2) m v²}} | Energy due to **motion** |
 | **Potential energy (PE)** | {{PE = m g h}} | Energy due to **position or condition** (height, stretched spring) |
 
 - KE becomes **four times** if velocity is **doubled**.
 - **Law of conservation of energy:** energy can neither be created nor destroyed, only changed from one form to another. The **total** stays constant. In a falling object, PE **decreases** while KE **increases**.
-- **Mass-energy equivalence (Einstein):** {{E = m c^2}}; the basis of **nuclear energy**.
+- **Mass-energy equivalence (Einstein):** {{E = m c²}}; the basis of **nuclear energy**.
 
 | Device | Energy change |
 |---|---|
@@ -269,8 +269,8 @@ Friction opposes motion between two surfaces in contact. It depends on the **rou
 **Power** is the **rate of doing work**: {{P = W / t}}. Unit: **watt (W)**; 1 W = 1 J/s.
 
 - **1 kilowatt (kW) = 1000 W.** **1 horsepower (HP) = 746 W.**
-- **Commercial unit of energy:** **kilowatt-hour (kWh)** = **1 unit** of electricity. 1 kWh = 3.6 x 10^6 J.
-- **Electricity bill example:** a 100 W bulb used 10 hours a day for 30 days uses 100 x 10 x 30 / 1000 = **30 units**.
+- **Commercial unit of energy:** **kilowatt-hour (kWh)** = **1 unit** of electricity. 1 kWh = 3.6 × 10⁶ J.
+- **Electricity bill example:** a 100 W bulb used 10 hours a day for 30 days uses 100 × 10 × 30 / 1000 = **30 units**.
 
 :::tip Exam tip
 **No displacement = no work.** **Doubling speed multiplies KE by four.** **Watt = joule per second.** **1 kWh = 3.6 million joules.** **Energy is conserved; it only changes form.**
@@ -309,7 +309,7 @@ Sound is produced by **vibrating** bodies. It is a **mechanical, longitudinal wa
 - Fastest in **solids**, then **liquids**, slowest in **gases**: solid > liquid > gas.
 - In **air at 25 degrees C**: about **346 m/s** (about 331 m/s at 0 degrees C). It **rises with temperature**.
 - In **water** about 1500 m/s; in **iron** about 5000 m/s.
-- **Light is far faster** (3 x 10^8 m/s), so lightning is seen before thunder is heard.
+- **Light is far faster** (3 × 10⁸ m/s), so lightning is seen before thunder is heard.
 
 ### Range of hearing
 
@@ -346,7 +346,7 @@ Sound is produced by **vibrating** bodies. It is a **mechanical, longitudinal wa
 
 ### Nature of light
 
-Light is an **electromagnetic wave** that needs **no medium**. Its speed in vacuum is **3 x 10^8 m/s**. It travels in **straight lines** (rectilinear propagation), which explains **shadows**, **eclipses** and the **pinhole camera**.
+Light is an **electromagnetic wave** that needs **no medium**. Its speed in vacuum is **3 × 10⁸ m/s**. It travels in **straight lines** (rectilinear propagation), which explains **shadows**, **eclipses** and the **pinhole camera**.
 
 - **Luminous** objects give their own light (Sun, stars, bulb); **non-luminous** objects are seen by reflected light (Moon).
 - **Transparent** (glass, clear water), **translucent** (butter paper, frosted glass) and **opaque** (wood, metal) objects pass all, some or no light.
@@ -439,7 +439,7 @@ Light bends when it passes from one medium to another because its **speed change
 
 ### Charge and current
 
-- **Charge** (unit **coulomb, C**) is positive or negative. **Like charges repel; unlike attract.** The charge of one electron is **1.6 x 10^-19 C**.
+- **Charge** (unit **coulomb, C**) is positive or negative. **Like charges repel; unlike attract.** The charge of one electron is **1.6 × 10⁻¹⁹ C**.
 - **Rubbing** transfers electrons: glass rubbed with silk becomes **positive**; plastic or ebonite rubbed with fur becomes **negative**.
 - The **gold-leaf electroscope** detects charge. **Lightning** is a huge electric discharge; **lightning conductors** protect buildings.
 - **Electric current** is the rate of flow of charge: {{I = Q / t}}. Unit: **ampere (A)** (1 A = 1 C/s). Measured by an **ammeter**, connected in **series**.
@@ -467,16 +467,16 @@ Light bends when it passes from one medium to another because its **speed change
 |---|---|---|
 | **Current** | Same through all | Divides among branches |
 | **Voltage** | Divides | Same across all |
-| **Total resistance** | {{R = R1 + R2 + R3}} (bigger) | {{1/R = 1/R1 + 1/R2 + 1/R3}} (smaller) |
+| **Total resistance** | {{R = R₁ + R₂ + R₃}} (bigger) | {{1/R = 1/R₁ + 1/R₂ + 1/R₃}} (smaller) |
 | **If one fails** | The whole circuit stops | Others keep working |
 | **Use** | Fuses, switches, old festive lights | **Household wiring** |
 
-**Worked example.** Two resistors of 4 ohm and 6 ohm in series: R = 10 ohm. In parallel: R = (4 x 6) / (4 + 6) = **2.4 ohm**. On a 12 V supply, the series current is 12/10 = **1.2 A**.
+**Worked example.** Two resistors of 4 ohm and 6 ohm in series: R = 10 ohm. In parallel: R = (4 × 6) / (4 + 6) = **2.4 ohm**. On a 12 V supply, the series current is 12/10 = **1.2 A**.
 
 ### Heating effect and power
 
-- **Joule's law:** {{H = I^2 R t}}. Used in **heaters, geysers, irons, toasters, electric bulbs, fuses**.
-- **Electric power** {{P = V I = I^2 R = V^2 / R}}. Unit **watt**. **1 kWh = 1 unit.**
+- **Joule's law:** {{H = I² R t}}. Used in **heaters, geysers, irons, toasters, electric bulbs, fuses**.
+- **Electric power** {{P = V I = I² R = V² / R}}. Unit **watt**. **1 kWh = 1 unit.**
 - **Filament** of a bulb is of **tungsten** (very high melting point, 3380 degrees C); the bulb is filled with **argon or nitrogen** to protect it.
 - **Fuse wire** is made of a **tin-lead alloy**.
 
@@ -624,7 +624,7 @@ Mercury is used because it is a **good conductor, expands evenly, and does not w
 - **Fossil fuels** (coal, oil, gas) formed over millions of years from dead organisms; burning them causes **air pollution, greenhouse gases and acid rain**.
 - **Hydroelectric power:** the **PE of stored water** turns turbines. **Tehri, Bhakra Nangal, Baglihar and Salal** are examples; J&K has high hydro potential on the **Chenab and Jhelum**.
 - **Thermal power:** burning coal; **India's main source of electricity**.
-- **Solar energy:** **solar cells (photovoltaic)** convert sunlight to electricity; **solar cookers, heaters, panels**. A **solar constant** is about **1.4 kW/m^2**.
+- **Solar energy:** **solar cells (photovoltaic)** convert sunlight to electricity; **solar cookers, heaters, panels**. A **solar constant** is about **1.4 kW/m²**.
 - **Wind energy:** windmills and **wind turbines**; **Muppandal** in Tamil Nadu is among the largest wind farms.
 - **Biogas:** from **cow dung and organic waste**; mainly **methane** (about 65 to 70%); the leftover **slurry** is a good manure. Made in **gobar gas plants**.
 - **Biomass:** wood, dung cakes, crop residue.
@@ -730,7 +730,7 @@ Signs of a chemical change: **change of colour, gas released, heat or light, pre
 | Type | Meaning | Examples |
 |---|---|---|
 | **Element** | One kind of atom; cannot be broken further | **Iron, oxygen, gold, mercury, carbon** |
-| **Compound** | **Two or more elements chemically combined** in a fixed ratio | Water, salt, sugar, CO2 |
+| **Compound** | **Two or more elements chemically combined** in a fixed ratio | Water, salt, sugar, CO₂ |
 | **Mixture** | Two or more substances **physically** mixed; **no fixed ratio**; properties of components remain | Air, sea water, soil, alloys |
 
 - **Homogeneous mixture:** uniform throughout (a **solution**): salt in water, air, brass, vinegar. **Heterogeneous mixture:** not uniform: sand and water, oil and water.
@@ -749,7 +749,7 @@ Signs of a chemical change: **change of colour, gas released, heat or light, pre
 
 - **Solute** is dissolved; **solvent** dissolves it. **Water is the universal solvent.**
 - **Tyndall effect:** scattering of a light beam by colloidal particles (a **sunbeam through a dusty room**, headlights in fog).
-- **Concentration** {{mass percent = (mass of solute / mass of solution) x 100}}.
+- **Concentration** {{mass percent = (mass of solute / mass of solution) × 100}}.
 - **Saturated solution:** cannot dissolve more solute at that temperature. **Solubility generally increases with temperature** for solids; **gases dissolve less** in warm water.
 
 ### Methods of separation
@@ -799,19 +799,19 @@ Signs of a chemical change: **change of colour, gas released, heat or light, pre
 
 ### Atoms, molecules and ions
 
-- **Atom:** the smallest particle of an element that takes part in a reaction. **Molecule:** a group of atoms bonded together (**O2, H2O, CO2**).
-- **Atomicity** is the number of atoms in a molecule: **monatomic** (He, Ne, Ar), **diatomic** (H2, N2, O2, Cl2), **triatomic** (O3 ozone, CO2), **tetratomic** (P4), **octatomic** (S8).
-- **Ion:** a charged particle. **Cation** is positive (lost electrons, e.g. Na+); **anion** is negative (gained electrons, e.g. Cl-).
+- **Atom:** the smallest particle of an element that takes part in a reaction. **Molecule:** a group of atoms bonded together (**O₂, H₂O, CO₂**).
+- **Atomicity** is the number of atoms in a molecule: **monatomic** (He, Ne, Ar), **diatomic** (H₂, N₂, O₂, Cl₂), **triatomic** (O₃ ozone, CO₂), **tetratomic** (P₄), **octatomic** (S₈).
+- **Ion:** a charged particle. **Cation** is positive (lost electrons, e.g. Na⁺); **anion** is negative (gained electrons, e.g. Cl⁻).
 - **Symbols:** often the first letter or two (H, He, Ca), or from Latin: **Na** (natrium, sodium), **K** (kalium, potassium), **Fe** (ferrum, iron), **Cu** (cuprum, copper), **Ag** (argentum, silver), **Au** (aurum, gold), **Pb** (plumbum, lead), **Hg** (hydrargyrum, mercury), **Sn** (stannum, tin), **Sb** (stibium, antimony), **W** (wolfram, tungsten).
 - **Most abundant elements:** in the **Earth's crust: oxygen**, then silicon, aluminium, iron; in the **universe: hydrogen**; in the **human body: oxygen**; in the **atmosphere: nitrogen**. The **most abundant metal in the crust is aluminium**.
 - **Atomic mass unit (u):** 1/12 of the mass of a **carbon-12** atom.
 
 ### Mole concept
 
-- **Mole:** the amount of substance containing **6.022 x 10^23** particles (**Avogadro's number**).
+- **Mole:** the amount of substance containing **6.022 × 10²³** particles (**Avogadro's number**).
 - **Molar mass** is the mass of one mole in grams. **Moles = given mass / molar mass.**
 - **1 mole of any gas at STP occupies 22.4 litres.**
-- Example: 1 mole of water = 18 g = 6.022 x 10^23 molecules. **Molecular mass of CO2 = 12 + 32 = 44 u.**
+- Example: 1 mole of water = 18 g = 6.022 × 10²³ molecules. **Molecular mass of CO₂ = 12 + 32 = 44 u.**
 
 ### Discovery of subatomic particles
 
@@ -829,7 +829,7 @@ Signs of a chemical change: **change of colour, gas released, heat or light, pre
 | **Rutherford (nuclear model)** | **Alpha-scattering experiment** on gold foil: a small, dense, **positively charged nucleus** with electrons around it; most of the atom is **empty space** | Did not explain **stability** of the atom |
 | **Bohr** | Electrons revolve in **fixed orbits (shells) without radiating energy**; energy is **quantised** | Fails for larger atoms |
 
-- **Shells:** K, L, M, N (n = 1, 2, 3, 4). **Maximum electrons in a shell = 2n^2**: K = 2, L = 8, M = 18, N = 32. The **outermost shell holds at most 8** electrons (the **octet rule**; **duplet** for first shell).
+- **Shells:** K, L, M, N (n = 1, 2, 3, 4). **Maximum electrons in a shell = 2n²**: K = 2, L = 8, M = 18, N = 32. The **outermost shell holds at most 8** electrons (the **octet rule**; **duplet** for first shell).
 - **Valence electrons** are those in the outermost shell. **Valency** is the combining capacity: it equals the number of valence electrons (up to 4), otherwise **8 minus valence electrons**.
 - **Examples:** Na (2,8,1) valency 1; Mg (2,8,2) valency 2; Al (2,8,3) valency 3; Cl (2,8,7) valency 1; Ne (2,8) **zero** (inert).
 
@@ -843,7 +843,7 @@ Signs of a chemical change: **change of colour, gas released, heat or light, pre
 - **Hydrogen has no neutron** in its common form.
 
 :::tip Exam tip
-**Electron: Thomson; proton: Goldstein/Rutherford; neutron: Chadwick.** **Rutherford: nucleus (gold foil).** **Max electrons = 2n^2.** **Mass number = protons + neutrons.** **Isotopes: same Z, different A.** **Na = natrium, K = kalium, Fe = ferrum, Pb = plumbum.**
+**Electron: Thomson; proton: Goldstein/Rutherford; neutron: Chadwick.** **Rutherford: nucleus (gold foil).** **Max electrons = 2n².** **Mass number = protons + neutrons.** **Isotopes: same Z, different A.** **Na = natrium, K = kalium, Fe = ferrum, Pb = plumbum.**
 :::
 
 ## Periodic Table and Periodic Properties {#periodic-table}
@@ -912,19 +912,19 @@ Signs of a chemical change: **change of colour, gas released, heat or light, pre
 A **chemical equation** shows reactants and products using symbols and formulae. It must be **balanced**, because **mass is conserved**: the number of atoms of each element is equal on both sides.
 
 - **Physical states:** (s) solid, (l) liquid, (g) gas, (aq) aqueous solution. An **upward arrow** shows a gas released; a **downward arrow** a precipitate.
-- Example: {{2H2 + O2 -> 2H2O}}.
+- Example: {{2H₂ + O₂ -> 2H₂O}}.
 - A **catalyst** speeds up a reaction without being used up; **enzymes** are biological catalysts.
 
 ### Types of chemical reactions
 
 | Type | Description | Example |
 |---|---|---|
-| **Combination** | Two or more substances form one product | {{CaO + H2O -> Ca(OH)2}} (slaking of lime); {{C + O2 -> CO2}} |
-| **Decomposition** | One substance breaks into simpler ones | {{CaCO3 -> CaO + CO2}} (heat); {{2H2O -> 2H2 + O2}} (electricity) |
-| **Displacement** | A more reactive element displaces a less reactive one | {{Fe + CuSO4 -> FeSO4 + Cu}} |
-| **Double displacement** | Exchange of ions; often a **precipitate** | {{Na2SO4 + BaCl2 -> BaSO4 + 2NaCl}} |
+| **Combination** | Two or more substances form one product | {{CaO + H₂O -> Ca(OH)₂}} (slaking of lime); {{C + O₂ -> CO₂}} |
+| **Decomposition** | One substance breaks into simpler ones | {{CaCO₃ -> CaO + CO₂}} (heat); {{2H₂O -> 2H₂ + O₂}} (electricity) |
+| **Displacement** | A more reactive element displaces a less reactive one | {{Fe + CuSO₄ -> FeSO₄ + Cu}} |
+| **Double displacement** | Exchange of ions; often a **precipitate** | {{Na₂SO₄ + BaCl₂ -> BaSO₄ + 2NaCl}} |
 | **Oxidation** | Gain of oxygen or loss of hydrogen / electrons | Burning of magnesium |
-| **Reduction** | Loss of oxygen or gain of hydrogen / electrons | {{CuO + H2 -> Cu + H2O}} |
+| **Reduction** | Loss of oxygen or gain of hydrogen / electrons | {{CuO + H₂ -> Cu + H₂O}} |
 | **Redox** | Oxidation and reduction together | Most reactions above |
 
 - **Exothermic reactions release heat:** burning of fuels, **respiration**, **neutralisation**, slaking of lime, decomposition of vegetable matter into compost.
@@ -935,12 +935,12 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 
 ### Corrosion and rancidity
 
-- **Corrosion** is the slow destruction of metals by air and moisture. **Rusting of iron** needs **both oxygen and water**: {{Fe2O3 . xH2O}}. **Silver tarnishes** (black silver sulphide) and **copper turns green** (basic copper carbonate).
+- **Corrosion** is the slow destruction of metals by air and moisture. **Rusting of iron** needs **both oxygen and water**: {{Fe₂O₃·xH₂O}}. **Silver tarnishes** (black silver sulphide) and **copper turns green** (basic copper carbonate).
 - **Prevention of rusting:** **painting, oiling, galvanisation** (zinc coating), **tinning, electroplating, alloying (stainless steel), cathodic protection**.
 - **Rancidity:** oxidation of fats and oils in food, giving a bad smell and taste. **Prevented** by **antioxidants**, airtight containers, refrigeration, and flushing **nitrogen** in chips packets.
 
 :::tip Exam tip
-**Rusting needs oxygen and water.** **Photosynthesis, dissolving NH4Cl and CaCO3 decomposition are endothermic.** **Respiration is exothermic.** **Electrolysis of water: H2 : O2 = 2 : 1.** **Galvanisation = zinc coating.** **Silver chloride is photosensitive.**
+**Rusting needs oxygen and water.** **Photosynthesis, dissolving NH₄Cl and CaCO₃ decomposition are endothermic.** **Respiration is exothermic.** **Electrolysis of water: H₂ : O₂ = 2 : 1.** **Galvanisation = zinc coating.** **Silver chloride is photosensitive.**
 :::
 
 ## Acids, Bases and Salts {#acids-bases}
@@ -951,22 +951,22 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 |---|---|---|
 | **Taste** | **Sour** | **Bitter**, soapy to touch |
 | **Litmus** | **Blue to red** | **Red to blue** |
-| **Ions** | Release **H+** in water | Release **OH-** in water |
+| **Ions** | Release **H⁺** in water | Release **OH⁻** in water |
 | **pH** | **Below 7** | **Above 7** |
 | **Phenolphthalein** | Colourless | **Pink** |
 | **Methyl orange** | **Red** | **Yellow** |
-| **Examples** | HCl, H2SO4, HNO3, vinegar | **NaOH, KOH, Ca(OH)2, NH4OH, milk of magnesia** |
+| **Examples** | HCl, H₂SO₄, HNO₃, vinegar | **NaOH, KOH, Ca(OH)₂, NH₄OH, milk of magnesia** |
 
 - **Indicators:** **litmus** (from lichens), **turmeric** (turns red with bases), **China rose (gudhal)**, **red cabbage**, **phenolphthalein**, **methyl orange**. **Olfactory indicators** (onion, vanilla, clove) change smell.
 - **Alkali:** a base **soluble in water** (NaOH, KOH). All alkalis are bases, but **not all bases are alkalis** (copper oxide).
-- **Strong acids:** HCl, H2SO4, HNO3. **Weak acids:** acetic acid, carbonic acid, citric acid. **Strong bases:** NaOH, KOH.
+- **Strong acids:** HCl, H₂SO₄, HNO₃. **Weak acids:** acetic acid, carbonic acid, citric acid. **Strong bases:** NaOH, KOH.
 - **Concentrated acid should be added to water slowly**, never the reverse (heat is released).
 
 ### Reactions
 
-- **Acid + metal -> salt + hydrogen** (pops with a lighted splinter): {{Zn + H2SO4 -> ZnSO4 + H2}}.
-- **Acid + metal carbonate or bicarbonate -> salt + water + CO2** (turns **lime water milky**): {{CaCO3 + 2HCl -> CaCl2 + H2O + CO2}}.
-- **Acid + base -> salt + water** (**neutralisation**): {{HCl + NaOH -> NaCl + H2O}}.
+- **Acid + metal -> salt + hydrogen** (pops with a lighted splinter): {{Zn + H₂SO₄ -> ZₙSO₄ + H₂}}.
+- **Acid + metal carbonate or bicarbonate -> salt + water + CO₂** (turns **lime water milky**): {{CaCO₃ + 2HCl -> CaCl₂ + H₂O + CO₂}}.
+- **Acid + base -> salt + water** (**neutralisation**): {{HCl + NaOH -> NaCl + H₂O}}.
 - **Acid + metal oxide -> salt + water**; **base + non-metal oxide -> salt + water** (so non-metal oxides are acidic and metal oxides are basic).
 - **Acids and bases conduct electricity** in water because of ions.
 - **Dilution** reduces the concentration of ions per unit volume.
@@ -998,23 +998,23 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 | **Sulphuric acid** | **"King of chemicals"**; car batteries |
 | **Nitric acid** | Fertilisers, explosives |
 
-**Aqua regia** (3 parts HCl : 1 part HNO3) dissolves **gold and platinum**.
+**Aqua regia** (3 parts HCl : 1 part HNO₃) dissolves **gold and platinum**.
 
 ### Important salts
 
 | Compound | Formula | Preparation and uses |
 |---|---|---|
 | **Common salt** | NaCl | From sea water and rock salt; food, preservative |
-| **Caustic soda** | NaOH | **Chlor-alkali process** (electrolysis of brine, giving **Cl2, H2 and NaOH**); soaps, paper |
-| **Bleaching powder** | CaOCl2 | {{Ca(OH)2 + Cl2}}; **disinfecting water, bleaching** |
-| **Baking soda** | NaHCO3 | Mild antacid; baking (CO2 makes dough rise); **fire extinguisher** |
-| **Washing soda** | Na2CO3.10H2O | Removes **permanent hardness** of water; cleaning |
-| **Plaster of Paris** | CaSO4.1/2 H2O | **Gypsum heated at 373 K**; **fracture supports**, statues; sets into gypsum with water |
-| **Gypsum** | CaSO4.2H2O | Cement; fertiliser |
-| **Quicklime** | CaO | Cement, drying; **slaked lime** is Ca(OH)2 |
-| **Limestone, marble, chalk** | CaCO3 | Building |
-| **Blue vitriol** | CuSO4.5H2O | Pesticide, **Bordeaux mixture**; **blue** crystals turn **white** on heating |
-| **Green vitriol** | FeSO4.7H2O | Medicine |
+| **Caustic soda** | NaOH | **Chlor-alkali process** (electrolysis of brine, giving **Cl₂, H₂ and NaOH**); soaps, paper |
+| **Bleaching powder** | CaOCl₂ | {{Ca(OH)₂ + Cl₂}}; **disinfecting water, bleaching** |
+| **Baking soda** | NaHCO₃ | Mild antacid; baking (CO₂ makes dough rise); **fire extinguisher** |
+| **Washing soda** | Na₂CO₃.10H₂O | Removes **permanent hardness** of water; cleaning |
+| **Plaster of Paris** | CaSO₄·½H₂O | **Gypsum heated at 373 K**; **fracture supports**, statues; sets into gypsum with water |
+| **Gypsum** | CaSO₄·2H₂O | Cement; fertiliser |
+| **Quicklime** | CaO | Cement, drying; **slaked lime** is Ca(OH)₂ |
+| **Limestone, marble, chalk** | CaCO₃ | Building |
+| **Blue vitriol** | CuSO₄·5H₂O | Pesticide, **Bordeaux mixture**; **blue** crystals turn **white** on heating |
+| **Green vitriol** | FeSO₄·7H₂O | Medicine |
 
 - **Water of crystallisation** is the fixed number of water molecules in a salt crystal.
 - **Salts of strong acid + strong base** are **neutral** (pH 7); **strong acid + weak base** are **acidic**; **weak acid + strong base** are **basic** (washing soda pH about 11).
@@ -1022,7 +1022,7 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 - **Baking powder** = baking soda + a mild edible acid (tartaric acid).
 
 :::tip Exam tip
-**pH < 7 acid; > 7 base; blood 7.4.** **Baking soda = NaHCO3; washing soda = Na2CO3.** **Plaster of Paris = CaSO4.1/2 H2O.** **Chlor-alkali gives Cl2, H2, NaOH.** **Lime water turns milky with CO2.** **Aqua regia dissolves gold.** **Add acid to water, not water to acid.**
+**pH < 7 acid; > 7 base; blood 7.4.** **Baking soda = NaHCO₃; washing soda = Na₂CO₃.** **Plaster of Paris = CaSO₄·½H₂O.** **Chlor-alkali gives Cl₂, H₂, NaOH.** **Lime water turns milky with CO₂.** **Aqua regia dissolves gold.** **Add acid to water, not water to acid.**
 :::
 
 ## Metals and Non-metals {#metals}
@@ -1042,7 +1042,7 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 | **Ions** | Form **cations** | Form **anions** |
 | **Density** | High (**sodium, potassium, lithium** float on water) | Low |
 
-- **Amphoteric oxides** react with both acids and bases: **Al2O3, ZnO**.
+- **Amphoteric oxides** react with both acids and bases: **Al₂O₃, ZnO**.
 - **Malleable:** can be beaten into sheets. **Ductile:** can be drawn into wires. **Most malleable and ductile: gold.** **Best conductors: silver, then copper**; **lead is a poor conductor**.
 - **Sodium and potassium** are kept in **kerosene** (they catch fire in air). **Phosphorus** is stored under **water**.
 
@@ -1073,7 +1073,7 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 
 | Metal reactivity | Method | Example |
 |---|---|---|
-| **High (K, Na, Ca, Mg, Al)** | **Electrolysis** of molten compound | **Aluminium from bauxite (Al2O3)**, sodium from molten NaCl |
+| **High (K, Na, Ca, Mg, Al)** | **Electrolysis** of molten compound | **Aluminium from bauxite (Al₂O₃)**, sodium from molten NaCl |
 | **Medium (Zn, Fe, Pb)** | Roast / calcine then **reduction with carbon** | **Zinc, iron** |
 | **Low (Cu, Hg, Ag, Au)** | **Heating** the ore | **Cinnabar (HgS) gives mercury** |
 
@@ -1114,13 +1114,13 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 
 | Type | Bond | General formula | Examples |
 |---|---|---|---|
-| **Alkanes (saturated)** | All single | {{CnH2n+2}} | **Methane CH4, ethane C2H6, propane C3H8, butane C4H10** |
-| **Alkenes** | One double bond | {{CnH2n}} | **Ethene C2H4, propene C3H6** |
-| **Alkynes** | One triple bond | {{CnH2n-2}} | **Ethyne C2H2** |
+| **Alkanes (saturated)** | All single | {{CₙH₂ₙ₊₂}} | **Methane CH₄, ethane C₂H₆, propane C₃H₈, butane C₄H₁₀** |
+| **Alkenes** | One double bond | {{CₙH₂ₙ}} | **Ethene C₂H₄, propene C₃H₆** |
+| **Alkynes** | One triple bond | {{CₙH₂ₙ₋₂}} | **Ethyne C₂H₂** |
 
 - **Saturated** hydrocarbons burn with a **clean blue flame**; **unsaturated** ones burn with a **yellow, sooty flame**.
 - **Methane** is the main component of **natural gas, biogas and marsh gas**; **LPG** is propane and butane; **CNG** is mostly methane.
-- **Homologous series:** a family of compounds with the **same functional group**, whose members **differ by a CH2 unit** (mass difference **14 u**). **Properties change gradually.**
+- **Homologous series:** a family of compounds with the **same functional group**, whose members **differ by a CH₂ unit** (mass difference **14 u**). **Properties change gradually.**
 - **Functional group:** an atom or group that decides the compound's properties.
 
 | Functional group | Name | Example |
@@ -1136,23 +1136,23 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 
 ### Chemical properties
 
-- **Combustion:** {{CH4 + 2O2 -> CO2 + 2H2O + heat}}. **Incomplete combustion** gives **carbon monoxide and soot**.
+- **Combustion:** {{CH₄ + 2O₂ -> CO₂ + 2H₂O + heat}}. **Incomplete combustion** gives **carbon monoxide and soot**.
 - **Oxidation:** ethanol is oxidised to ethanoic acid by **alkaline potassium permanganate** or **acidified potassium dichromate**.
 - **Addition reaction:** unsaturated hydrocarbons add hydrogen in the presence of **nickel catalyst**, giving saturated ones. This is the basis of **hydrogenation of vegetable oil into vanaspati ghee**.
 - **Substitution reaction:** a hydrogen atom is replaced (alkanes with chlorine in sunlight).
 
 ### Ethanol and ethanoic acid
 
-| Property | Ethanol (C2H5OH) | Ethanoic acid (CH3COOH) |
+| Property | Ethanol (C₂H₅OH) | Ethanoic acid (CH₃COOH) |
 |---|---|---|
 | **Nature** | Neutral liquid | **Weak acid** |
 | **Uses** | **Medicines, tonics, alcoholic drinks, solvent, fuel (petrol blending)** | **Vinegar (5 to 8%)**, preservative |
-| **Reactions** | With **sodium** gives **hydrogen**; **dehydration** with conc. H2SO4 gives **ethene** | Reacts with **carbonates** to release **CO2**; with alcohol forms an **ester** (sweet smell) |
+| **Reactions** | With **sodium** gives **hydrogen**; **dehydration** with conc. H₂SO₄ gives **ethene** | Reacts with **carbonates** to release **CO₂**; with alcohol forms an **ester** (sweet smell) |
 
 - **Denatured alcohol** is poisonous ethanol made unfit to drink (with **methanol** and a dye). **Methanol** is **poisonous**; it can cause **blindness and death**.
 - **Pure ethanoic acid** freezes at **16.6 C** and is called **glacial acetic acid**.
 - **Esterification:** acid + alcohol, in the presence of **concentrated sulphuric acid**, gives an **ester** + water. **Esters** smell fruity (perfumes, flavours).
-- **Fermentation:** **yeast** converts sugar into ethanol and CO2.
+- **Fermentation:** **yeast** converts sugar into ethanol and CO₂.
 
 ### Soaps and detergents
 
@@ -1161,7 +1161,7 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 - **Soaps do not work well in hard water** (they form **scum**); **detergents** (sulphonate or sulphate salts) work in hard water. **Some detergents are not biodegradable** and pollute water.
 
 :::tip Exam tip
-**Carbon is tetravalent and shows catenation.** **Diamond is hardest; graphite conducts.** **CnH2n+2 alkane; CnH2n alkene; CnH2n-2 alkyne.** **Hydrogenation of oils uses nickel.** **Soap + hard water = scum.** **Methanol is poisonous.** **-OH alcohol; -COOH acid; -CHO aldehyde.**
+**Carbon is tetravalent and shows catenation.** **Diamond is hardest; graphite conducts.** **CₙH₂ₙ₊₂ alkane; CₙH₂ₙ alkene; CₙH₂ₙ₋₂ alkyne.** **Hydrogenation of oils uses nickel.** **Soap + hard water = scum.** **Methanol is poisonous.** **-OH alcohol; -COOH acid; -CHO aldehyde.**
 :::
 
 ## Everyday Chemistry: Water, Air, Fuels and Materials {#everyday-chemistry}
@@ -1176,22 +1176,22 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 | **Carbon dioxide** | **0.04%** |
 | Others (neon, helium, methane, water vapour) | Traces |
 
-- **Oxygen** supports burning and respiration; **nitrogen** is inert and is fixed by bacteria and lightning; **CO2** is used by plants, in **fire extinguishers**, soda water and **dry ice**.
-- **Ozone (O3):** in the **stratosphere** at 15 to 35 km; absorbs harmful **UV rays**. **CFCs** deplete it. **Montreal Protocol (1987)** controls this.
-- **Greenhouse gases:** **CO2, methane, water vapour, nitrous oxide, CFCs**. **Global warming** results from their increase.
-- **Test for gases:** **CO2 turns lime water milky**; **hydrogen burns with a pop**; **oxygen relights a glowing splinter**; **ammonia** has a pungent smell.
+- **Oxygen** supports burning and respiration; **nitrogen** is inert and is fixed by bacteria and lightning; **CO₂** is used by plants, in **fire extinguishers**, soda water and **dry ice**.
+- **Ozone (O₃):** in the **stratosphere** at 15 to 35 km; absorbs harmful **UV rays**. **CFCs** deplete it. **Montreal Protocol (1987)** controls this.
+- **Greenhouse gases:** **CO₂, methane, water vapour, nitrous oxide, CFCs**. **Global warming** results from their increase.
+- **Test for gases:** **CO₂ turns lime water milky**; **hydrogen burns with a pop**; **oxygen relights a glowing splinter**; **ammonia** has a pungent smell.
 
 ### Water
 
-- **Formula H2O**; two hydrogen atoms bonded to one oxygen. **Pure water has no taste, colour or smell**, and pH 7.
-- **Heavy water (D2O)** is used as a **moderator in nuclear reactors**.
+- **Formula H₂O**; two hydrogen atoms bonded to one oxygen. **Pure water has no taste, colour or smell**, and pH 7.
+- **Heavy water (D₂O)** is used as a **moderator in nuclear reactors**.
 - **Hard water** forms scum with soap; **soft water** lathers easily.
 - **Water treatment:** sedimentation, filtration, **chlorination**; **ozone** and **UV** are also used.
 - **Water pollution:** industrial effluents, sewage, **pesticides**; **eutrophication** is excess nutrients causing algal bloom. **BOD (biochemical oxygen demand)** measures pollution by organic waste.
 
 ### Combustion and fuels
 
-- **Combustion** is burning in oxygen with heat and light. **Conditions for burning:** a **fuel, oxygen (air) and ignition temperature**. **Fire is extinguished** by removing any one: **water** (cools; not for oil or electrical fires), **CO2** (cuts off oxygen; for electrical and oil fires), **sand or blanket**.
+- **Combustion** is burning in oxygen with heat and light. **Conditions for burning:** a **fuel, oxygen (air) and ignition temperature**. **Fire is extinguished** by removing any one: **water** (cools; not for oil or electrical fires), **CO₂** (cuts off oxygen; for electrical and oil fires), **sand or blanket**.
 - **Types of combustion:** **rapid** (fire), **spontaneous** (white phosphorus), **explosive** (crackers).
 - **Flame zones:** **innermost (dark, unburnt vapour)**, **middle (partial combustion, luminous)**, **outermost (complete combustion, hottest, non-luminous)**. **Goldsmiths use the outermost zone.**
 - **Ignition temperature:** the lowest temperature at which a substance catches fire.
@@ -1215,14 +1215,14 @@ A **chemical equation** shows reactants and products using symbols and formulae.
 - **Biodegradable** materials decompose by microbes (paper, food); **non-biodegradable** ones (plastics, glass) do not. Use the **3 Rs: reduce, reuse, recycle**.
 - **Fertilisers:** **urea** (46% N, the **highest nitrogen**), **NPK**, **DAP**, **superphosphate**; **pesticides** include insecticides, fungicides, herbicides. **DDT** is banned for its persistence.
 - **Dyes, soaps, medicines:** **antibiotics** (penicillin, found by **Alexander Fleming**, 1928), **antipyretics** (paracetamol), **analgesics** (aspirin), **antacids**, **antiseptics** (dettol, iodine tincture), **disinfectants**.
-- **Fire extinguishers:** soda-acid (baking soda + sulphuric acid, produces CO2), foam, CO2.
+- **Fire extinguishers:** soda-acid (baking soda + sulphuric acid, produces CO₂), foam, CO₂.
 - **Preservation of food:** salt, sugar, oil, vinegar, **sodium benzoate**, cold storage, **pasteurisation** (heating milk at 70 C for 15 to 30 seconds, by **Louis Pasteur**).
 - **Artificial sweeteners:** **saccharin, aspartame**.
 - **LPG cylinders in India: 14.2 kg domestic.**
-- **Tear gas** is chloropicrin; **laughing gas** is **nitrous oxide**; **marsh gas** is **methane**; **dry ice** is solid CO2; **quicksilver** is mercury; **vitamin C** is **ascorbic acid**; **bleaching powder** is calcium oxychloride; **rock salt** is NaCl; **Epsom salt** is magnesium sulphate; **Glauber's salt** is sodium sulphate; **chile saltpetre** is NaNO3.
+- **Tear gas** is chloropicrin; **laughing gas** is **nitrous oxide**; **marsh gas** is **methane**; **dry ice** is solid CO₂; **quicksilver** is mercury; **vitamin C** is **ascorbic acid**; **bleaching powder** is calcium oxychloride; **rock salt** is NaCl; **Epsom salt** is magnesium sulphate; **Glauber's salt** is sodium sulphate; **chile saltpetre** is NaNO₃.
 
 :::tip Exam tip
-**Air: N2 78%, O2 21%.** **Ozone absorbs UV; CFCs destroy it.** **Fire from oil or electricity: use CO2, not water.** **Vulcanisation uses sulphur.** **Bakelite is thermosetting.** **Nylon is the first fully synthetic fibre.** **Urea has the highest nitrogen.** **Outermost flame zone is hottest.**
+**Air: N₂ 78%, O₂ 21%.** **Ozone absorbs UV; CFCs destroy it.** **Fire from oil or electricity: use CO₂, not water.** **Vulcanisation uses sulphur.** **Bakelite is thermosetting.** **Nylon is the first fully synthetic fibre.** **Urea has the highest nitrogen.** **Outermost flame zone is hottest.**
 :::
 
 @unit Biology
@@ -1393,14 +1393,14 @@ Classification groups organisms by similarity. **Carolus Linnaeus** (**Father of
 
 Plants (and algae, some bacteria) make food using **sunlight, water, and carbon dioxide** with **chlorophyll**:
 
-{{6CO2 + 6H2O + sunlight -> C6H12O6 + 6O2}}
+{{6CO₂ + 6H₂O + sunlight -> C₆H₁₂O₆ + 6O₂}}
 
 - **Site:** **chloroplasts** (in the **leaf**). **Chlorophyll** absorbs **red and blue** light and **reflects green**.
-- **Water** is taken through **roots** (xylem); **CO2** enters through **stomata**.
+- **Water** is taken through **roots** (xylem); **CO₂** enters through **stomata**.
 - **Products:** **glucose (stored as starch)** and **oxygen**. **Oxygen released comes from water.**
 - **Starch test:** **iodine** turns **blue-black** with starch (used to show photosynthesis in the leaf).
-- **Light and dark reactions:** light reactions give ATP and release O2; **Calvin cycle** (dark reaction) makes glucose.
-- **Conditions:** light, chlorophyll, CO2, water.
+- **Light and dark reactions:** light reactions give ATP and release O₂; **Calvin cycle** (dark reaction) makes glucose.
+- **Conditions:** light, chlorophyll, CO₂, water.
 - **Plants that lack chlorophyll** (fungi, **Cuscuta (amar bel)**) cannot do photosynthesis.
 
 ### Modes of nutrition
@@ -1428,12 +1428,12 @@ Plants (and algae, some bacteria) make food using **sunlight, water, and carbon 
 
 ### Respiration in plants and photosynthesis compared
 
-- Plants respire **all the time** (day and night); they **photosynthesise only in light**. During the **day**, photosynthesis exceeds respiration so net O2 is released.
+- Plants respire **all the time** (day and night); they **photosynthesise only in light**. During the **day**, photosynthesis exceeds respiration so net O₂ is released.
 
 | Photosynthesis | Respiration |
 |---|---|
 | Makes food (glucose) | **Breaks down food** to release energy |
-| Takes in CO2 and releases O2 | Takes in O2 and releases CO2 |
+| Takes in CO₂ and releases O₂ | Takes in O₂ and releases CO₂ |
 | Only in **chlorophyll-containing cells, in light** | **All living cells, all the time** |
 | **Stores energy** | **Releases energy** (ATP) |
 
@@ -1451,7 +1451,7 @@ Plants (and algae, some bacteria) make food using **sunlight, water, and carbon 
 - **Nastic movement** is not directional: **touch-me-not (Mimosa pudica)** folds its leaves on touch.
 
 :::tip Exam tip
-**Photosynthesis: chloroplast; chlorophyll reflects green.** **O2 released comes from water.** **Starch is tested with iodine (blue-black).** **Cuscuta: parasite. Lichen: symbiosis.** **Pitcher plant: insectivorous.** **Rhizobium: nitrogen fixation in pulses.** **Xylem: water up; phloem: food.** **Ethylene ripens fruit; ABA closes stomata.**
+**Photosynthesis: chloroplast; chlorophyll reflects green.** **O₂ released comes from water.** **Starch is tested with iodine (blue-black).** **Cuscuta: parasite. Lichen: symbiosis.** **Pitcher plant: insectivorous.** **Rhizobium: nitrogen fixation in pulses.** **Xylem: water up; phloem: food.** **Ethylene ripens fruit; ABA closes stomata.**
 :::
 
 ## Human Body: Nutrition, Digestion, Respiration, Circulation and Excretion {#human-body}
@@ -1511,12 +1511,12 @@ Plants (and algae, some bacteria) make food using **sunlight, water, and carbon 
 
 ### Respiration
 
-- **Breathing** is moving air in and out; **cellular respiration** releases energy from glucose in cells: {{C6H12O6 + 6O2 -> 6CO2 + 6H2O + energy (ATP)}}.
-- **Aerobic** respiration uses oxygen (**38 ATP**); **anaerobic** does not: in **yeast** it gives **ethanol + CO2**; in **muscles** it gives **lactic acid** (causing cramps) (**2 ATP**).
+- **Breathing** is moving air in and out; **cellular respiration** releases energy from glucose in cells: {{C₆H₁₂O₆ + 6O₂ -> 6CO₂ + 6H₂O + energy (ATP)}}.
+- **Aerobic** respiration uses oxygen (**38 ATP**); **anaerobic** does not: in **yeast** it gives **ethanol + CO₂**; in **muscles** it gives **lactic acid** (causing cramps) (**2 ATP**).
 - **Path of air:** nose, **pharynx, larynx, trachea, bronchi, bronchioles, alveoli**. **Gas exchange** happens in the **alveoli**. **Haemoglobin** carries oxygen.
 - **Diaphragm** and **intercostal muscles** control breathing: **inhaling: diaphragm contracts and flattens, ribs lift**; **exhaling: they relax**.
 - **Lungs:** **right lung has 3 lobes, left has 2**.
-- **Breathing rate (adult at rest): about 12 to 20 per minute.** **Air we breathe out** has about **4% CO2**.
+- **Breathing rate (adult at rest): about 12 to 20 per minute.** **Air we breathe out** has about **4% CO₂**.
 - **Other animals:** **earthworm (skin), insects (tracheae), fish (gills), frog (skin and lungs), birds and mammals (lungs).**
 
 ### Circulation
@@ -1539,9 +1539,9 @@ Plants (and algae, some bacteria) make food using **sunlight, water, and carbon 
 | Component | Function |
 |---|---|
 | **Plasma (55%)** | Liquid; **90% water**; carries nutrients, hormones, waste |
-| **Red blood cells (RBC, erythrocytes)** | **Haemoglobin** (iron) carries oxygen; **no nucleus**; made in **bone marrow**; **lifespan about 120 days**; **about 5 million/mm^3** |
-| **White blood cells (WBC, leucocytes)** | **Fight infection** (immunity); **lifespan short**; about 5000 to 10,000/mm^3 |
-| **Platelets (thrombocytes)** | **Blood clotting**; about 1.5 to 4 lakh/mm^3 |
+| **Red blood cells (RBC, erythrocytes)** | **Haemoglobin** (iron) carries oxygen; **no nucleus**; made in **bone marrow**; **lifespan about 120 days**; **about 5 million/mm³** |
+| **White blood cells (WBC, leucocytes)** | **Fight infection** (immunity); **lifespan short**; about 5000 to 10,000/mm³ |
+| **Platelets (thrombocytes)** | **Blood clotting**; about 1.5 to 4 lakh/mm³ |
 
 - **Blood groups** (**Karl Landsteiner**): **A, B, AB, O**. **O** is the **universal donor** (no antigens); **AB** is the **universal recipient**. **Rh factor** was found in **rhesus monkey**; **Rh-negative mother with Rh-positive baby** can cause problems.
 - **Adult blood volume: about 5 to 6 litres.** **Haemoglobin: 12 to 16 g/dl.** **Anaemia** is low haemoglobin.
@@ -1554,7 +1554,7 @@ Plants (and algae, some bacteria) make food using **sunlight, water, and carbon 
 - **Kidney** (bean-shaped) has about **a million nephrons** (**structural and functional unit**) which **filter blood**; **urine** is formed by **filtration, reabsorption and secretion**.
 - **Urine** is **about 95% water**, **urea**, uric acid, salts; **pale yellow due to urochrome**. **Normal urine is slightly acidic.**
 - **Dialysis (artificial kidney)** treats kidney failure; **kidney transplant** is another option.
-- **Other excretory organs:** **skin (sweat)**, **lungs (CO2)**, **liver (bile pigments, urea formation)**.
+- **Other excretory organs:** **skin (sweat)**, **lungs (CO₂)**, **liver (bile pigments, urea formation)**.
 - **Excretory products:** **ammonia** (fish, ammonotelic), **urea** (humans, ureotelic), **uric acid** (birds and reptiles, uricotelic).
 - **Kidney stones** are calcium oxalate. **Diabetes** and **hypertension** harm kidneys.
 
@@ -1669,7 +1669,7 @@ One parent, **no gametes**, offspring are **genetically identical (clones)**.
 - **Gregor Mendel** (**Father of Genetics**) worked on **pea plants** (*Pisum sativum*) and published in **1866**. He studied **seven pairs of contrasting traits** (height, seed shape, seed colour, flower colour and others).
 - **Mendel's laws:** the **law of dominance**, the **law of segregation**, and the **law of independent assortment**.
 - **Terms:** **dominant** (expressed), **recessive** (hidden unless both alleles are recessive), **allele**, **genotype** (genetic make-up), **phenotype** (visible character), **homozygous** (identical alleles), **heterozygous** (different alleles).
-- **Monohybrid cross** (tall x dwarf pea): **F1 all tall; F2 ratio 3 : 1** (phenotype) and 1 : 2 : 1 (genotype). **Dihybrid ratio:** **9 : 3 : 3 : 1**.
+- **Monohybrid cross** (tall x dwarf pea): **F1 all tall; F₂ ratio 3 : 1** (phenotype) and 1 : 2 : 1 (genotype). **Dihybrid ratio:** **9 : 3 : 3 : 1**.
 - **Chromosomes** carry **genes**; **DNA** has the genetic code. **Watson and Crick** (1953) gave the **double-helix** model of DNA (with **Rosalind Franklin** and **Maurice Wilkins** contributing the X-ray data). **DNA bases:** **A pairs with T; G pairs with C**. **RNA** has **uracil (U)** in place of thymine.
 - **Genes and proteins:** **DNA, mRNA, protein**; **RNA types: mRNA, tRNA, rRNA**.
 - **Sex chromosomes:** **XX female, XY male**; **autosomes** are the other **22 pairs**. **Human chromosome number: 46.**
@@ -1688,7 +1688,7 @@ One parent, **no gametes**, offspring are **genetically identical (clones)**.
 - **Artificial selection** (breeding): **wild cabbage** gave cabbage, cauliflower, broccoli, kale and kohlrabi.
 
 :::tip Exam tip
-**Mendel: Father of Genetics; pea plant; F2 ratio 3:1; dihybrid 9:3:3:1.** **Darwin: natural selection, 1859.** **Haemophilia: X-linked.** **Down syndrome: trisomy 21.** **Wings of birds and insects: analogous.** **Human arm and bat wing: homologous.** **Dolly: first cloned mammal.** **Child's sex: father's sperm decides.**
+**Mendel: Father of Genetics; pea plant; F₂ ratio 3:1; dihybrid 9:3:3:1.** **Darwin: natural selection, 1859.** **Haemophilia: X-linked.** **Down syndrome: trisomy 21.** **Wings of birds and insects: analogous.** **Human arm and bat wing: homologous.** **Dolly: first cloned mammal.** **Child's sex: father's sperm decides.**
 :::
 
 ## Health, Diseases and Immunity {#health}
@@ -1755,8 +1755,8 @@ An **ecosystem** is a community of living things interacting with the non-living
 ### Biogeochemical cycles
 
 - **Water (hydrological) cycle:** evaporation, condensation, precipitation. **Transpiration** adds to it.
-- **Carbon cycle:** **photosynthesis** takes CO2; **respiration, burning and decay** return it. **Carbon sinks:** forests and oceans.
-- **Nitrogen cycle:** **nitrogen fixation** (Rhizobium, lightning), **nitrification**, assimilation, **denitrification** (returns N2 to the air).
+- **Carbon cycle:** **photosynthesis** takes CO₂; **respiration, burning and decay** return it. **Carbon sinks:** forests and oceans.
+- **Nitrogen cycle:** **nitrogen fixation** (Rhizobium, lightning), **nitrification**, assimilation, **denitrification** (returns N₂ to the air).
 - **Oxygen cycle** links photosynthesis and respiration.
 
 ### Biodiversity and conservation
@@ -1773,7 +1773,7 @@ An **ecosystem** is a community of living things interacting with the non-living
 
 | Type | Causes | Effects |
 |---|---|---|
-| **Air** | **Vehicles, factories, burning of crop stubble, CO, SO2, NOx, particulate matter (PM2.5 and PM10)** | Smog, asthma, **acid rain** |
+| **Air** | **Vehicles, factories, burning of crop stubble, CO, SO₂, NOₓ, particulate matter (PM₂.₅ and PM₁₀)** | Smog, asthma, **acid rain** |
 | **Water** | Sewage, industrial waste, **plastics, pesticides, oil spills** | Disease, **eutrophication**, fish deaths |
 | **Soil** | **Chemical fertilisers, pesticides, plastics** | Loss of fertility |
 | **Noise** | Traffic, loudspeakers | Hearing loss, stress; **safe level below 85 dB** |
@@ -1781,7 +1781,7 @@ An **ecosystem** is a community of living things interacting with the non-living
 | **Radioactive** | Nuclear waste | Cancer, genetic damage |
 
 - **Global warming** is from the **greenhouse effect**; the **Kyoto Protocol (1997)**, **Paris Agreement (2015)** aim to limit it. **Ozone hole** over **Antarctica**.
-- **Acid rain:** **SO2 and NO2** dissolve in rain; harms the **Taj Mahal (marble cancer)**.
+- **Acid rain:** **SO₂ and NO₂** dissolve in rain; harms the **Taj Mahal (marble cancer)**.
 - **Smog:** smoke + fog. **Photochemical smog** forms from vehicle exhaust in sunlight.
 - **Tests and measures:** **Air Quality Index (AQI)**; **National Green Tribunal (2010)**; **Environment Protection Act, 1986**; **World Environment Day: 5 June**; **Earth Day: 22 April**; **World Water Day: 22 March**; **World Wildlife Day: 3 March**; **International Day of Biodiversity: 22 May**.
 - **Waste management:** **segregate (wet and dry)**, **compost**, **recycle**, **reduce plastics**; **Swachh Bharat Mission** (2014).
@@ -1801,7 +1801,7 @@ An **ecosystem** is a community of living things interacting with the non-living
 - **Types of soil in India:** **alluvial** (most fertile; widest), **black (regur; cotton)**, **red**, **laterite**, **desert**, **mountain**.
 
 :::tip Exam tip
-**10% energy law.** **Producers are plants; decomposers recycle.** **Biomagnification: DDT at the top of the food chain.** **Kharif: rice; Rabi: wheat.** **Chipko: Sunderlal Bahuguna.** **Dachigam: hangul.** **Green Revolution: Swaminathan; White: Kurien.** **World Environment Day: 5 June.** **Acid rain: SO2 and NO2.**
+**10% energy law.** **Producers are plants; decomposers recycle.** **Biomagnification: DDT at the top of the food chain.** **Kharif: rice; Rabi: wheat.** **Chipko: Sunderlal Bahuguna.** **Dachigam: hangul.** **Green Revolution: Swaminathan; White: Kurien.** **World Environment Day: 5 June.** **Acid rain: SO₂ and NO₂.**
 :::
 
 @unit Quick Revision
@@ -1813,7 +1813,7 @@ An **ecosystem** is a community of living things interacting with the non-living
 | **Isaac Newton** | Laws of motion, **gravitation**, dispersion of light, reflecting telescope |
 | **Galileo Galilei** | Telescope observations (moons of Jupiter), laws of falling bodies, pendulum |
 | **Archimedes** | **Buoyancy (upthrust) principle** |
-| **Albert Einstein** | **Relativity**, E = mc^2, **photoelectric effect** (Nobel 1921) |
+| **Albert Einstein** | **Relativity**, E = mc², **photoelectric effect** (Nobel 1921) |
 | **Michael Faraday** | **Electromagnetic induction**, laws of electrolysis |
 | **Hans Oersted** | Magnetic effect of electric current |
 | **Alessandro Volta** | **Voltaic cell** (battery) |
@@ -1890,8 +1890,8 @@ An **ecosystem** is a community of living things interacting with the non-living
 | Capacitance | **farad** | Magnetic field | **tesla** |
 | Radioactivity | **becquerel** | Illumination | **lux** |
 | Power of lens | **dioptre** | Sound intensity | **decibel** |
-| Speed | **m/s** | Acceleration | **m/s^2** |
-| Momentum | **kg m/s** | Density | **kg/m^3** |
+| Speed | **m/s** | Acceleration | **m/s²** |
+| Momentum | **kg m/s** | Density | **kg/m³** |
 | Wavelength | **metre** (also angstrom) | Distance of stars | **light year** |
 
 ### Instruments
@@ -1930,7 +1930,7 @@ An **ecosystem** is a community of living things interacting with the non-living
 ### Physics
 
 - **SI unit of force: newton; of energy: joule; of power: watt.**
-- **Acceleration due to gravity: 9.8 m/s^2. Speed of light: 3 x 10^8 m/s. Speed of sound in air: about 340 m/s.**
+- **Acceleration due to gravity: 9.8 m/s². Speed of light: 3 × 10⁸ m/s. Speed of sound in air: about 340 m/s.**
 - **Sound needs a medium; light does not.** **Sound is fastest in solids.**
 - **Audible range: 20 Hz to 20,000 Hz.**
 - **Concave mirror: shaving mirror, headlights. Convex mirror: rear-view mirror.**
@@ -1949,11 +1949,11 @@ An **ecosystem** is a community of living things interacting with the non-living
 - **Hardest substance: diamond. Best conductor: silver. Liquid metal: mercury. Liquid non-metal: bromine.**
 - **Most abundant element in Earth's crust: oxygen. Most abundant metal: aluminium.**
 - **Most abundant gas in air: nitrogen (78%).**
-- **Baking soda: NaHCO3. Washing soda: Na2CO3. Plaster of Paris: CaSO4.1/2 H2O. Bleaching powder: CaOCl2.**
+- **Baking soda: NaHCO₃. Washing soda: Na₂CO₃. Plaster of Paris: CaSO₄·½H₂O. Bleaching powder: CaOCl₂.**
 - **Rusting needs air and water.** **Sodium is kept in kerosene; phosphorus under water.**
-- **Alkane: CnH2n+2; alkene: CnH2n; alkyne: CnH2n-2.**
+- **Alkane: CₙH₂ₙ₊₂; alkene: CₙH₂ₙ; alkyne: CₙH₂ₙ₋₂.**
 - **Noble gases have a complete outer shell.** **Helium fills balloons safely.**
-- **Dry ice is solid CO2.** **Laughing gas is nitrous oxide.** **Marsh gas is methane.**
+- **Dry ice is solid CO₂.** **Laughing gas is nitrous oxide.** **Marsh gas is methane.**
 
 ### Biology
 
@@ -2039,10 +2039,10 @@ Test yourself, then check the answers below.
 ### Answers
 
 1. **Newton (N).**
-2. **72 x 5/18 = 20 m/s.**
+2. **72 × 5/18 = 20 m/s.**
 3. **Convex mirror.**
 4. **Concave lens.**
-5. **(3 x 6)/(3 + 6) = 2 ohm.**
+5. **(3 × 6)/(3 + 6) = 2 ohm.**
 6. **Insulin.**
 7. **Hydrogen.**
 8. **7.**
@@ -2052,7 +2052,7 @@ Test yourself, then check the answers below.
 12. **Mars.**
 13. **Sound Navigation and Ranging.**
 14. **O.**
-15. **NaHCO3 (sodium hydrogencarbonate).**
+15. **NaHCO₃ (sodium hydrogencarbonate).**
 16. **Newton's first law (inertia).**
 17. **It carries water and minerals upward from the roots.**
 18. **Carbon dioxide, water and sunlight (with chlorophyll).**
@@ -2076,4 +2076,3 @@ For the whole subject, follow the chain **Matter, Energy, Life**: how things are
 Practise with our free tests at [JKEdusphere](https://jkedusphere.com).
 `,
 };
-
