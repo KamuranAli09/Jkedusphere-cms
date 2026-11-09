@@ -16,7 +16,7 @@ import { ECONOMY } from './notes-economy';
 import { ECON_CHARTS } from './notes-econ-charts';
 import { JKREORG } from './notes-jkreorg';
 import { GEOGRAPHY } from './notes-geography';
-import { MAPS } from './notes-science';
+import { SCIENCE } from './notes-science';
 import { OG_NOTES } from './og-notes';
 
 
