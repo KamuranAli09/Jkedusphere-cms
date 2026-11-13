@@ -14,6 +14,7 @@ import { registerContribute } from './contribute';
 import { registerCurrentAffairs } from './currentaffairs';
 import { registerAnalytics } from './analytics';
 import { trackMiddleware } from './track';
+import { registerSeo } from './seo';
 
 const app = new Hono<Env>();
 
@@ -131,7 +132,7 @@ registerHomepage(app);
 registerImporter(app);
 registerAnalytics(app); // dashboard, analytics and notes manager
 
-app.get('/robots.txt', (c) => c.text('User-agent: *\nDisallow: /admin\nAllow: /\nSitemap: ' + siteOrigin(c.req.url) + '/sitemap.xml\n'));
+registerSeo(app); // robots.txt, llms.txt, /slug.md, feed.xml, IndexNow, admin SEO page (before registerPublic)
 registerNotes(app);
 registerCurrentAffairs(app); // /current-affairs hub + admin (must come before registerPublic)
 registerContribute(app); // reader contributions + admin review queue (must come before registerPublic)
