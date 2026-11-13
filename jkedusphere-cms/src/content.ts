@@ -2,6 +2,8 @@ import { notesCardsMissing, setNotesCard } from './notes';
 import type { Hono } from 'hono';
 import { html } from 'hono/html';
 import type { Env } from './types';
+import { SITE_URL } from './types';
+import { pingIndexNow } from './seo';
 import { adminPage } from './layout';
 import { APP_JS } from './editor';
 import { getCats, addCat, removeCat, cleanCat } from './categories';
@@ -164,6 +166,13 @@ export function registerContent(app: Hono<Env>) {
 
   app.get('/admin/posts/new', async (c) => c.html(postForm({ status: 'draft' }, '/admin/posts', await getCats(c.env.DB))));
 
+  // Tell Bing / IndexNow about a published post right away (runs in the background, never blocks saving)
+  const announce = (c: any, p: { slug: string; status: string; published_at: number }) => {
+    try {
+      if (p.status !== 'published' || p.published_at > now() || /^(localhost|127\.0\.0\.1)$/.test(new URL(c.req.url).hostname)) return;
+      c.executionCtx.waitUntil(pingIndexNow(c.env.DB, [SITE_URL + '/' + p.slug, SITE_URL + '/']).then(() => undefined, () => undefined));
+    } catch { /* ignore */ }
+  };
   async function savePost(c: any, id: number | null) {
     const p = readPost(await c.req.formData());
     let cats = await getCats(c.env.DB);
@@ -182,10 +191,12 @@ export function registerContent(app: Hono<Env>) {
     if (id) {
       await c.env.DB.prepare('UPDATE posts SET title=?,slug=?,body=?,excerpt=?,category=?,tags=?,image=?,image_alt=?,seo_title=?,seo_description=?,important_dates=?,status=?,published_at=?,updated_at=? WHERE id=?')
         .bind(...vals, now(), id).run();
+      announce(c, p);
       return c.redirect(`/admin/posts/${id}/edit?saved=1`);
     }
     const r = await c.env.DB.prepare('INSERT INTO posts (title,slug,body,excerpt,category,tags,image,image_alt,seo_title,seo_description,important_dates,status,published_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)')
       .bind(...vals, now(), now()).run();
+    announce(c, p);
     return c.redirect(`/admin/posts/${r.meta.last_row_id}/edit?saved=1`);
   }
   app.post('/admin/posts', (c) => savePost(c, null));
