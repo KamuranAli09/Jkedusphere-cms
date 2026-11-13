@@ -4,6 +4,7 @@ import type { MiddlewareHandler } from 'hono';
 import { getCookie } from 'hono/cookie';
 import type { Env } from './types';
 import { sha256Hex } from './auth';
+import { AI_REFERRERS, crawlerOf } from './seo-core';
 
 const IST = 5.5 * 3600 * 1000;
 export const istDay = (ms = Date.now()) => new Date(ms + IST).toISOString().slice(0, 10);
@@ -23,6 +24,8 @@ const APPS: Record<string, [string, string]> = {
 // Where did this visit come from? Returns null for internal navigation (not a new source).
 export function classify(referer: string, reqHost: string, url: URL): { channel: string; source: string } | null {
   const utmS = (url.searchParams.get('utm_source') ?? '').toLowerCase().slice(0, 40), utmM = (url.searchParams.get('utm_medium') ?? '').toLowerCase();
+  const aiU = utmS && AI_REFERRERS.find(([re]) => re.test(utmS.replace(/^www\./, '')));
+  if (aiU) return { channel: 'AI Assistant', source: aiU[1] };
   if (utmS) {
     const known = [...SOCIAL, ...SEARCH].find(([re]) => re.test(utmS + '.com'));
     const name = known ? known[1] : utmS;
@@ -36,6 +39,7 @@ export function classify(referer: string, reqHost: string, url: URL): { channel:
   const own = reqHost.toLowerCase().replace(/^www\./, '');
   if (h === own || h === 'jkedusphere.online' || h.endsWith('.workers.dev')) return null;
   if (h === 'mail.google.com') return { channel: 'Email', source: 'Gmail' };
+  const ai = AI_REFERRERS.find(([re]) => re.test(h)); if (ai) return { channel: 'AI Assistant', source: ai[1] };
   const s = SEARCH.find(([re]) => re.test(h)); if (s) return { channel: 'Search', source: s[1] };
   const so = SOCIAL.find(([re]) => re.test(h)); if (so) return { channel: 'Social', source: so[1] };
   return { channel: 'Referral', source: h };
@@ -100,13 +104,25 @@ export const trackMiddleware: MiddlewareHandler<Env> = async (c, next) => {
   try {
     if (c.req.method !== 'GET') return;
     const path = new URL(c.req.url).pathname;
-    if (SKIP_PATH.test(path)) return;
+    if (SKIP_PATH.test(path) && !/^\/(robots\.txt|sitemap\.xml)$/.test(path)) return;
     const status = c.res.status;
     if (status !== 200 && status !== 404) return;
-    if (status === 200 && !(c.res.headers.get('content-type') ?? '').includes('text/html')) return;
+    const aiFile = /^\/(llms\.txt|feed\.xml|robots\.txt|sitemap\.xml|[a-z0-9-]+\.md)$/.test(path);
+    if (status === 200 && !aiFile && !(c.res.headers.get('content-type') ?? '').includes('text/html')) return;
     if (status === 404 && !(c.res.headers.get('content-type') ?? '').includes('text/html')) return;
     const agent = c.req.header('User-Agent') ?? '';
-    if (!agent || BOT.test(agent)) return;
+    const cr = agent ? crawlerOf(agent) : null;
+    if (agent && (BOT.test(agent) || cr)) {
+      if (cr && status === 200 && (c.req.method === 'GET')) {
+        const day = istDay(), p = path.replace(/\/+$/, '').slice(0, 70) || '/';
+        const st = [upDim(c.env.DB, 'aibot', day, cr.name)];
+        if (cr.group === 'AI') st.push(upDim(c.env.DB, 'aibotp', day, `${cr.name.split(' ')[0]}|${p}`));
+        const job = c.env.DB.batch(st).catch(() => undefined);
+        try { c.executionCtx.waitUntil(job); } catch { await job; }
+      }
+      return;
+    }
+    if (!agent || aiFile) return; // llms.txt, feeds and .md files are only counted for crawlers
     if (/prefetch|prerender/i.test(c.req.header('Sec-Purpose') ?? c.req.header('Purpose') ?? '')) return;
     if (getCookie(c, 'jk_session')) return; // the admin's own visits are not counted
     const job = record(c, status).catch(() => undefined); // never let analytics break a page (e.g. tables not created yet)
