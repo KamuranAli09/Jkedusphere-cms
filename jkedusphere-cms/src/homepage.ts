@@ -6,6 +6,7 @@ import { adminPage } from './layout';
 import { getCats } from './categories';
 import { THEME_CSS } from './theme';
 import { LOGO_PNG_B64, OG_PNG_B64 } from './brand';
+import { SAME_AS, KNOWS_ABOUT } from './seo-core';
 
 // ---------------------------------------------------------------------------------------------
 // Shared SEO helpers (used by every public page so markup stays identical site-wide)
@@ -14,10 +15,17 @@ const b64bytes = (b64: string) => Uint8Array.from(atob(b64), (ch) => ch.charCode
 export const DEFAULT_OG = '/og-default.png';
 /** One Organization entity per page; everything else points at it by @id instead of repeating it. */
 export const orgNode = (origin: string, name: string) => ({
-  '@type': 'Organization', '@id': origin + '/#organization', name, url: origin + '/',
+  '@type': ['Organization', 'EducationalOrganization'], '@id': origin + '/#organization', name, alternateName: ['JKEdusphere.online', 'JKEdusphere'], url: origin + '/',
+  slogan: 'Powered by Vision & Knowledge',
+  description: 'Educational platform for competitive-exam aspirants in Jammu & Kashmir: free study notes, current affairs, vacancy updates and exam preparation for JKSSB, JKPSC, JKPSI, JKBOSE and NTA exams.',
   logo: { '@type': 'ImageObject', '@id': origin + '/#logo', url: origin + '/logo.png', contentUrl: origin + '/logo.png', width: 512, height: 512, caption: name },
   image: { '@id': origin + '/#logo' },
+  sameAs: SAME_AS, knowsAbout: KNOWS_ABOUT,
+  areaServed: { '@type': 'AdministrativeArea', name: 'Jammu and Kashmir, India' },
 });
+/** Lets search engines show large previews and long snippets, and lets AI tools quote us. */
+export const ROBOTS_META = '<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">';
+export const FEED_LINK = '<link rel="alternate" type="application/rss+xml" title="JKEdusphere" href="/feed.xml">';
 /** Self-describing pointer to the site-wide WebSite entity (the full node lives on the homepage). */
 export const siteRef = (origin: string) => ({ '@type': 'WebSite', '@id': origin + '/#website', url: origin + '/', name: 'JKEdusphere' });
 export const siteNode = (origin: string, name: string) => ({
@@ -353,7 +361,7 @@ async function renderHome(db: D1Database, origin: string) {
     { '@type': 'WebPage', '@id': origin + '/#webpage', url: origin + '/', name: seo.title, description: seo.description, inLanguage: 'en-IN', isPartOf: { '@id': origin + '/#website' }, about: { '@id': origin + '/#organization' }, primaryImageOfPage: { '@id': origin + '/#logo' } }] };
   const og = socialTags({ origin, title: seo.title, description: seo.description, url: origin + '/', type: 'website', siteName: seo.siteName, image: seo.ogImage || undefined });
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(seo.title)}</title><meta name="description" content="${esc(seo.description)}"><link rel="canonical" href="${esc(origin)}/">
+<title>${esc(seo.title)}</title><meta name="description" content="${esc(seo.description)}"><link rel="canonical" href="${esc(origin)}/">${ROBOTS_META}${FEED_LINK}
 ${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
@@ -368,7 +376,7 @@ export async function shell(db: D1Database, origin: string, o: { title: string; 
   const ctx: Ctx = { latest: [], feeds: {}, counts: {} };
   const og = socialTags({ origin, title: o.title, description: o.description, url: o.canonical, type: o.type ?? 'website', siteName: L.data('seo').siteName, image: o.image });
   return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ''}
+<title>${esc(o.title)}</title><meta name="description" content="${esc(o.description)}"><link rel="canonical" href="${esc(o.canonical)}">${o.noindex ? '<meta name="robots" content="noindex,follow">' : ROBOTS_META}${FEED_LINK}
 ${og}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="/assets/theme.css">${GA}
