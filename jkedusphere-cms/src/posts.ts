@@ -7,6 +7,7 @@ import { notesPaths, notesIndex, plainText } from './notes';
 import { getCats } from './categories';
 import { authorFor, authorBox, AUTHOR_CSS } from './contribute';
 import { caSitemap } from './currentaffairs';
+import { faqFromHtml, wordCount } from './seo-core';
 
 const IST = 5.5 * 3600 * 1000;
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -292,12 +293,17 @@ ${T.showDates === 'yes' && dates.length ? `<div class="glance"><h2>Important dat
 <div class="prose">${wrapTables(stripMicrodata(p.body))}</div>${cta}${share}${au ? AUTHOR_CSS + authorBox(au) : ''}
 ${T.disclaimer ? `<p class="dnote">${esc(T.disclaimer)}</p>` : ''}</article>
 <aside class="side">${related.length ? `<div class="box2"><h2>${esc(T.relatedTitle)}</h2>${related.map((r) => `<a href="/${esc(r.slug)}"><span>${esc(r.title)}<small>${day(r.published_at)}</small></span></a>`).join('')}</div>` : ''}</aside></div>${POST_JS}`;
+      const faq = faqFromHtml(String(p.body));
+      const tagList = String(p.tags ?? '').split(',').map((t) => t.trim()).filter(Boolean).slice(0, 12);
+      const metaHead = `<meta name="author" content="${esc(au ? au.name : site)}"><meta property="article:published_time" content="${iso(p.published_at)}"><meta property="article:modified_time" content="${iso(Math.max(p.updated_at, p.published_at))}">${p.category ? `<meta property="article:section" content="${esc(p.category)}">` : ''}${tagList.map((t) => `<meta property="article:tag" content="${esc(t)}">`).join('')}<link rel="alternate" type="text/markdown" href="${esc(url)}.md">`;
       const ld = { '@context': 'https://schema.org', '@graph': [
         orgNode(o, site),
-        { '@type': 'Article', '@id': url + '#article', headline: String(p.title).slice(0, 110), description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, url, datePublished: iso(p.published_at), dateModified: iso(Math.max(p.updated_at, p.published_at)), mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        { '@type': 'Article', '@id': url + '#article', isAccessibleForFree: true, wordCount: wordCount(String(p.body)), ...(tagList.length ? { keywords: tagList.join(', ') } : {}),
+          speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.prose > p:first-of-type'] }, headline: String(p.title).slice(0, 110), description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, url, datePublished: iso(p.published_at), dateModified: iso(Math.max(p.updated_at, p.published_at)), mainEntityOfPage: { '@type': 'WebPage', '@id': url },
           image: [p.image ? abs(o, p.image) : o + DEFAULT_OG], inLanguage: 'en-IN', ...(p.category ? { articleSection: p.category } : {}), isPartOf: siteRef(o),
-          author: au ? { '@type': 'Person', name: au.name } : { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } }, crumbLd(o, items)] };
-      return c.html(await shell(db, o, { title: p.seo_title || `${p.title} | ${site}`, description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, canonical: url, type: 'article', image: p.image ? abs(o, p.image) : undefined, ld, body }), 200, { 'Cache-Control': 'public, max-age=60' });
+          author: au ? { '@type': 'Person', name: au.name } : { '@id': o + '/#organization' }, publisher: { '@id': o + '/#organization' } }, crumbLd(o, items),
+        ...(faq.length ? [{ '@type': 'FAQPage', '@id': url + '#faq', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : [])] };
+      return c.html(await shell(db, o, { title: p.seo_title || `${p.title} | ${site}`, description: p.seo_description || p.excerpt || `${p.title} on ${site}.`, canonical: url, type: 'article', image: p.image ? abs(o, p.image) : undefined, ld, head: metaHead, body }), 200, { 'Cache-Control': 'public, max-age=60' });
     }
 
     const g = await db.prepare('SELECT * FROM pages WHERE slug = ?').bind(slug).first<Row>();
