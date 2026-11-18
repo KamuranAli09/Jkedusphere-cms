@@ -17,6 +17,7 @@ import { ECON_CHARTS } from './notes-econ-charts';
 import { JKREORG } from './notes-jkreorg';
 import { GEOGRAPHY } from './notes-geography';
 import { SCIENCE } from './notes-science';
+import { ENGLISH } from './notes-english';
 import { OG_NOTES } from './og-notes';
 
 
@@ -32,7 +33,7 @@ export type Subject = {
   source: string;      // the notes, in the simple format described in notes-polity.ts
 };
 
-const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY, JKREORG, GEOGRAPHY, SCIENCE];
+const SUBJECTS: Subject[] = [POLITY, JKGEO, JKHISTORY, COMPUTER, MODERNHISTORY, ECONOMY, JKREORG, GEOGRAPHY, SCIENCE, ENGLISH];
 
 
 // Buttons and footnote at the end of each page (default: free mock tests + Telegram)
@@ -46,6 +47,7 @@ const NOTE: Record<string, string> = {
   'computer-knowledge': 'Prepared for exam revision from standard computer textbooks, Microsoft documentation and official sources. Features differ between Excel and Word versions (2016, 2019, 2021, 365) so check which version your exam follows.'
   ,'economy-of-jandk': NOTE_ECON
   ,'geography-of-india': 'Prepared for exam revision from NCERT, standard geography textbooks, the Census of India 2011, the India State of Forest Report, IMD, Ministry of Agriculture and other official sources. Maps are schematic teaching maps, not Survey of India maps, and zone boundaries are approximate. Figures such as production, capacity, counts of parks and ports, and census status change, so check the latest official source before relying on them.'
+  ,'general-english': 'Prepared for exam revision from standard English grammar books (Wren and Martin, Oxford and Cambridge grammar references), standard dictionaries and past exam patterns. Where two answers are accepted (for example, spelling variants or the verb after none), follow the rule given in these notes and the style of your exam. Awards and recent literary news change, so check a current source before relying on them.'
   ,'modern-indian-history': 'Prepared for exam revision from standard sources such as NCERT, Bipan Chandra, Spectrum and official records. Historians differ on some dates, figures and interpretations, so check your exam syllabus and a standard textbook.',
 };
 const NOTE_DEFAULT = 'Prepared for exam revision from standard sources, official publications and the Census. Figures and recent developments change, so check official sources before relying on them.';
