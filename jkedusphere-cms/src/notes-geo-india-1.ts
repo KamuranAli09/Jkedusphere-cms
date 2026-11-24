@@ -72,6 +72,18 @@ Geography begins with where a place lies. India's position decides its climate, 
 West to east: **G**ujarat, **R**ajasthan, **M**adhya Pradesh, **C**hhattisgarh, **J**harkhand, **W**est Bengal, **T**ripura, **M**izoram. Mnemonic: "**G**ood **R**ains **M**ake **C**rops **J**oyfully **W**ave, **T**ill **M**onsoon" (8 states).
 :::
 
+### Extreme points
+
+| Direction | Point | Location |
+|---|---|---|
+| **North** | Indira Col (37°6'N) | Siachen region, Ladakh |
+| **South (mainland)** | Kanyakumari / Cape Comorin (8°4'N) | Tamil Nadu |
+| **South (whole of India)** | Indira Point (6°45'N) | Great Nicobar, Andaman and Nicobar Islands |
+| **East** | Kibithu (97°25'E) | Anjaw district, Arunachal Pradesh |
+| **West** | Guhar Moti (68°7'E) | Kutch district, Gujarat |
+
+The latitudinal and the longitudinal extent are both about **29 degrees**, yet the north-south distance (3,214 km) is larger than the east-west distance (2,933 km). The reason is that one degree of latitude is about **111 km** everywhere, while one degree of longitude **shrinks** as you move away from the equator, so it is shorter in the north of India.
+
 Because the Tropic of Cancer divides the country, the part **south of it is tropical** and the part **north of it is sub-tropical** by latitude. In practice the monsoon gives all of India a **tropical monsoon** character.
 
 ### Size
@@ -105,6 +117,14 @@ India has **9 coastal states** and **4 coastal Union Territories** (Dadra and Na
 :::note Gujarat's coast
 Counted with its islands, Gujarat's coastline is much longer (over 2,300 km). Exams usually mean the **mainland** figure, so read the question carefully.
 :::
+
+### Coastal facts to remember
+
+- **West coast** (Arabian Sea): Gujarat, Maharashtra, Goa, Karnataka, Kerala. It is narrow, with estuaries and lagoons (*kayals* in Kerala) and no large deltas.
+- **East coast** (Bay of Bengal): Tamil Nadu, Andhra Pradesh, Odisha, West Bengal. It is wider and has big deltas: Mahanadi, Godavari, Krishna, Kaveri and the Ganga-Brahmaputra delta.
+- **Kanyakumari** is the meeting point of the **Arabian Sea, the Bay of Bengal and the Indian Ocean**.
+- Among the coastal states **Gujarat** has the longest coast and **Goa** the shortest. **West Bengal** has a short coast but holds the Sundarbans delta.
+- Coastal Union Territories: **Puducherry** (its four parts are spread out: Puducherry and Karaikal on the east coast, **Mahe** on the Kerala coast, **Yanam** in the Godavari delta of Andhra Pradesh), **Dadra and Nagar Haveli and Daman and Diu**, **Lakshadweep**, and **Andaman and Nicobar**.
 
 ### Strategic position
 
@@ -149,6 +169,47 @@ India has **seven land neighbours** and shares sea borders with **Sri Lanka, the
 **B**ig **C**hina **P**uts **N**epal, **M**yanmar, **B**hutan, **A**fghanistan: **B**angladesh > **C**hina > **P**akistan > **N**epal > **M**yanmar > **B**hutan > **A**fghanistan.
 :::
 
+### Neighbours at a glance
+
+| Neighbour | Capital | Type of border | Indian states / UTs touching it |
+|---|---|---|---|
+| **Pakistan** | Islamabad | Land: International Border, LoC, AGPL | 5 |
+| **Afghanistan** | Kabul | Land, by India's claim over the Pakistan-administered area (no practical common frontier) | 1 (Ladakh, claimed) |
+| **China** | Beijing | Land: LAC; McMahon Line in the east | 5 |
+| **Nepal** | Kathmandu | Land, open border | 5 |
+| **Bhutan** | Thimphu | Land, open border | 4 |
+| **Bangladesh** | Dhaka | Land, partly rivers; fenced in large parts | 5 |
+| **Myanmar** | Naypyidaw | Land (hills and forest) | 4 |
+| **Sri Lanka** | Colombo (legislative capital Sri Jayawardenepura Kotte) | Sea: Palk Strait, Gulf of Mannar | Tamil Nadu |
+| **Maldives** | Malé | Sea: Eight Degree Channel | Lakshadweep (Minicoy) |
+
+**Indonesia** (Sumatra, across the Great Channel) and **Thailand** (across the Andaman Sea) are sea neighbours through the Andaman and Nicobar Islands. Indira Point lies only about **150 km** from Sumatra.
+
+### Border length, state by state
+
+| Border | State-wise length (km, approx.) |
+|---|---|
+| **India-Bangladesh** (4,096.7) | West Bengal about 2,217 > Tripura about 856 > Meghalaya about 443 > Mizoram about 318 > Assam about 263 |
+| **India-Myanmar** (1,643) | Arunachal Pradesh about 520 > Mizoram about 510 > Manipur about 398 > Nagaland about 215 |
+
+- **West Bengal** has the **longest** stretch of international border of any state and touches **three** countries (Bangladesh, Nepal, Bhutan).
+- **Rajasthan** has the longest border with **Pakistan** among the states.
+- **Mizoram** is the only state that touches **both Bangladesh and Myanmar**.
+
+### Important border crossings
+
+| Crossing | Between | Neighbour |
+|---|---|---|
+| **Attari-Wagah** (Punjab) | Amritsar and Lahore road | Pakistan |
+| **Petrapole-Benapole** (West Bengal) | Kolkata and Dhaka road | Bangladesh; the busiest land port |
+| **Agartala-Akhaura** (Tripura) | Tripura and Bangladesh | Bangladesh |
+| **Dawki-Tamabil** (Meghalaya) | Meghalaya and Sylhet | Bangladesh |
+| **Raxaul-Birgunj** (Bihar) | Bihar and Nepal | Nepal |
+| **Jaigaon-Phuentsholing** (West Bengal) | Duars and Bhutan | Bhutan |
+| **Moreh-Tamu** (Manipur) | India-Myanmar-Thailand route | Myanmar |
+| **Zokhawthar-Rih** (Mizoram) | Mizoram and Chin State | Myanmar |
+| **Nathu La, Shipki La, Lipulekh** | Sikkim, Himachal Pradesh, Uttarakhand | China (border trade passes) |
+
 ### Border lines you must know
 
 | Line | Between | Note |
@@ -170,6 +231,16 @@ India has **seven land neighbours** and shares sea borders with **Sri Lanka, the
 - **Siachen, Sir Creek, Kalapani** (Uttarakhand-Nepal) and **Aksai Chin** are known disputed or sensitive areas in exams.
 - **India-Bhutan** border is open; the same holds for Nepal under the 1950 Treaty of Peace and Friendship.
 
+### Who guards the borders
+
+| Force | Border |
+|---|---|
+| **Border Security Force (BSF)** | Pakistan and Bangladesh |
+| **Indo-Tibetan Border Police (ITBP)** | China (LAC) |
+| **Sashastra Seema Bal (SSB)** | Nepal and Bhutan |
+| **Assam Rifles** | Myanmar |
+| **Indian Coast Guard and Navy** | Coast and sea borders |
+
 ### Seas, straits and channels
 
 | Name | Between |
@@ -188,6 +259,15 @@ India has **seven land neighbours** and shares sea borders with **Sri Lanka, the
 ### Maritime zones (UNCLOS)
 
 Under the **Territorial Waters, Continental Shelf, EEZ and other Maritime Zones Act, 1976**, India claims a **12 nautical mile** territorial sea, **24 nm** contiguous zone and a **200 nm Exclusive Economic Zone (EEZ)**. The EEZ is about **2 million sq km** (about 2.02), roughly two-thirds of the land area, and rich in fish, oil and gas, and polymetallic nodules.
+
+| Zone | Limit from the baseline | In km (approx.) | India's rights |
+|---|---|---|---|
+| **Territorial sea** | 12 nautical miles | 22 km | Full sovereignty (air, water, seabed); innocent passage allowed |
+| **Contiguous zone** | 24 nautical miles | 44 km | Can act against smuggling, customs, immigration and sanitary offences |
+| **Exclusive Economic Zone** | 200 nautical miles | 370 km | Sovereign rights over fish, oil, gas and minerals |
+| **Continental shelf** | Up to 200 nm, extendable to 350 nm | 370-650 km | Seabed resources; India has made submissions to the UN Commission on the Limits of the Continental Shelf |
+
+One **nautical mile = 1.852 km**. The 1976 Act is the Indian law; the international basis is **UNCLOS (1982)**, which India has ratified.
 
 :::tip Exam tip
 JKPSC and UPSC love "Which of the following states does not share a border with X?" Make a small table of the five states touching **China** and the four touching **Myanmar** and revise it. **Sikkim** touches China, Nepal and Bhutan (and West Bengal); **West Bengal** touches Nepal, Bhutan, Bangladesh. States touching **three** foreign countries: **West Bengal** (Nepal, Bhutan, Bangladesh), **Sikkim** (Nepal, China, Bhutan), **Arunachal** (China, Bhutan, Myanmar).
@@ -219,6 +299,17 @@ The sun rises about **two hours earlier** in Arunachal Pradesh than in Gujarat, 
 :::tip Exam tip
 Questions like "If it is 12 noon at Greenwich, what is the time at 82°30'E?" Answer: **5:30 pm**. For two places, subtract longitudes, multiply by **4 minutes**.
 :::
+
+### Worked examples
+
+| Question | Working | Answer |
+|---|---|---|
+| Greenwich shows 12 noon. What is the time at 82°30'E? | 82.5 x 4 = 330 min = 5 h 30 min | **5:30 pm** |
+| IST shows 12 noon. What is the time at Greenwich? | 12:00 minus 5:30 | **6:30 am** |
+| Difference between Kibithu (97°25'E) and Guhar Moti (68°7'E) | 29°18' = 29.3 x 4 = 117.2 min | about **1 h 57 min** |
+| At 82°30'E it is 10 am. What is the local solar time at 97°30'E? | 15 x 4 = 60 min ahead | **11 am** |
+
+Places **east** are **ahead** in time; places **west** are **behind**, because the earth rotates from west to east. The prime meridian (0°) through **Greenwich** was fixed at the International Meridian Conference of **1884**.
 
 ## States and Union Territories {#states-and-uts}
 
@@ -252,6 +343,54 @@ India has **28 states and 8 Union Territories**. The map shows them with capital
 **M**ahar-**G**uj (1960) - **N**agaland (63) - **H**aryana (66) - **H**imachal (71) - **M**eghalaya, **M**anipur, **T**ripura (72) - **S**ikkim (75) - **M**izoram, **A**runachal, **G**oa (87) - **C**hhattisgarh, **U**ttarakhand, **J**harkhand (2000) - **T**elangana (2014).
 :::
 
+### States and capitals (28)
+
+| State | Capital | State | Capital |
+|---|---|---|---|
+| Andhra Pradesh | Amaravati | Nagaland | Kohima |
+| Arunachal Pradesh | Itanagar | Odisha | Bhubaneswar |
+| Assam | Dispur | Punjab | Chandigarh |
+| Bihar | Patna | Rajasthan | Jaipur |
+| Chhattisgarh | Raipur | Sikkim | Gangtok |
+| Goa | Panaji | Tamil Nadu | Chennai |
+| Gujarat | Gandhinagar | Telangana | Hyderabad |
+| Haryana | Chandigarh | Tripura | Agartala |
+| Himachal Pradesh | Shimla (summer); Dharamshala (winter, second capital) | Uttar Pradesh | Lucknow |
+| Jharkhand | Ranchi | Uttarakhand | Dehradun (winter); Gairsain / Bhararisain (summer) |
+| Karnataka | Bengaluru | West Bengal | Kolkata |
+| Kerala | Thiruvananthapuram | Madhya Pradesh | Bhopal |
+| Maharashtra | Mumbai (Nagpur: winter session) | Manipur | Imphal |
+| Meghalaya | Shillong | Mizoram | Aizawl |
+
+:::note Shared and twin capitals
+**Chandigarh** is the capital of both **Punjab and Haryana** and is a UT itself. **Hyderabad** was the joint capital of Telangana and Andhra Pradesh for ten years, until **2 June 2024**; Andhra Pradesh now has **Amaravati** as its capital.
+:::
+
+### Constitutional provisions on states
+
+| Article | Subject |
+|---|---|
+| **Art. 1** | India, that is Bharat, is a **Union of States** |
+| **Art. 2** | Parliament may admit or establish new states |
+| **Art. 3** | Parliament may form new states and change the area, boundaries or name of a state; needs only a **simple majority**; the President refers the Bill to the state legislature for its views, which are **not binding** |
+| **Art. 4** | Laws under Art. 2 and 3 are **not** constitutional amendments under Art. 368 |
+| **Art. 239** | Administration of Union Territories through the President |
+| **Art. 239A** | Legislature for Puducherry |
+| **Art. 239AA** | Special status of Delhi (NCT) |
+
+### How former colonial territories joined
+
+| Territory | Colonial power | Became part of India |
+|---|---|---|
+| **Puducherry** (with Karaikal, Mahe, Yanam) | France | De facto 1954, **de jure 1962** (14th Amendment) |
+| **Dadra and Nagar Haveli** | Portugal | Freed 1954; UT in **1961** (10th Amendment) |
+| **Goa, Daman and Diu** | Portugal | **Operation Vijay**, December 1961; UT |
+| **Sikkim** | Chogyal-ruled kingdom under Indian protection | Associate state 1974; **22nd state in 1975** (36th Amendment) |
+
+### Zonal Councils
+
+Five **Zonal Councils** (Northern, Central, Eastern, Western, Southern) were set up by the **States Reorganisation Act, 1956** to improve Centre-state cooperation. They are **statutory**, not constitutional bodies; the **Union Home Minister** chairs each. The North-Eastern states have a separate **North Eastern Council** (1971 Act).
+
 ### Union Territories (8)
 
 | UT | Capital | Note |
@@ -269,6 +408,12 @@ India has **28 states and 8 Union Territories**. The map shows them with capital
 The Ministry of Home Affairs announced the renaming of **Port Blair to Sri Vijaya Puram** in September 2024. Exams may use either name; know both.
 :::
 
+### Legislatures in the Union Territories
+
+- UTs **with** a legislature: **Delhi, Puducherry, Jammu and Kashmir**.
+- UTs **without** a legislature: **Andaman and Nicobar, Chandigarh, Dadra and Nagar Haveli and Daman and Diu, Ladakh, Lakshadweep**.
+- **Chandigarh** was planned by the French architect **Le Corbusier**; **Delhi** became the NCT through the **69th Amendment (1991)**.
+
 ### Quick records
 
 - **Largest state** by area: **Rajasthan** (342,239 sq km). **Smallest state**: **Goa** (3,702 sq km).
@@ -276,9 +421,29 @@ The Ministry of Home Affairs announced the renaming of **Port Blair to Sri Vijay
 - **Most populous state**: **Uttar Pradesh**. **Least populous state**: **Sikkim**.
 - **States without a coastline and landlocked states** are listed in [Regional Profiles](#regional-profiles).
 
+### Top five and bottom three states
+
+| Rank | By area (sq km) | By population (Census 2011) |
+|---|---|---|
+| 1 | Rajasthan (342,239) | Uttar Pradesh |
+| 2 | Madhya Pradesh (308,245) | Maharashtra |
+| 3 | Maharashtra (307,713) | Bihar |
+| 4 | Uttar Pradesh (240,928) | West Bengal |
+| 5 | Gujarat (196,024) | Madhya Pradesh |
+| **Smallest** | Goa (3,702), Sikkim (7,096), Tripura (10,486) | Sikkim, Mizoram, Arunachal Pradesh |
+
 :::jk J&K corner
 Before 2019, **J&K was the only state with its own flag and constitution** and the **only Muslim-majority state**. Today **Jammu and Kashmir** (20 districts) and **Ladakh** are UTs. Full district details are in [Geography of J&K](/geography-of-jandk).
 :::
+
+### Districts of Jammu and Kashmir (20)
+
+| Division | Districts |
+|---|---|
+| **Jammu** (10) | Jammu, Samba, Kathua, Udhampur, Reasi, Doda, Kishtwar, Ramban, Rajouri, Poonch |
+| **Kashmir** (10) | Srinagar, Ganderbal, Budgam, Baramulla, Bandipora, Kupwara, Anantnag, Kulgam, Pulwama, Shopian |
+
+**Ladakh** is a separate UT with the **Leh** and **Kargil** districts (see the UT table above).
 
 @unit Geological Foundations
 
@@ -299,6 +464,24 @@ Landforms, rivers and minerals make sense only when you know how the Indian land
 - **Fold mountains** form from collision of continental plates; **volcanoes** at oceanic-continental boundaries.
 - **Hotspot**: a stationary magma source; the Réunion hotspot lay under India at the time of the Deccan eruptions.
 :::
+
+### From continental drift to plate tectonics
+
+| Idea | Scientist / date |
+|---|---|
+| **Continental drift** | Alfred Wegener, **1912** |
+| Convection currents in the mantle as the driving force | Arthur Holmes, 1930s |
+| **Sea-floor spreading** | Harry Hess, early 1960s |
+| **Plate tectonics** | Late 1960s |
+
+Evidence that India was part of **Gondwanaland**:
+
+- The **jigsaw fit** of the coasts of India, Africa, Australia, Antarctica and South America.
+- Fossils of the plant **Glossopteris** in all the Gondwana continents.
+- **Tillites** (glacial deposits) of the same age in India and the southern continents.
+- Matching rock belts and mineral zones on both sides of the oceans.
+
+The Indian plate moved north at 15-20 cm a year during its drift. Today it moves at about **5 cm a year**, still pushing under Tibet, which is why the Himalaya keeps rising and shaking.
 
 ### Himalayan orogeny (mountain building): three phases
 
@@ -329,7 +512,7 @@ The **Karewas** of the Kashmir Valley are **lake deposits** of the Pleistocene, 
 
 ## Rock Systems of India {#rock-systems}
 
-Indian geologists classify rocks into **five great groups**, from oldest to youngest.
+Indian geologists classify the rocks of India into **nine major systems**, from oldest to youngest. In the common four-fold scheme they fall into: **Archaean** (with Dharwar), **Purana** (Cuddapah and Vindhyan), **Dravidian** (Palaeozoic) and **Aryan** (Gondwana, Deccan Trap, Tertiary and Quaternary).
 
 @map in-physical | Six physiographic divisions of India in one picture. Notice how the Peninsular Plateau (green) is the oldest block; the Himalaya (purple) is the youngest.
 
@@ -398,6 +581,18 @@ Indian geologists classify rocks into **five great groups**, from oldest to youn
 | Tertiary | 66-2 Ma | Folded sediments | Oil, gas, lignite |
 | Quaternary | 2 Ma to now | Alluvium | Soil |
 
+### Rocks by origin
+
+| Type | How formed | Indian examples |
+|---|---|---|
+| **Igneous** | Cooling and hardening of magma or lava | **Deccan basalt**, granite of the Peninsula |
+| **Sedimentary** | Deposition and compaction of sediments | Vindhyan sandstone, **Gondwana coal**, alluvium |
+| **Metamorphic** | Older rocks changed by heat and pressure | **Gneiss, schist, slate, quartzite, marble** (Makrana marble, Rajasthan) |
+
+### The ancient cratons
+
+The Peninsular block is a **shield** made of old, stable cores called **cratons**: **Dharwar** (Karnataka), **Bastar** (Chhattisgarh), **Singhbhum** (Jharkhand and Odisha), **Bundelkhand** (UP and MP) and **Aravalli** (Rajasthan). Most of India's iron, manganese, mica and gold is found in or around these ancient rocks.
+
 :::tip Exam tip
 Match-the-following traps: "Dharwar" (metals), "Cuddapah" (asbestos), "Vindhyan" (building stone and diamond), "Gondwana" (coal), "Deccan Trap" (black soil). Remember **Gondwana = Coal**.
 :::
@@ -430,6 +625,16 @@ India's relief is grouped into **six divisions**. Learn them in this order, nort
 | Earthquakes | Frequent | Moderate | Rare (but Latur 1993, Koyna 1967) |
 | Resources | Forests, hydropower | Soil, groundwater | Minerals |
 
+### Share of land by relief
+
+| Relief | Share of India's land |
+|---|---|
+| **Plains** | about **43 per cent** |
+| **Mountains** | about **30 per cent** |
+| **Plateaus** | about **27 per cent** |
+
+A second, geological way to group the same land is **three blocks**: the **Peninsular block** (oldest), the **Himalaya and the other extra-Peninsular mountains**, and the **Indo-Gangetic plain**.
+
 In the next topics we study each division in detail, starting with [the Himalayas](#himalaya-origin-divisions).
 
 @unit The Himalayas
@@ -445,6 +650,10 @@ The **Himalaya** (from Sanskrit "abode of snow") is the highest and youngest mou
 - **Height:** greater in the east than in the west when measured by peaks.
 - **Arc:** curved (like a bow) with convex side toward India.
 - **Type:** young **fold mountains** formed in the collision of the Indian and Eurasian plates.
+
+- **Anchors:** the range ends in sharp bends at **Nanga Parbat** (8,126 m) in the west and **Namcha Barwa** (7,782 m) in the east.
+- **Countries:** the Himalaya spreads across **Pakistan, India, Nepal, China (Tibet) and Bhutan**.
+- **Name:** from Sanskrit *hima* (snow) and *alaya* (abode).
 
 ### Longitudinal divisions (north to south)
 
@@ -486,6 +695,17 @@ The **Himalaya** (from Sanskrit "abode of snow") is the highest and youngest mou
 **T**rans-Himalaya - **H**imadri - **H**imachal - **S**hiwalik: "**T**en **H**ikers **H**ugged **S**now". Or recall: Greater (**Himadri**) then Lesser (**Himachal**) then Outer (**Shiwalik**).
 :::
 
+### Fault lines that separate the divisions
+
+| Fault / thrust | What it marks |
+|---|---|
+| **Indus-Tsangpo Suture Zone** | The line where the Indian and Eurasian plates joined; north of the Great Himalaya |
+| **Main Central Thrust (MCT)** | Separates the **Great Himalaya** from the **Lesser Himalaya** |
+| **Main Boundary Thrust (MBT)** | Separates the **Lesser Himalaya** from the **Shiwalik** |
+| **Himalayan Frontal Thrust (HFT)** | Separates the **Shiwalik** from the **Northern Plains** |
+
+These thrusts are zones of weakness, so most Himalayan **earthquakes** and **landslides** cluster along them.
+
 ### Regional divisions (Sidney Burrard)
 
 The Himalaya is also divided **west to east** by the **river valleys** between them.
@@ -518,6 +738,19 @@ South of the Brahmaputra bend, the Himalaya turns **south** and spreads into the
 | Snow line | Lower in the west | Higher |
 | Vegetation | Temperate, conifers, alpine pastures | Rich evergreen, bamboo, rhododendron |
 | Rivers | Indus system | Brahmaputra system |
+
+### Vegetation by altitude in the Himalaya
+
+| Altitude (approx.) | Belt | Typical trees and plants |
+|---|---|---|
+| Below 1,000 m | Tropical moist deciduous (foothills) | **Sal**, teak, bamboo |
+| 1,000-2,000 m | Sub-tropical | **Chir pine**, oak, rhododendron |
+| 2,000-3,000 m | Temperate | **Deodar**, oak, maple, chestnut, blue pine |
+| 3,000-4,000 m | Sub-alpine | Silver fir, spruce, juniper, birch |
+| Above 4,000 m | Alpine meadows and scrub | Dwarf rhododendron, juniper, mosses and lichens; rare herbs |
+| Above the snow line | Permanent snow and ice | No plants |
+
+Alpine meadows are called **marg** in Kashmir (Gulmarg, Sonamarg) and **bugyal** in Garhwal. Herders such as the **Gujjar-Bakarwal** of J&K and the **Bhotias** of Uttarakhand move to them in summer.
 
 :::jk J&K corner
 In J&K the Himalaya shows **all four zones**: **Karakoram, Ladakh and Zanskar** (trans-Himalaya), **Great Himalaya** with **Zoji La, Nun-Kun, Kolahoi**, the **Pir Panjal** with the **Banihal and Mughal Road passes**, and the **Shiwaliks** and **Kandi belt** of Jammu. See [Geography of J&K](/geography-of-jandk) for the details.
@@ -552,6 +785,36 @@ Peaks and passes are common "match the following" questions. Learn the table, th
 **Kangchenjunga** lies on the **Sikkim-Nepal border** and is the highest peak **within India's boundaries**. **Nanda Devi** is the highest peak **wholly inside** India. Questions often use "highest peak in India" for Kangchenjunga; if the options include K2 (disputed area), read the question carefully.
 :::
 
+### The fourteen 8,000-metre peaks
+
+| Peak | Height (m) | Range / country |
+|---|---|---|
+| Mount Everest | 8,848 | Nepal-China (Tibet) |
+| K2 (Godwin Austen) | 8,611 | Karakoram, Gilgit-Baltistan (India claims) and China |
+| **Kangchenjunga** | **8,586** | **India-Nepal (Sikkim)** |
+| Lhotse | 8,516 | Nepal-China |
+| Makalu | 8,485 | Nepal-China |
+| Cho Oyu | 8,188 | Nepal-China |
+| Dhaulagiri I | 8,167 | Nepal |
+| Manaslu | 8,163 | Nepal |
+| Nanga Parbat | 8,126 | Gilgit-Baltistan (India claims) |
+| Annapurna I | 8,091 | Nepal |
+| Gasherbrum I (Hidden Peak) | 8,080 | Karakoram, Gilgit-Baltistan (India claims) and China |
+| Broad Peak | 8,051 | Karakoram, Gilgit-Baltistan (India claims) and China |
+| Gasherbrum II | 8,035 | Karakoram, Gilgit-Baltistan (India claims) and China |
+| Shishapangma | 8,027 | Tibet |
+
+Only **Kangchenjunga** touches India among the 8,000-metre peaks.
+
+### Mountaineering firsts
+
+| Event | Detail |
+|---|---|
+| First ascent of Everest | **Tenzing Norgay and Edmund Hillary**, 29 May 1953 |
+| First Indian woman on Everest | **Bachendri Pal**, 1984 |
+| Himalayan Mountaineering Institute | **Darjeeling** (1954) |
+| Nehru Institute of Mountaineering | **Uttarkashi** (1965) |
+
 ### Himalayan passes: state-wise
 
 Passes are the gaps in the high mountains used for roads, trade and invasion.
@@ -583,6 +846,28 @@ Passes are the gaps in the high mountains used for roads, trade and invasion.
 **Banihal** to **Jammu**; **Zoji La** to **Leh**; **Rohtang** to **Lahaul**; **Shipki La** to **Sutlej**; **Lipulekh** to **Kailash**; **Nathu La** to **Sikkim**; **Bomdi La** to **Tawang**.
 :::
 
+### Passes of Jammu and Kashmir
+
+| Pass | Connects / note |
+|---|---|
+| **Banihal** | Jammu to the Kashmir Valley across the Pir Panjal; the **Jawahar Tunnel** (1956) and the newer Banihal-Qazigund tunnel go beneath it |
+| **Pir Panjal Pass / Peer Ki Gali** | Highest point of the **Mughal Road** between Shopian and Poonch-Rajouri |
+| **Sinthan Pass** | Anantnag (Kashmir) to Kishtwar |
+| **Margan Pass** | Another Kashmir to Kishtwar / Warwan route |
+| **Razdan Pass** | Bandipora to the **Gurez** valley |
+| **Burzil Pass** | Old Srinagar-Gilgit trade route |
+| **Sadhna Pass** | Kupwara to the Karnah valley (Tangdhar) |
+| **Zoji La** | Srinagar to Dras, Kargil and Leh; the Zojila tunnel project is meant to give an all-weather link |
+| **Pensi La** | Gateway from the Suru valley (Kargil) to **Zanskar** |
+
+### More passes worth knowing
+
+| Pass | Region | Note |
+|---|---|---|
+| **Jalori** | Himachal Pradesh | Links Kullu and Shimla districts |
+| **Bum La** | Arunachal Pradesh | Tawang to Tibet |
+| **Diphu Pass** | Arunachal Pradesh | Near the tri-junction of India, China and Myanmar |
+
 ### Minor ranges and peaks (selected)
 
 | Range | Location |
@@ -596,6 +881,19 @@ Passes are the gaps in the high mountains used for roads, trade and invasion.
 | **Kumaon peaks** | Nanda Devi, Kamet, Trisul |
 | **Sikkim** | Kangchenjunga and Pauhunri |
 | **Arunachal** | Kangto, Gorichen (Gorichen Chuli, 6,488 m) |
+
+### Parallel ranges of Ladakh and Kashmir (north to south)
+
+| Range | Position | Note |
+|---|---|---|
+| **Karakoram** | Northernmost; north of the Shyok-Nubra valley | K2, Siachen |
+| **Ladakh Range** | Between the **Shyok** (north) and the **Indus** (south) | **Khardung La** crosses it; **Leh** lies on its southern side |
+| **Zanskar Range** | South of the Indus | Between the Indus and the Zanskar valley |
+| **Great Himalaya** | South of the Zanskar valley | **Zoji La**, **Nun-Kun** (7,135 m and 7,087 m) |
+| **Pir Panjal** | South of the Kashmir Valley | **Banihal** and Mughal Road |
+| **Shiwalik** | Southernmost, in Jammu | **Kandi** belt and plains of Jammu |
+
+The **Kashmir Valley** lies between the Great Himalaya and the Pir Panjal; the **Jhelum** flows through it.
 
 ### Map practice
 
@@ -622,6 +920,35 @@ Himalayan glaciers feed the **Indus, Ganga and Brahmaputra** systems, which is w
 Remember: **Siachen = longest in India** and **second longest outside the polar regions**. Gangotri is the **source glacier of the Ganga** (Bhagirathi).
 :::
 
+### Glaciers and the rivers they feed
+
+| Glacier | River |
+|---|---|
+| **Gangotri** | **Bhagirathi** (headstream of the Ganga) |
+| **Yamunotri** (Bandarpunch) | **Yamuna** |
+| **Satopanth / Bhagirathi Kharak** | **Alaknanda** (meets the Bhagirathi at **Devprayag** to form the Ganga) |
+| **Milam** | Gori Ganga |
+| **Pindari** | Pindar |
+| **Siachen** | **Nubra** (then Shyok) |
+| **Bara Shigri** | Chandra |
+| **Kolahoi** | Lidder |
+| **Chemayungdung** | **Brahmaputra** (in Tibet) |
+
+### Important Himalayan lakes
+
+| Lake | Location | Note |
+|---|---|---|
+| **Wular** | Bandipora, J&K | **Largest freshwater lake in India**; the Jhelum flows through it |
+| **Dal** | Srinagar, J&K | Houseboats and floating gardens; Nigeen Lake lies next to it |
+| **Manasbal** | Ganderbal, J&K | Known for its lotus flowers |
+| **Gangabal, Vishansar, Kishansar** | Kashmir | Alpine lakes of the Great Lakes trek |
+| **Pangong Tso** | Ladakh and Tibet | Saline, about 134 km long; mostly on the Tibet side |
+| **Tso Moriri, Tso Kar** | Changthang, Ladakh | High-altitude lakes; both are **Ramsar** sites |
+| **Chandratal** | Spiti, Himachal Pradesh | Ramsar site |
+| **Gurudongmar, Tsomgo (Changu)** | Sikkim | Gurudongmar is among the highest lakes in the world (about 5,100 m) |
+| **Roopkund** | Chamoli, Uttarakhand | "Skeleton lake" |
+| **Naini, Bhimtal, Sattal** | Nainital, Uttarakhand | Kumaon lake district |
+
 ### Valleys and basins
 
 | Valley | River | Features |
@@ -634,6 +961,17 @@ Remember: **Siachen = longest in India** and **second longest outside the polar 
 | **Valley of Flowers** | Pushpawati (Chamoli) | **UNESCO** (2005, with Nanda Devi NP) |
 | **Kathmandu Valley** | Bagmati | Nepal |
 | **Nubra, Zanskar, Suru, Dras** | Shyok, Zanskar, Suru | Ladakh; **Dras** is the second coldest inhabited place on earth |
+
+### More valleys of Jammu and Kashmir
+
+| Valley | River | Note |
+|---|---|---|
+| **Lidder (Pahalgam)** | Lidder | Starting point of the Amarnath yatra route |
+| **Sind (Sonamarg)** | Sind | Meadow and glaciers near Zoji La |
+| **Lolab, Bangus** | Kupwara district | Forested valleys of north Kashmir |
+| **Gurez** | Kishanganga (Neelum) | Bandipora district, close to the LoC |
+| **Warwan** | Marusudar-Warwan, a tributary of the Chenab | Kishtwar district; remote high valley |
+| **Bhaderwah** | Neru | Doda district; "Chhota Kashmir" |
 
 ### Duns and Duars
 
@@ -663,6 +1001,24 @@ The **Kashmir Valley** is a rare **intermontane basin** with its own climate; th
 ### Threats
 
 Glacier retreat, **glacial lake outburst floods** (Kedarnath 2013, Chamoli 2021), **landslides**, deforestation, unplanned tourism and construction, **earthquake** risk.
+
+| Year | Earthquake | Region |
+|---|---|---|
+| 1897 | Shillong (Great Assam) earthquake | Meghalaya, Assam |
+| 1905 | **Kangra** earthquake | Himachal Pradesh |
+| 1934 | Bihar-Nepal earthquake | North Bihar, Nepal |
+| 1950 | Assam-Tibet earthquake | Arunachal, Assam, Tibet |
+| 1991 | Uttarkashi earthquake | Uttarakhand |
+| 1999 | Chamoli earthquake | Uttarakhand |
+| 2005 | Kashmir earthquake | Uri-Muzaffarabad (J&K, PoK) |
+| 2011 | Sikkim earthquake | Sikkim |
+| 2015 | Gorkha earthquake | Nepal |
+
+### Himalaya and conservation
+
+- The **Chipko movement** (1973, **Reni village**, Chamoli) saved trees by hugging them; remembered names are **Gaura Devi**, **Sunderlal Bahuguna** and **Chandi Prasad Bhatt**.
+- **Tehri Dam** on the Bhagirathi (260.5 m) is the **tallest dam in India**; it also drew protests over displacement and earthquake risk.
+- India has **four biodiversity hotspots**: **Himalaya, Indo-Burma** (the north-east), **Western Ghats and Sri Lanka**, and **Sundaland** (the Nicobar Islands).
 
 :::jk J&K corner
 For Kashmir the Himalaya is **water, climate and economy**: the **Jhelum, Chenab, Indus** are fed by snow and glacier melt, and the **Pir Panjal** gives the Valley its **cold, dry-winter** and **snow-fed** summer climate.
@@ -695,6 +1051,15 @@ The **Northern Plains** (Indo-Gangetic-Brahmaputra Plains) are a vast, almost fl
 **B**hai **T**ere **B**hai **K**hadar: **B**habar - **T**erai - **B**hangar - **K**hadar.
 :::
 
+### Bhangar and Khadar compared
+
+| Feature | Bhangar (old alluvium) | Khadar (new alluvium) |
+|---|---|---|
+| Position | Higher terraces above the flood level | Low floodplain beside rivers |
+| Colour and texture | Darker, more clay, with **kankar** nodules | Lighter, sandy and silty |
+| Fertility | Less fertile | **More fertile**, renewed by every flood |
+| Flooding | Not flooded | Flooded in the rainy season |
+
 ### Other features
 
 - **Reh / Kallar / Usar**: saline efflorescence on the surface in **Punjab, Haryana, UP** after irrigation without drainage.
@@ -706,6 +1071,17 @@ The **Northern Plains** (Indo-Gangetic-Brahmaputra Plains) are a vast, almost fl
 :::key Why the plains matter
 About **40-45 per cent of India's population** lives in the plains. They produce much of the **wheat, rice, sugarcane, pulses, oilseeds**; have the **densest** network of **rail, roads** and the most **cities**.
 :::
+
+### Floods and river hazards
+
+| River | Known as | Problem |
+|---|---|---|
+| **Kosi** | **Sorrow of Bihar** | Heavy silt makes it shift its course; the 2008 breach caused a huge flood |
+| **Damodar** | Sorrow of Bengal (earlier) | Floods reduced after the **Damodar Valley Corporation** dams (1948) |
+| **Ghaghara, Gandak** | Flood-prone rivers | Floods in east UP and north Bihar |
+| **Brahmaputra** | Annual floods in Assam | Braided channels, heavy silt, bank erosion |
+
+Other problems of the plains are **waterlogging**, **salinity (reh, usar)** and falling **groundwater** in Punjab and Haryana.
 
 ## Divisions of the Northern Plains {#northern-plains-divisions}
 
@@ -725,6 +1101,24 @@ The plain is divided **west to east** into four regions.
 - Rich **wheat-rice** belt; **Green Revolution** heartland; canals (**Bhakra, Sirhind**).
 - **Malwa** is the area south of the Sutlej.
 
+### The five rivers of Punjab
+
+| River | Ancient (Vedic) name | Doab it bounds |
+|---|---|---|
+| **Jhelum** | Vitasta | Sindh Sagar (with the Indus) |
+| **Chenab** | Asikni | Chaj (with the Jhelum) and Rechna (with the Ravi) |
+| **Ravi** | Parushni | Rechna and Bari |
+| **Beas** | Vipasa | Bari and Bist |
+| **Sutlej** | Shutudri | Bist (with the Beas) |
+
+### Regions of Punjab
+
+| Region | Position | Examples |
+|---|---|---|
+| **Majha** | Between the Beas and the Ravi | Amritsar, Gurdaspur |
+| **Doaba** | Between the Beas and the Sutlej | Jalandhar, Hoshiarpur, Kapurthala |
+| **Malwa** | South of the Sutlej | Ludhiana, Patiala, Bathinda |
+
 ### Ganga Plain
 
 | Part | Extent | Features |
@@ -736,10 +1130,27 @@ The plain is divided **west to east** into four regions.
 - **Bundelkhand** and **Vindhyan** edge mark the south.
 - The **Barind** is older alluvium in North Bengal and Bangladesh.
 
+### Regions of the Ganga plain
+
+| Region | Where | Note |
+|---|---|---|
+| **Doab** | Between the Ganga and the Yamuna | Meerut, Aligarh, Agra side |
+| **Rohilkhand** | North-west UP | Bareilly; the Ramganga |
+| **Awadh** | Central UP | Lucknow; the Gomti and Ghaghara |
+| **Purvanchal** | East UP | Bhojpuri-speaking, Varanasi and Gorakhpur |
+| **Mithila** | North Bihar | Kosi and Gandak plains |
+| **Magadh** | South Bihar | Patna and Gaya; south of the Ganga |
+| **Delta** | South Bengal | **Sundarbans**, the largest mangrove forest in the world, shared with Bangladesh; home of the **Royal Bengal tiger**; UNESCO site (1987) |
+
 ### Brahmaputra Plain
 
 - A **narrow, braided** plain bounded by the Himalaya on the north and the **Meghalaya and Karbi plateau** on the south.
 - **Majuli**, one of the **largest river islands in the world**, lies in the Brahmaputra (Assam). **Floods** are annual; **tea** and **rice** are the crops.
+
+- **Majuli** became India's **first river-island district** (2016).
+- **Digboi** (Tinsukia) has the oldest oil refinery in India (1901).
+- **Umananda** island in the Brahmaputra at Guwahati is often called the smallest inhabited river island in the world.
+- **Kaziranga**, home of the one-horned rhinoceros, lies on the south bank.
 
 ### Chhattisgarh plain and others
 
@@ -755,5 +1166,9 @@ The **Jammu plains** (Kathua, Samba, Jammu) at the foot of the **Shiwaliks** are
 
 :::tip Exam tip
 "Which of the following is correct about the Bhabar belt?" Answer: pebbles, porous, streams disappear. Do not mix Bhabar (pebbles) and Terai (marsh).
+:::
+
+:::tip Doab names
+From the Sutlej to the Indus the doabs are **Bist** (Beas-Sutlej), **Bari** (Beas-Ravi), **Rechna** (Ravi-Chenab), **Chaj** (Chenab-Jhelum) and **Sindh Sagar** (Jhelum-Indus). Only **Bist and Bari** lie mostly in India. The **Ganga-Yamuna Doab** in UP is the other famous one.
 :::
 `;
